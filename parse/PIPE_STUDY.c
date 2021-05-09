@@ -3,6 +3,9 @@
 
 extern char **environ;
 
+
+
+// ls | grep .c 
 int main(void)
 {
     int r, status;
@@ -24,7 +27,7 @@ int main(void)
         close(pipefd[1]);
         dup2(pipefd[0], 0);
         close(pipefd[0]);
-        char    *argv[] = {"/usr/bin/grep","txt", NULL};
+        char    *argv[] = {"/usr/bin/grep",".c", NULL};
         execve(argv[0], argv, environ);
     }
 
