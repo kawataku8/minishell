@@ -4,13 +4,6 @@
 
 extern char **environ;
 
-typedef struct s_proc
-{
-    char *cmd[3];
-    int isend;
-}               t_proc;
-
-
 // ls | grep .c 
 int main(void)
 {
