@@ -2,6 +2,7 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 #include "../include/cmd.h"
 #include "../libft/libft.h"
@@ -88,10 +89,21 @@ int main(void)
 	int	haspipe = 0;
 	int	lastpipe[2] = { -1, -1 };
 
-	// char    **argv;
-	char    *argv1[] = {"/bin/ls","./", NULL};
-	char    *argv2[] = {"/usr/bin/grep",".c", NULL};
-	char    *argv3[] = {"/usr/bin/wc", NULL};
+
+	// redirect out test
+	// int out_fd;
+	// out_fd = open("outputw", O_CREAT | O_RDWR, S_IRWXU);
+	// close(1);
+	// dup2(out_fd, 1);
+	// close(out_fd);
+
+	//redirect in test
+	int in_fd;
+	in_fd = open("output", O_RDONLY);
+	close(0);
+	dup2(in_fd, 0);
+	close(in_fd);
+
 
 
 	t_cmd_list cmds_list;
@@ -99,25 +111,25 @@ int main(void)
 
 	cmd_node = (t_cmd_node*)malloc(sizeof(t_cmd_node));
 	//TODO make_cmd_node("/bin/ls ./")に置き換え
-	cmd_node->argv = ft_split("/bin/ls ./",' ');
-	// cmd_node->argv = argv1;
+	// cmd_node->argv = ft_split("/bin/ls ./",' ');
+	cmd_node->argv = ft_split("/bin/cat",' ');
 	cmds_list.head = cmd_node;
 
-	cmd_node = (t_cmd_node*)malloc(sizeof(t_cmd_node));
-	cmd_node->argv = ft_split("/usr/bin/grep .c", ' ');
-	// cmd_node->argv = argv2;
-	cmds_list.head->next = cmd_node;
+	cmds_list.head->next = NULL;
 
-	cmd_node = (t_cmd_node*)malloc(sizeof(t_cmd_node));
-	cmd_node->argv = ft_split("/usr/bin/wc", ' ');
-	// cmd_node->argv = argv3;
-	cmds_list.head->next->next = cmd_node;
+	// cmd_node = (t_cmd_node*)malloc(sizeof(t_cmd_node));
+	// cmd_node->argv = ft_split("/usr/bin/grep .c", ' ');
+	// cmds_list.head->next = cmd_node;
 
-	cmds_list.head->next->next->next = NULL;
+	// cmd_node = (t_cmd_node*)malloc(sizeof(t_cmd_node));
+	// cmd_node->argv = ft_split("/usr/bin/wc", ' ');
+	// // cmd_node->argv = argv3;
+	// cmds_list.head->next->next = cmd_node;
+
+	// cmds_list.head->next->next->next = NULL;
 	
 
 	t_cmd_node *cur_cmd_node = cmds_list.head;
-
 	while (cur_cmd_node != NULL)
 	{
 		cur_cmd_node->pid = start_command(cur_cmd_node->argv, ispipe(cur_cmd_node), haspipe, lastpipe);
@@ -126,8 +138,15 @@ int main(void)
 		else
 			break ;
 	}
-
+	
 	waitpid(cur_cmd_node->pid,&status,0);
+
+	// pid = wait(&status);
+	// printf("DEBUG2:pid id:%d\n",pid);
+	// pid = wait(&status);
+	// printf("DEBUG2:pid id:%d\n",pid);
+	// pid = wait(&status);
+	// printf("DEBUG2:pid id:%d\n",pid);
 
 	free_cmd_list(&cmds_list);
 

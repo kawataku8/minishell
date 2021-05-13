@@ -10,5 +10,7 @@ int main(void)
 {
 	t_cmd *cmds;
 
+	
+
 	return 0;
 }
