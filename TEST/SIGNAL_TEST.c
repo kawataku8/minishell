@@ -1,22 +1,41 @@
-#include <unistd.h>
-#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
+#include <unistd.h>
+#include <signal.h>
 
+volatile sig_atomic_t sigint_count = 3;
+
+void sigint_handler(int signum)
+{
+	printf("sigint_handler: signum(%d), sigint_count(%d)\n",
+		   signum, sigint_count);
+
+	if (--sigint_count <= 0)
+	{
+		printf("sigint_handler: exiting ...\n");
+		exit(1);
+	}
+
+#if 0 /* For the original System V signal */
+		signal(SIGINT, &sigint_handler);
+#endif
+}
 
 int main(void)
 {
-    // redirect out test
-	int out_fd;
-	out_fd = open("sigput", O_CREAT | O_RDWR, S_IRWXU);
+	
+	signal(SIGINT, &sigint_handler);
 
-    close(1);
-    dup2(out_fd,1);
-    close(out_fd);
+	for (;;)
+	{
+		printf("main: sigint_count(%d), calling pause ...\n",
+			sigint_count);
 
-    printf("SIG TEST OUT\n");
+		pause();
 
+		printf("main: returned from pause. sigint_count(%d)\n",
+			sigint_count);
+	}
 
-    return 0;
+	return 0;
 }

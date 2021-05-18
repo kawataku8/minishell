@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void del_content(void *content)
+void del_tokennode(void *content)
 {
 	free(((t_token*)content)->word);
 	free((t_token*)content);
@@ -34,9 +34,11 @@ int main(void)
 		printf("%d,%s\n",((t_token*)cur_lst->content)->type,((t_token*)cur_lst->content)->word);
 		cur_lst = cur_lst->next;
 	}
+	printf("%d,%s\n",((t_token*)lst->content)->type,((t_token*)lst->content)->word);
+	
 
 	// ft_lstdelone(lst,&del_content);
-	ft_lstclear(&lst, &del_content);
+	ft_lstclear(&lst, &del_tokennode);
 	
 	return 0;
 }
