@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 09:47:43 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/18 12:54:41 by takuya           ###   ########.fr       */
+/*   Updated: 2021/05/19 21:20:13 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,49 @@ void print_processlist(t_list *process_list)
 	
 }
 
+void free_splitwords(char **words)
+{
+	int i;
 
+	i = 0;
+	while(words[i] != NULL)
+	{
+		free(words[i]);
+		i++;
+	}
+	free(words);
+	words = NULL;
+}
 
+void del_cmdnode(void *content)
+{
+	free_splitwords(((t_cmd_node*)content)->argv);
+	free((t_cmd_node*)content);
+}
+
+void clear_processlist(t_list **process_list, void (*del)(void *))
+{
+	t_list *next_lst;
+	t_list *lst_temp;
+
+	if (process_list && del)
+	{
+		lst_temp = *process_list;
+		while (lst_temp)
+		{
+			next_lst = lst_temp->next;
+			// free(((t_process*)lst_temp->content)->red_in_filepath);
+			// free(((t_process*)lst_temp->content)->red_out_filepath);
+			// free(((t_process*)lst_temp->content)->red_err_filepath);
+			ft_lstclear( &(((t_process*)lst_temp->content)->cmd_listhead),del);
+			free((t_process*)lst_temp->content);
+			free(lst_temp);
+			lst_temp = next_lst;
+		}
+		*process_list = NULL;
+	}
+
+}
 
 t_list *setup_process(char *usr_input)
 {
@@ -90,16 +131,16 @@ t_list *setup_process(char *usr_input)
 			cmd_node->argv = ft_split(split_bypipe[j],' ');
 			ft_lstadd_back(&cmd_list,ft_lstnew((void*)cmd_node));
 			j++;
-			print_cmdlist(cmd_list);
-			
 		}
-		//TODO 動作検証
 		process_node = (t_process*)malloc(sizeof(t_process));
 		process_node->cmd_listhead = cmd_list;
 		ft_lstadd_back(&process_list,ft_lstnew((void*)process_node));
 
+		free_splitwords(split_bypipe);
 		i++;
 	}
+
+	free_splitwords(split_bysemi);
 
 	return (process_list);
 }
@@ -108,14 +149,24 @@ t_list *setup_process(char *usr_input)
 
 
 
-// int main(void)
-// {
-// 	t_list *process_list;
+int main(int argc, char *argv[])
+{
+	int i = 0;
 
-// 	process_list =  setup_process("ls|grep .c| wc; echo hello");
-// 	// printf(((t_process*)process_list->content)->cmd_listhead->content )
-// 	print_processlist(process_list);
+	while(i < argc)
+	{
+		printf("%s\n",argv[i]);
+		i++;
+	}
 
-// 	exit(1);
-// 	return 0;
-// }
+
+
+	// t_list *process_list;
+
+	// process_list =  setup_process("ls |grep .c| wc; echo hello; env ;echo \"hello\">yoyo");
+	// // printf(((t_process*)process_list->content)->cmd_listhead->content )
+	// print_processlist(process_list);
+	// clear_processlist(&process_list,&del_cmdnode);
+
+	return 0;
+}
