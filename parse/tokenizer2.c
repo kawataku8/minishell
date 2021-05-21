@@ -6,11 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:08:34 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/20 22:46:25 by takuya           ###   ########.fr       */
+/*   Updated: 2021/05/21 19:03:30 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include "../include/validator.h"
 
 int specify_tokentype(char c)
 {
@@ -105,17 +106,17 @@ t_token *make_token(char *usr_input, int *i,int in_squote, int in_dquote)
 	type = specify_tokentype(usr_input[*i]);
 	if(in_squote && type != SQUOTE)
 	{
-		printf("DEBUG:[squote]%c\n",usr_input[*i]);
+		// printf("DEBUG:[squote]%c\n",usr_input[*i]);
 		end = idx_next_squote(usr_input,*i);
 	}
 	else if(in_dquote && type != DQUOTE)
 	{
-		printf("DEBUG:[dquote]%c\n",usr_input[*i]);
+		// printf("DEBUG:[dquote]%c\n",usr_input[*i]);
 		end = idx_next_dquote(usr_input,*i);
 	}
 	else
 	{
-		printf("DEBUG:[normal]%c\n",usr_input[*i]);
+		// printf("DEBUG:[normal]%c\n",usr_input[*i]);
 		end = idx_next_delim(usr_input,*i);
 	}
 	// printf("DEBUG:i is %d, end is %d\n",*i,end);
@@ -161,24 +162,33 @@ void print_tokenlist(t_list *token_list)
 	t_list *cur_node = token_list;
 	while(cur_node != NULL)
 	{
-		printf("type:%d\n",((t_token*)cur_node->content)->type);
-		printf("word:%s\n",((t_token*)cur_node->content)->word);
-		printf("\n");
+		printf("type:[%d]\n",((t_token*)cur_node->content)->type);
+		printf("word:[%s]\n",((t_token*)cur_node->content)->word);
+		printf("---------------------------\n");
 		cur_node = cur_node->next;
 	}
 }
 
 int main(int argc, char *argv[])
 {
-	char usr_input[100];
+	char *usr_input;
+	int size = 100;
 	t_list *token_list;
 
-	scanf("%s",usr_input);
-	printf("%s\n",usr_input),
+
+	usr_input = (char*)malloc(sizeof(char)*size);
+	fgets(usr_input,size,stdin);
+	printf("USER INPUT:%s\n",usr_input);
+	
 	token_list = make_tokenlist(usr_input);
 	print_tokenlist(token_list);
 
+	if(validator(token_list) == 0)
+		printf("INVALID\n");
+	else
+		printf("GOOD\n");
 
+	free(usr_input);
 	exit(1);
 	return 0;
 }
