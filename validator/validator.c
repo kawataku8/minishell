@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 23:59:35 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/21 23:24:22 by takuya           ###   ########.fr       */
+/*   Updated: 2021/05/22 14:25:23 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ int validator(t_list *token_list)
 		return (0);
 	while(cur_token != NULL)
 	{
-		printf("DEBUG:%s\n",((t_token*)cur_token->content)->word);
+		// printf("DEBUG:%s\n",((t_token*)cur_token->content)->word);
+
 		swich_quote_flag(cur_token, &flag_squote, &flag_dquote);
 		if(!(valid_meta_syntax(cur_token)))
 		{
