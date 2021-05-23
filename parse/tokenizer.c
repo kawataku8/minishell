@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:08:34 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/21 19:03:30 by takuya           ###   ########.fr       */
+/*   Updated: 2021/05/22 14:45:28 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,8 @@ int main(int argc, char *argv[])
 
 	usr_input = (char*)malloc(sizeof(char)*size);
 	fgets(usr_input,size,stdin);
+
+	usr_input[ft_strlen(usr_input)-1] = '\0';
 	printf("USER INPUT:%s\n",usr_input);
 	
 	token_list = make_tokenlist(usr_input);

@@ -2,10 +2,20 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../libft/libft.h"
+
 int main(void)
 {
-	char *str = "hello\n";
+	char **str = ft_split(";ls|wc;;echo hello;;",';');
 
-	write(1,str,strlen(str));
+	int i = 0;
+	while (str[i] != NULL)
+	{
+		printf("%s\n",str[i]);
+		i++;
+	}
+	
+
+	exit(1);
 	return 0;
 }

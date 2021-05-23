@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokeniser.c                                        :+:      :+:    :+:   */
+/*   make_procslist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 09:47:43 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/19 21:20:13 by takuya           ###   ########.fr       */
+/*   Updated: 2021/05/23 13:17:59 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void clear_processlist(t_list **process_list, void (*del)(void *))
 		}
 		*process_list = NULL;
 	}
-
 }
 
 t_list *setup_process(char *usr_input)
@@ -144,9 +143,6 @@ t_list *setup_process(char *usr_input)
 
 	return (process_list);
 }
-
-
-
 
 
 int main(int argc, char *argv[])
