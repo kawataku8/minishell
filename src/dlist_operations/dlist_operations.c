@@ -1,5 +1,4 @@
-
-#include "../include/dlist_operations.h"
+#include "../../include/dlist_operations.h"
 
 //key,valueは事前にmallocされている前提
 t_env_node *make_node(char *key, char *value)

@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/18 13:26:31 by takuya           ###   ########.fr       */
+/*   Updated: 2021/05/31 14:19:53 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2])
 }
 
 // rename main to exec_multi_cmds()
-int exec_multi_cmds(t_list *cmd_listhead)
+int exec_multi_cmds(t_list *cmd_list)
 {
 	int i = 0;
 	int pid, status;
 	int	haspipe = 0;
 	int	lastpipe[2] = { -1, -1 };
 
-	t_list *cur_cmd_node = cmd_listhead;
+	t_list *cur_cmd_node = cmd_list;
 	while (cur_cmd_node != NULL)
 	{
 		((t_cmd_node*)cur_cmd_node->content)->pid = start_command(((t_cmd_node*)cur_cmd_node->content)->argv, ispipe(cur_cmd_node), haspipe, lastpipe);

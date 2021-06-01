@@ -3,6 +3,28 @@
 #include "../include/parse.h"
 #include "../include/validator.h"
 
+
+t_list *null_test(t_list *token_list)
+{
+	t_list *cur_node = token_list;
+	t_list *end_node = cur_node;
+	t_list *res_node;
+	int i = 0;
+
+	while(end_node != NULL)
+	{
+		if(i == 3)
+		{
+			res_node = end_node->next;
+			end_node->next = NULL;
+			break;
+		}
+		i++;
+		end_node = end_node->next;
+	}
+	return (res_node);
+}
+
 int main(int argc, char *argv[])
 {
 	char *usr_input;
@@ -23,6 +45,14 @@ int main(int argc, char *argv[])
 		printf("INVALID\n");
 	else
 		printf("GOOD\n");
+
+	t_list *cmd_list;
+	cmd_list = split_tokens(token_list);
+	print_cmdlist(cmd_list);
+
+
+	//whileでcmdlist回して、それぞれのコマンド実行
+	// process_cmdlist(cmd_list);
 
 	free(usr_input);
 	exit(1);
