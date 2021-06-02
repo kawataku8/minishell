@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/31 14:20:10 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/01 16:50:16 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int exec_cmdline(t_list *cmd_list)
 {
 	
 	// while()
-	//事前にredirectの繋ぎ変え
-	//set_redirect();
+	//parse_env();
+	//parse_redirect();
 	
 	// if (single)
 	// {
