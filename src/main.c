@@ -2,6 +2,8 @@
 #include "../include/commonlib.h"
 #include "../include/parse.h"
 #include "../include/validator.h"
+#include "../include/cmd.h"
+#include "../include/env_operations.h"
 
 
 t_list *null_test(t_list *token_list)
@@ -25,11 +27,12 @@ t_list *null_test(t_list *token_list)
 	return (res_node);
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char **envp)
 {
 	char *usr_input;
 	int size = 100;
 	t_list *token_list;
+	t_doubly_list *env_list;
 
 
 	usr_input = (char*)malloc(sizeof(char)*size);
@@ -50,7 +53,10 @@ int main(int argc, char *argv[])
 	cmd_list = split_tokens(token_list);
 	print_cmdlist(cmd_list);
 
-
+	printf("-------------------\n");
+	env_list = make_envlist(envp);
+	edit_env(cmd_list, env_list);
+	print_cmdlist(cmd_list);
 	//whileでcmdlist回して、それぞれのコマンド実行
 	// process_cmdlist(cmd_list);
 

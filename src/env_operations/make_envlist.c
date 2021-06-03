@@ -1,4 +1,4 @@
-#include "../..//include/env_operations.h"
+#include "../../include/env_operations.h"
 
 int get_chrindex(char *str, char c)
 {

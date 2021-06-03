@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 07:45:47 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/24 16:02:14 by takuya           ###   ########.fr       */
+/*   Updated: 2021/05/28 16:04:01 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,19 @@
 typedef struct	s_cmd_node
 {
 	pid_t 				pid;
-	int					argc;
-	char				**argv;
-}				t_cmd_node;
-
-typedef struct s_process
-{
+	int		op;
 	char *red_in_filepath;
 	char *red_out_filepath;
 	char *red_err_filepath;
-	t_list *cmd_listhead;
-}				t_process;
+	// int					argc;
+	// char				**argv;
+	t_list				*token_list;
+}				t_cmd_node;
+
+// typedef struct s_process
+// {
+// 	t_list *cmd_listhead;
+// }				t_process;
 
 typedef struct s_token
 {

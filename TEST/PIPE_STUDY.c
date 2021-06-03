@@ -15,11 +15,12 @@ int main(void)
     char    *argv2[] = {"/usr/bin/grep",".c", NULL};
     char    *argv3[] = {"/usr/bin/wc", NULL};
 
-
     //ls
     pid_t child1 = fork();
     if (child1 == 0) {
         close(pipefd[0]);
+	printf("hello");
+	fork();
         dup2(pipefd[1], 1);
         close(pipefd[1]);
         execve(argv1[0], argv1, environ);

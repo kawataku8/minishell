@@ -2,6 +2,7 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 extern char **environ;
 
@@ -12,8 +13,9 @@ int ispipe(int i)
     return 0;
 }
 
-pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2])
+pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2],int i)
 {
+	int file_fd;
 	pid_t pid;
 	int newpipe[2];
 
@@ -37,6 +39,14 @@ pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2])
 			dup2(newpipe[1], 1);
 			close(newpipe[1]);
 		}
+
+		if(i == 1)
+		{
+			file_fd = open("output", O_CREAT | O_RDWR, S_IRWXU);
+			dup2(file_fd,1);
+			close(file_fd);
+		}
+
 		// execvp(argv[0], argv);
         execve(argv[0], argv, environ);
 	}
@@ -67,22 +77,29 @@ int main(void)
     char    *argv2[] = {"/usr/bin/grep",".c", NULL};
     char    *argv3[] = {"/usr/bin/wc", NULL};
 
+
 	while (i < 3)
 	{
         if (i==0)
-            argv = argv1;
-        else if(i == 1)
-            argv = argv2;
-        else
-            argv = argv3;
-        
-		pid = start_command(argv, ispipe(i), haspipe, lastpipe);
+		{
+			argv = argv1;
+		}
+		else if (i == 1)
+		{
+			argv = argv2;
+		}
+		else
+		    argv = argv3;
+
+		pid = start_command(argv, ispipe(i), haspipe, lastpipe,i);
 		haspipe = ispipe(i);
 		if (haspipe)
+		{ 
             i++;
+		}
 		else
         {
-            printf("DEBUG: i is %d\n",i);
+            // printf("DEBUG: i is %d\n",i);
 			break ;
         }
 	}
