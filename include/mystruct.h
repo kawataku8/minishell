@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 07:45:47 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/28 16:04:01 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/08 22:02:38 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct	s_cmd_node
 	char *red_in_filepath;
 	char *red_out_filepath;
 	char *red_err_filepath;
-	// int					argc;
-	// char				**argv;
+	int					argc;
+	char				**argv;
 	t_list				*token_list;
 }				t_cmd_node;
 

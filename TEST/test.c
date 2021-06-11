@@ -5,12 +5,10 @@
 
 int main(void)
 {
-	char *s1 = "heyo";
-	char *s2 = "heyo";
-	printf("%s,%s\n",s1,s2);
-	if (my_strcmp(s1,s2) == 0)
-		printf("yes\n");
-	else
-		printf("no\n");
+	char *s = ft_strdup("");
+	if (s == NULL)
+		printf("YES NULL\n");
+	printf("[%s]\n",s);
+	free(s);
 	return 0;
 }

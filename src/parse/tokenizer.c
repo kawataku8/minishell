@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:08:34 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/27 16:05:09 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/03 16:41:30 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int specify_tokentype(char c)
 		return (AND);
 	else if(c == ';')
 		return (SCOLON);
-	else if(c == '\\')
-		return (ESC);
+	// else if(c == '\\')
+	// 	return (ESC);
 	return (0);
 }
 

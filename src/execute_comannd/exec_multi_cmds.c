@@ -6,18 +6,18 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/31 14:19:53 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/10 15:04:30 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cmd.h"
+#include "../../include/cmd.h"
 
 
 extern char **environ;
 
-int ispipe(t_list *cur_cmd_node)
+int ispipe(t_cmd_node *cur_cmd_node)
 {
-	if (cur_cmd_node->next != NULL)
+	if (cur_cmd_node->op == PIPE)
 		return 1;
 	return 0;
 }
@@ -35,12 +35,12 @@ void del_cmdnode(void *content)
 	free((t_cmd_node*)content);
 }
 
-pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2])
+pid_t	start_command(t_cmd_node *cmd_node, int haspipe, int lastpipe[2])
 {
 	pid_t pid;
 	int newpipe[2];
-	
-	if (ispipe)
+
+	if (ispipe(cmd_node))
 		pipe(newpipe);
 	pid = fork();
 	//子プロセス
@@ -54,14 +54,13 @@ pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2])
 			close(lastpipe[0]);
 		}
 		//右にパイプあり　出力をpipeに繋がったfd1に流す
-		if (ispipe)
+		if (ispipe(cmd_node))
 		{
 			close(newpipe[0]);
 			dup2(newpipe[1], 1);
 			close(newpipe[1]);
 		}
-		// execvp(argv[0], argv);
-		execve(argv[0], argv, environ);
+		execve(cmd_node->argv[0],cmd_node->argv, environ);
 	}
 	
 	// 上の子プロセスですでに入出力の受け渡しは終了しているので一個前に使ったpipeをclose
@@ -70,7 +69,7 @@ pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2])
 		close(lastpipe[0]);
 		close(lastpipe[1]);
 	}
-	if (ispipe)
+	if (ispipe(cmd_node))
 	{
 		lastpipe[0] = newpipe[0];
 		lastpipe[1] = newpipe[1];
@@ -78,29 +77,34 @@ pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2])
 	return (pid);
 }
 
-// rename main to exec_multi_cmds()
-int exec_multi_cmds(t_list *cmd_list)
+t_list *exec_multi_cmds(t_list *cmd_list, t_doubly_list *env_list)
 {
+	t_cmd_node *cmd_node;
 	int i = 0;
 	int pid, status;
 	int	haspipe = 0;
 	int	lastpipe[2] = { -1, -1 };
 
-	t_list *cur_cmd_node = cmd_list;
-	while (cur_cmd_node != NULL)
+	t_list *cur_cmd_list = cmd_list;
+	while (cur_cmd_list != NULL)
 	{
-		((t_cmd_node*)cur_cmd_node->content)->pid = start_command(((t_cmd_node*)cur_cmd_node->content)->argv, ispipe(cur_cmd_node), haspipe, lastpipe);
-		if ((haspipe = ispipe(cur_cmd_node)) == 1)
-			cur_cmd_node = cur_cmd_node->next;
+		cmd_node = ((t_cmd_node*)cur_cmd_list->content);
+		expand_env(cmd_node->token_list, env_list);
+		//parse_redirect(cur_cmdlist);
+		setup_argv_argc(cmd_node);
+		cmd_node->pid = start_command(cmd_node, haspipe, lastpipe);
+		if ((haspipe = ispipe(cmd_node)) == 1)
+			cur_cmd_list = cur_cmd_list->next;
 		else
 			break ;
 	}
-	waitpid(((t_cmd_node*)cur_cmd_node->content)->pid,&status,0);
+	//一番最後に実行したコマンドのwait
+	waitpid(cmd_node->pid,&status,0);
 
 	// pid = wait(&status);
 	// printf("DEBUG2:pid id:%d,status is :%d\n",pid, status);
 	// pid = wait(&status);
 	// printf("DEBUG2:pid id:%d,status is : %d\n",pid, status);
 
-	return 0;
+	return (cur_cmd_list);
 }

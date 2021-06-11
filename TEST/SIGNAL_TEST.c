@@ -16,9 +16,6 @@ void sigint_handler(int signum)
 		exit(1);
 	}
 
-#if 0 /* For the original System V signal */
-		signal(SIGINT, &sigint_handler);
-#endif
 }
 
 int main(void)

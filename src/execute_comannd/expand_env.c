@@ -34,7 +34,7 @@ char *get_value_from_envlist(char *key, t_doubly_list *env_list)
 
 //input: "hello $TEST"
 //output: 1->exist, 0->nah
-//description: 文字列に環境変数があるかをチェックする
+//description: 文字列に$環境変数があるかをチェックする
 //ある->i, j は環境変数の文字indexを示す
 int envvar_exist(char *word, int *i, int *j)
 {
@@ -62,7 +62,8 @@ int envvar_exist(char *word, int *i, int *j)
 //input: "$NAME"
 //output:"takuya"
 //環境変数をkeyで探して、valueを返す
-//見つからなければ NULL を返す
+//$が見つからなければ NULL を返す
+//$はあるがそのkeyでvalueが存在しなければ空文字列"""を返す
 //key取り出すときの区切り　[スペース、バックスラッシュ、EOL]
 char *get_env_value(char *word, t_doubly_list *env_list)
 {
@@ -77,8 +78,8 @@ char *get_env_value(char *word, t_doubly_list *env_list)
 		key = ft_substr(word,i+1,j-(i+1));
 		value = get_value_from_envlist(key, env_list);
 		free(key);
-		if (value != NULL)
-			return (value);
+		if (value == NULL)
+			value = ft_strdup("");
 	}
 	return (value);
 }
@@ -98,6 +99,7 @@ char *make_new_word(char *word, char *env_value)
 	ft_strlcpy(new_word, word, new_word_len + 1);
 	ft_strlcpy(new_word + env_i, env_value, new_word_len + 1);
 	ft_strlcpy(new_word + (env_i + ft_strlen(env_value)), word + env_j, new_word_len + 1);
+
 	return (new_word);
 }
 
@@ -124,8 +126,6 @@ t_list *make_new_tokens(char *word, char *env_value)
 	t_token *new_token;
 	char *new_word;
 	char **split_newword;
-	int i;
-	int j;
 	int l;
 
 	new_tokenlist = NULL;
@@ -136,16 +136,18 @@ t_list *make_new_tokens(char *word, char *env_value)
 	{
 		new_token = (t_token *)malloc(sizeof(t_token));
 		new_token->type = STR;
-		new_token->word = split_newword[l++];
+		new_token->word = ft_strdup(split_newword[l++]);
 		ft_lstadd_back(&new_tokenlist, ft_lstnew((void*)new_token));
 	}
 	free(new_word);
+	free_splitstr(split_newword);
 	return (new_tokenlist);
 }
 
-// //input: "$NAME"
-// //output: "oda"->"joe"
-// //受け取ったtokenはfree()
+//input: "$NAME"
+//output: "oda"->"joe"
+//環境変数が存在しなかった場合、env_valueには空文字””
+//受け取ったtokenはfree()
 t_list *expand_env_in_token(t_list *token, char *env_value, int flag_dquote)
 {
 	t_list	*new_tokenlist;
@@ -193,21 +195,14 @@ void expand_env(t_list *token_list, t_doubly_list *env_list)
 	{
 		if ((((t_token*)cur_token->content)->type) == DQUOTE)
 			flag_dquote ^= 1;
-		printf("hello\n");	
-		//一つのトークンの中にいくつもの＄,もしくは＄のvalueが＄の場合が有るので、
-		//next_tokenに一つ展開した後、next_tokenにlast_token入れて
-		//同じところをもう一回見てくようにする
 		if ((env_value = get_env_value(((t_token*)cur_token->content)->word, env_list)) != NULL)
 		{
-			printf("morning\n");
 			new_tokenlist = expand_env_in_token(cur_token, env_value, flag_dquote);
 			next_token = cur_token->next;
-			//new_tokenlistの前後のつなぎ合わせ
-			//TODO:cur_token->nextがNULLの時やばいかも
 			ft_lstadd_back(&new_tokenlist,next_token);
 			if (last_token != NULL)
 				last_token->next = new_tokenlist;
-			free(cur_token);
+			free_token(cur_token);
 			cur_token = new_tokenlist;
 			continue;
 		}

@@ -8,6 +8,8 @@
         "dlist_operations.h": "c",
         "env_operations.h": "c",
         "validator.h": "c",
-        "cmd.h": "c"
+        "cmd.h": "c",
+        "mystruct.h": "c",
+        "main.h": "c"
     }
 }

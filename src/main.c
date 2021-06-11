@@ -4,7 +4,25 @@
 #include "../include/validator.h"
 #include "../include/cmd.h"
 #include "../include/env_operations.h"
+#include "../include/setup.h"
+#include "../include/main.h"
 
+
+void print_cmdlist_withmeta(t_list *cmd_list)
+{
+	t_list *cur_node = cmd_list;
+	t_cmd_node *cur_cmd;
+
+	while(cur_node != NULL)
+	{
+		cur_cmd = ((t_cmd_node*)cur_node->content);
+		printf("pid:[%d]\n",cur_cmd->pid);
+		printf("op:[%d]\n",cur_cmd->op);
+		printf("argc:[%d]\n",cur_cmd->argc);
+		printf("---------------------------\n");
+		cur_node = cur_node->next;
+	}
+}
 
 t_list *null_test(t_list *token_list)
 {
@@ -30,37 +48,40 @@ t_list *null_test(t_list *token_list)
 int main(int argc, char *argv[], char **envp)
 {
 	char *usr_input;
-	int size = 100;
 	t_list *token_list;
 	t_doubly_list *env_list;
 
+	while ((usr_input = readline("minishell$ ")) != NULL)
+	{
+		if (ft_strlen(usr_input) > 0)
+			add_history(usr_input);
+		else
+			continue ;
+			
+		token_list = make_tokenlist(usr_input);
 
-	usr_input = (char*)malloc(sizeof(char)*size);
-	fgets(usr_input,size,stdin);
+		if (validator(token_list) == 0)
+		{
+			printf("INVALID\n");
+			free(usr_input);
+			continue ;
+		}
+		else
+			printf("GOOD\n");
 
-	usr_input[ft_strlen(usr_input)-1] = '\0';
-	printf("USER INPUT:%s\n",usr_input);
+		//token_listからcmd_list生成
+		t_list *cmd_list;
+		cmd_list = make_cmdlist(token_list);
+		print_cmdlist(cmd_list);
+		printf("-------------------\n");
+
+		setup_op(cmd_list);
+		env_list = make_envlist(envp);
+		process_cmdlist(cmd_list, env_list);
+
+		free(usr_input);	
+	}
 	
-	token_list = make_tokenlist(usr_input);
-	print_tokenlist(token_list);
-
-	if(validator(token_list) == 0)
-		printf("INVALID\n");
-	else
-		printf("GOOD\n");
-
-	t_list *cmd_list;
-	cmd_list = split_tokens(token_list);
-	print_cmdlist(cmd_list);
-
-	printf("-------------------\n");
-	env_list = make_envlist(envp);
-	edit_env(cmd_list, env_list);
-	print_cmdlist(cmd_list);
-	//whileでcmdlist回して、それぞれのコマンド実行
-	// process_cmdlist(cmd_list);
-
-	free(usr_input);
 	exit(1);
 	return 0;
 }

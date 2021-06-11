@@ -2,13 +2,14 @@
 # define CMD_H
 
 #include "commonlib.h"
+#include "setup.h"
 
+int ispipe(t_cmd_node *cur_cmd_node);
+void del_cmdnode(void *content);
+pid_t	start_command(t_cmd_node *cmd_node, int haspipe, int lastpipe[2]);
+t_list *exec_multi_cmds(t_list *cmd_list, t_doubly_list *env_list);
 
-int exec_multi_cmds(t_list *cmds_list);
-pid_t	start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2]);
-int ispipe(t_list *cur_cmd_node);
-void del_tokennode(void *content);
-int exec_cmdline(t_list *cmd_list);
+void exec_single_cmd(t_cmd_node *cmd_node, t_doubly_list *env_list);
 
 int my_strcmp(const char *s1, const char *s2);
 char *get_value_from_envlist(char *key, t_doubly_list *env_list);
@@ -21,5 +22,7 @@ t_list *expand_env_in_token(t_list *token, char *env_value, int flag_dquote);
 void free_token(t_list *token);
 void expand_env(t_list *token_list, t_doubly_list *env_list);
 void edit_env(t_list *cmd_list, t_doubly_list *env_list);
+
+int process_cmdlist(t_list *cmd_list, t_doubly_list *env_list);
 
 #endif

@@ -1,4 +1,6 @@
 #include <unistd.h>
+#include <stdio.h>
+
 
 extern char **environ;
 
@@ -10,8 +12,10 @@ int main(void)
         // argv[1] = "./hello.txt";
         // argv[2] = NULL;
 
-        char    *argv[] = {"/usr/bin/wc","./hello.txt", NULL};
+        char    *argv[] = {"/bin/echo","./hello.txt", NULL};
         execve(argv[0], argv, environ);
+
+        printf("YOYOY\n");
 
         return 1;
 
