@@ -19,6 +19,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C ./libft
+	$(MAKE) bonus -C ./libft
 	$(CC) $(OBJS) -lreadline ./libft/libft.a -o $(NAME)
 
 clean:

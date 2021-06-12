@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/12 13:13:18 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/12 13:31:28 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void exec_single_cmd(t_cmd_node *cmd_node, t_doubly_list *env_list)
 
 
 	// ft_cmdのどれにも当てはまらなかった場合
+	// TODO: buildin じゃない場合はexec_multi_cmdsの方で実行？？
 	cmd_node->pid = fork();
 	
 	if (cmd_node->pid == 0)

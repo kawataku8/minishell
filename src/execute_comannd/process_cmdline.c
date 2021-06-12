@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/12 13:24:39 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/12 14:38:48 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int process_cmdlist(t_list *cmd_list, t_doubly_list *env_list)
 {
+	int status;
 	t_list *cur_cmdlist;
 	t_cmd_node *cmd_node;
 	
@@ -21,7 +22,6 @@ int process_cmdlist(t_list *cmd_list, t_doubly_list *env_list)
 	while(cur_cmdlist != NULL)
 	{
 		cmd_node = (t_cmd_node*)cur_cmdlist->content;
-
 
 		printf("====================================\n");
 		if (cmd_node->op == SCOLON)
@@ -34,6 +34,8 @@ int process_cmdlist(t_list *cmd_list, t_doubly_list *env_list)
 		else
 		{
 			cur_cmdlist = exec_multi_cmds(cur_cmdlist,env_list);
+			// waitpid(((t_cmd_node*)cur_cmdlist->content)->pid,&status,0);
+			wait(&status);
 		}
 
 		//リダイレクトによって変更したデフォfd(0,1,2)のリセット
