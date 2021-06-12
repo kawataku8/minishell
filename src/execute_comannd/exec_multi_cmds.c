@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/10 15:04:30 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/12 13:25:10 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,6 @@ t_list *exec_multi_cmds(t_list *cmd_list, t_doubly_list *env_list)
 	}
 	//一番最後に実行したコマンドのwait
 	waitpid(cmd_node->pid,&status,0);
-
-	// pid = wait(&status);
-	// printf("DEBUG2:pid id:%d,status is :%d\n",pid, status);
-	// pid = wait(&status);
-	// printf("DEBUG2:pid id:%d,status is : %d\n",pid, status);
 
 	return (cur_cmd_list);
 }

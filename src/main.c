@@ -48,6 +48,7 @@ t_list *null_test(t_list *token_list)
 int main(int argc, char *argv[], char **envp)
 {
 	char *usr_input;
+	char *tmp;
 	t_list *token_list;
 	t_doubly_list *env_list;
 
@@ -57,6 +58,9 @@ int main(int argc, char *argv[], char **envp)
 			add_history(usr_input);
 		else
 			continue ;
+		tmp = ft_strtrim(usr_input,"	 ");
+		free(usr_input);
+		usr_input = tmp;
 			
 		token_list = make_tokenlist(usr_input);
 
@@ -79,7 +83,9 @@ int main(int argc, char *argv[], char **envp)
 		env_list = make_envlist(envp);
 		process_cmdlist(cmd_list, env_list);
 
-		free(usr_input);	
+		free(usr_input);
+		// free_tokenlist(token_list);
+		// free_cmdlist(cmd_list);
 	}
 	
 	exit(1);
