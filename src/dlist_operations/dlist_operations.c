@@ -15,7 +15,7 @@ t_env_node *make_node(char *key, char *value)
 	return (new_node);
 }
 
-void insert_after(t_doubly_list *stack, t_env_node *node, t_env_node *new_node)
+void insert_after(t_env_list *stack, t_env_node *node, t_env_node *new_node)
 {
 	new_node->prev = node;
 	new_node->next = node->next;
@@ -26,7 +26,7 @@ void insert_after(t_doubly_list *stack, t_env_node *node, t_env_node *new_node)
 	node->next = new_node;
 }
 
-void insert_before(t_doubly_list *stack, t_env_node *node, t_env_node *new_node)
+void insert_before(t_env_list *stack, t_env_node *node, t_env_node *new_node)
 {
 	new_node->prev = node->prev;
 	new_node->next = node;
@@ -37,7 +37,7 @@ void insert_before(t_doubly_list *stack, t_env_node *node, t_env_node *new_node)
 	node->prev = new_node;
 }
 
-void insert_beginning(t_doubly_list *stack, t_env_node *new_node)
+void insert_beginning(t_env_list *stack, t_env_node *new_node)
 {
 	if (stack->head == NULL)
 	{
@@ -50,7 +50,7 @@ void insert_beginning(t_doubly_list *stack, t_env_node *new_node)
 		insert_before(stack,stack->head, new_node);
 }
 
-void insert_end(t_doubly_list *stack, t_env_node *new_node)
+void insert_end(t_env_list *stack, t_env_node *new_node)
 {
 	if (stack->tail == NULL)
 		insert_beginning(stack, new_node);
@@ -58,7 +58,7 @@ void insert_end(t_doubly_list *stack, t_env_node *new_node)
 		insert_after(stack, stack->tail, new_node);
 }
 
-void clear_stack(t_doubly_list *stack)
+void clear_stack(t_env_list *stack)
 {
 	t_env_node *cur_node;
 	t_env_node *next_env_node;
@@ -80,7 +80,7 @@ void clear_stack(t_doubly_list *stack)
 	free(stack);
 }
 
-void remove_node(t_doubly_list *stack,t_env_node *node)
+void remove_node(t_env_list *stack,t_env_node *node)
 {
 	if (node->prev == NULL)
 		stack->head = node->next;
@@ -95,7 +95,7 @@ void remove_node(t_doubly_list *stack,t_env_node *node)
 	free(node);
 }
 
-void print_doubly_list(t_doubly_list *stack)
+void print_env_list(t_env_list *stack)
 {
 	t_env_node *node = stack->head;
 

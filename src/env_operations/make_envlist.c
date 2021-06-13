@@ -14,15 +14,15 @@ int get_chrindex(char *str, char c)
 }
 
 // TEST=hello
-t_doubly_list *make_envlist(char **envp)
+t_env_list *make_envlist(char **envp)
 {
-	t_doubly_list *env_list;
+	t_env_list *env_list;
 	t_env_node *new_envnode;
 	char *key;
 	char *value;
 	int eql_idx;
 	
-	env_list = (t_doubly_list*)malloc(sizeof(t_doubly_list));
+	env_list = (t_env_list*)malloc(sizeof(t_env_list));
 	env_list->head = NULL;
 	env_list->tail = NULL;
 	while(*envp != NULL)
@@ -42,10 +42,10 @@ t_doubly_list *make_envlist(char **envp)
 
 // int main(int argc, char *argv[],char **envp)
 // {
-// 	t_doubly_list *env_list;
+// 	t_env_list *env_list;
 
 // 	env_list = make_envlist(envp);
-// 	print_doubly_list(env_list);
+// 	print_env_list(env_list);
 // 	clear_stack(env_list);
 
 // 	exit(1);

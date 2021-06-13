@@ -78,19 +78,22 @@ int main(int argc, char *argv[], char **envp)
 	char *usr_input;
 	char *tmp;
 	t_list *token_list;
-	t_doubly_list *env_list;
+	t_env_list *env_list;
 
+	env_list = make_envlist(envp);
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
 		if (ft_strlen(usr_input) > 0)
 			add_history(usr_input);
 		else
 			continue ;
+
 		tmp = ft_strtrim(usr_input,"	 ");
 		free(usr_input);
 		usr_input = tmp;
 			
 		token_list = make_tokenlist(usr_input);
+
 
 		if (validator(token_list) == 0)
 		{
@@ -107,7 +110,6 @@ int main(int argc, char *argv[], char **envp)
 		print_cmdlist(cmd_list);
 
 		setup_op(cmd_list);
-		env_list = make_envlist(envp);
 		process_cmdlist(cmd_list, env_list);
 
 		free(usr_input);

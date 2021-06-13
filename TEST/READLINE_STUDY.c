@@ -19,6 +19,7 @@ int main(void)
 
 		// readline malloc's a new buffer every time.
 		free(line);
+		rl_on_new_line();
 	}
 	return (0);
 }

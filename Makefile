@@ -8,7 +8,10 @@ SRCS =  ./src/main.c\
 	./src/setup/setup.c\
 	./src/execute_comannd/process_cmdline.c\
 	./src/execute_comannd/exec_single_cmd.c\
-	./src/execute_comannd/exec_multi_cmds.c
+	./src/execute_comannd/exec_multi_cmds.c\
+	./commands/ft_echo.c\
+	./commands/ft_pwd.c\
+	./commands/util.c
 
 OBJS    = $(SRCS:.c=.o)
 NAME    = minishell

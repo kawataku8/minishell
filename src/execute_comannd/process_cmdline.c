@@ -6,13 +6,13 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/12 14:38:48 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/13 18:25:09 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 
-int process_cmdlist(t_list *cmd_list, t_doubly_list *env_list)
+int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 {
 	int status;
 	t_list *cur_cmdlist;
@@ -22,6 +22,9 @@ int process_cmdlist(t_list *cmd_list, t_doubly_list *env_list)
 	while(cur_cmdlist != NULL)
 	{
 		cmd_node = (t_cmd_node*)cur_cmdlist->content;
+
+		// コマンド実行後にfdを初期値に戻すために、初期値を保存
+		//save_original_fd();
 
 		printf("====================================\n");
 		if (cmd_node->op == SCOLON)
@@ -35,10 +38,14 @@ int process_cmdlist(t_list *cmd_list, t_doubly_list *env_list)
 		{
 			cur_cmdlist = exec_multi_cmds(cur_cmdlist,env_list);
 			// waitpid(((t_cmd_node*)cur_cmdlist->content)->pid,&status,0);
+			// TODO:forkした回数child processをwaitして回収
+			// しないと出力の順番が崩れる
+			wait(&status);
 			wait(&status);
 		}
-
+	
 		//リダイレクトによって変更したデフォfd(0,1,2)のリセット
+		// save_original_fd()で保存した値を使用
 		//reset_fds();
 		cur_cmdlist = cur_cmdlist->next;
 	}

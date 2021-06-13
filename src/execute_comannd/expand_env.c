@@ -13,7 +13,7 @@ int my_strcmp(const char *s1, const char *s2)
 }
 
 
-char *get_value_from_envlist(char *key, t_doubly_list *env_list)
+char *get_value_from_envlist(char *key, t_env_list *env_list)
 {
 	t_env_node *cur_envnode;
 	char *value;
@@ -65,7 +65,7 @@ int envvar_exist(char *word, int *i, int *j)
 //$が見つからなければ NULL を返す
 //$はあるがそのkeyでvalueが存在しなければ空文字列"""を返す
 //key取り出すときの区切り　[スペース、バックスラッシュ、EOL]
-char *get_env_value(char *word, t_doubly_list *env_list)
+char *get_env_value(char *word, t_env_list *env_list)
 {
 	int i;
 	int j;
@@ -178,7 +178,7 @@ void free_token(t_list *token)
 // //input: "echo"->" "->"hello"->"$NAME"->";"
 // //output:"echo"->" "->"hello"->"takuya"->";"
 // //t_list->content == t_token
-void expand_env(t_list *token_list, t_doubly_list *env_list)
+void expand_env(t_list *token_list, t_env_list *env_list)
 {
 	int i;
 	int j;
@@ -211,7 +211,7 @@ void expand_env(t_list *token_list, t_doubly_list *env_list)
 	}
 }
 
-void edit_env(t_list *cmd_list, t_doubly_list *env_list)
+void edit_env(t_list *cmd_list, t_env_list *env_list)
 {
 	t_list *cur_cmd_list;
 

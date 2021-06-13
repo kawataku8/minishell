@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 07:45:47 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/12 14:29:32 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/13 12:46:01 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ typedef struct s_env_node
 	struct s_env_node *prev;
 }				t_env_node;
 
-typedef struct      s_doubly_list
+typedef struct      s_env_list
 {
 	t_env_node *head;
 	t_env_node *tail;
-}                   t_doubly_list;
+}                   t_env_list;
 
 #endif

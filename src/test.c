@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[], char **envp)
 {
-	// t_doubly_list *env_list;
+	// t_env_list *env_list;
 	// char *value;
 	// int i;
 	// int j;

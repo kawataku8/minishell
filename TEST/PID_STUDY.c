@@ -12,18 +12,6 @@ void do_child(void)
         // char *p = "Hello, dad or mam!\n";
 
         printf("This is child.\n");
-        exit (1);
-        // return 0;
-
-        // close(pipe_fd[0]);
-
-        // while (*p != '\0') {
-        //         if (write(pipe_fd[1], p, 1) < 0) {
-        //                 perror("write");
-        //                 exit(1);
-        //         }
-        //         p++;
-        // }
 }
 
 void do_parent(void)
@@ -54,19 +42,10 @@ int main(void)
 {
         int child,status;
 
-        // if (pipe(pipe_fd) < 0) {
-        //         perror("pipe");
-        //         exit(1);
-        // }
-
-        // if ((child = fork()) < 0) {
-        //         perror("fork");
-        //         exit(1);
-        // }
-
         if ((child = fork()) == 0) {
                 //child processでは走らせたものは必ずexitするので、その下のコードを実行することはない
                 do_child();
+                exit(1);
         }
         // do_parent();
         printf("this is dad \n");
