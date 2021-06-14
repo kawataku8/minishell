@@ -6,7 +6,7 @@
 
 int ispipe(t_cmd_node *cur_cmd_node);
 void del_cmdnode(void *content);
-pid_t	start_command(t_cmd_node *cmd_node, int haspipe, int lastpipe[2]);
+pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int lastpipe[2]);
 t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list);
 
 

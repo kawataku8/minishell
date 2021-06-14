@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/13 17:13:50 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/13 20:13:52 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void exec_cmd_inpipe(t_cmd_node *cmd_node, t_env_list *env_list)
 		execve(cmd_node->argv[0], cmd_node->argv, environ);
 }
 
-pid_t	start_command(t_cmd_node *cmd_node, int haspipe, int lastpipe[2])
+pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int lastpipe[2])
 {
 	pid_t pid;
 	int newpipe[2];
@@ -68,7 +68,13 @@ pid_t	start_command(t_cmd_node *cmd_node, int haspipe, int lastpipe[2])
 			dup2(newpipe[1], 1);
 			close(newpipe[1]);
 		}
-		execve(cmd_node->argv[0],cmd_node->argv, environ);
+		// execve(cmd_node->argv[0],cmd_node->argv, environ);
+		if (get_ft_buildin_idx(cmd_node->argv) > -1)
+			execute_buildin(cmd_node, env_list);
+		else
+		{
+			execve(cmd_node->argv[0], cmd_node->argv, environ);
+		}
 	}
 	
 	// 上の子プロセスですでに入出力の受け渡しは終了しているので一個前に使ったpipeをclose
@@ -100,7 +106,7 @@ t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 		expand_env(cmd_node->token_list, env_list);
 		//parse_redirect(cur_cmdlist);
 		setup_argv_argc(cmd_node);
-		cmd_node->pid = start_command(cmd_node, haspipe, lastpipe);
+		cmd_node->pid = start_command(cmd_node, env_list, haspipe, lastpipe);
 		if ((haspipe = ispipe(cmd_node)) == 1)
 			cur_cmd_list = cur_cmd_list->next;
 		else
