@@ -31,6 +31,7 @@ void setup_argv_argc(t_cmd_node *cmd_node)
 	while (cur_token != NULL)
 	{
 		if (((t_token*)cur_token->content)->type == STR)
+			// TODO: ft_studup()でnew_argvに入れるべき？
 			new_argv[i++] = ((t_token*)cur_token->content)->word;
 		cur_token = cur_token->next;
 	}

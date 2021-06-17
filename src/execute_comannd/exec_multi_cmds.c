@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/13 20:13:52 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/14 20:29:44 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 		}
 	}
 	
-	// 上の子プロセスですでに入出力の受け渡しは終了しているので一個前に使ったpipeをclose
+	// 上の子プロセスですでに左のパイプの入出力の受け渡しは終了しているので一個前に使ったpipeをclose
 	if (haspipe)
 	{
 		close(lastpipe[0]);

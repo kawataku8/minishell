@@ -1,20 +1,14 @@
-#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include <stdio.h>
-
-#include "../libft/libft.h"
+#include <stdlib.h>
+#include <fcntl.h>
 
 int main(void)
-{	
-
-	char **split_words = ft_split("echo hello;;ls",';');
+{
+	int file_fd = open("out201", O_RDONLY);
+	printf("RESULT:%d\n",file_fd);
 	
-	int i = 0;
-	while (split_words[i] != NULL)
-	{
-		printf("%s\n",split_words[i]);
-		i++;
-	}
-	
-	exit(1);
+	close(file_fd);
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 07:45:47 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/13 12:46:01 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/14 16:04:47 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,19 @@
 //next == NULL pipe cmdsの最後のコマンド
 typedef struct	s_cmd_node
 {
-	pid_t 				pid;
-	int		op;
+	pid_t pid;
+	int op;
 	char *red_in_filepath;
 	char *red_out_filepath;
 	char *red_err_filepath;
-	int					argc;
-	char				**argv;
-	t_list				*token_list;
+	int argc;
+	char **argv;
+	t_list *token_list;
 }				t_cmd_node;
-
-// typedef struct s_process
-// {
-// 	t_list *cmd_listhead;
-// }				t_process;
 
 typedef struct s_token
 {
-	int		type;
+	int	type;
 	char	*word;
 }				t_token;
 
