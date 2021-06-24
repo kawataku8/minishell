@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:11:37 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/20 15:11:03 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/24 16:30:41 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <string.h>
 
 #include "../libft/libft.h"
 #include "mystruct.h"

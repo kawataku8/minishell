@@ -1,6 +1,7 @@
 SRCS =  ./src/main.c\
 	./src/parse/tokenizer.c\
 	./src/parse/make_procslist.c\
+	./src/parse/set_redirect_fd.c\
 	./src/validator/validator.c\
 	./src/execute_comannd/expand_env.c\
 	./src/env_operations/make_envlist.c\
@@ -9,21 +10,24 @@ SRCS =  ./src/main.c\
 	./src/execute_comannd/process_cmdline.c\
 	./src/execute_comannd/exec_single_cmd.c\
 	./src/execute_comannd/exec_multi_cmds.c\
+	./src/signal/signal.c\
 	./commands/ft_echo.c\
 	./commands/ft_pwd.c\
 	./commands/util.c
 
 OBJS    = $(SRCS:.c=.o)
 NAME    = minishell
-CC      = gcc -g 
+CC      = gcc
 RM      = rm -f
+CFLAGS = -I $(shell brew --prefix readline)/include
+LDFLAGS = -lreadline -lhistory -L$(shell brew --prefix readline)/lib
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C ./libft
 	$(MAKE) bonus -C ./libft
-	$(CC) $(OBJS) -lreadline ./libft/libft.a -o $(NAME)
+	$(CC) $(OBJS)  $(CFLAGS) $(LDFLAGS) ./libft/libft.a -o $(NAME)
 
 clean:
 	$(MAKE) clean -C ./libft

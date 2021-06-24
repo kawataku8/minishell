@@ -54,6 +54,7 @@ pid_t start_command(char *argv[], int ispipe, int haspipe, int lastpipe[2], int 
 			dup2(file_fd, 1);
 			close(file_fd);
 		}
+		
 
 		// execvp(argv[0], argv);
 		execve(argv[0], argv, environ);

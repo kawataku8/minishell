@@ -10,6 +10,9 @@
         "validator.h": "c",
         "cmd.h": "c",
         "mystruct.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "readline.h": "c",
+        "setup.h": "c",
+        "signal.h": "c"
     }
 }

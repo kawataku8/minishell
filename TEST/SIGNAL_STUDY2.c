@@ -1,51 +1,40 @@
-
+#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-
-volatile sig_atomic_t sigint_count = 3;
+#include <fcntl.h>
+#include <string.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 void sigint_handler(int signum)
 {
-	printf("INTRHANDLER\n");
+	printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void sigquit_handler(int signum)
 {
-	printf("QUITHANDLER\n");
-	exit(1);
+	printf("SIGQUIT\n");
 }
-
-void do_child(void)
-{
-	printf("IN CHILD PS\n");
-	for (int i = 0; i < 5; i++)
-	{
-		printf("[%d]\n",i);
-		sleep(1);
-	}
-	exit(1);
-} 
-
 
 int main(void)
 {
-	// signal(SIGINT, &sigint_handler);
-	// signal(SIGQUIT, &sigquit_handler);
+	signal(SIGINT, &sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+		
+	char *usr_input;
+
+	printf("THIS IS DEBUG\n");
 	
-	int pid;
-	pid = fork();
-	if (pid ==0)
+	while((usr_input = readline("minishell$ ")) != NULL)
 	{
-		do_child();
+		printf("%s\n",usr_input);
+		free(usr_input);
+		usr_input = NULL;
 	}
-	
 
-	int status;
-	int r = wait(&status);
-	printf("PARENT,r:[%d]\n",r);
-
-
+	exit(1);
 	return 0;
 }

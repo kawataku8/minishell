@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 23:59:35 by takuya            #+#    #+#             */
-/*   Updated: 2021/05/26 14:39:32 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/24 15:57:44 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int is_next_sametype(t_list *token_list, int type)
 	{
 		if (((t_token*)cur_token->content)->type == type)
 			return (1);
-		if (((t_token*)cur_token->content)->type == SPACE)
+		if (((t_token*)cur_token->content)->type == MYSPACE)
 			cur_token = cur_token->next;
 		else
 			break ;
@@ -46,6 +46,10 @@ int is_token_redirect(t_list *token)
 		return (RDIR);
 	if(((t_token*)token->content)->type == LDIR)
 		return (LDIR);
+	if(((t_token*)token->content)->type == RRDIR)
+		return (RRDIR);
+	if(((t_token*)token->content)->type == LLDIR)
+		return (LLDIR);
 	return (0);
 }
 
@@ -75,7 +79,7 @@ int valid_LDIR(t_list *token)
 	{
 		if (is_token_redirect(cur_token) || is_token_meta(cur_token))
 			return (0);
-		if (((t_token*)cur_token->content)->type == SPACE)
+		if (((t_token*)cur_token->content)->type == MYSPACE)
 			cur_token = cur_token->next;
 		else
 			return (1);
@@ -84,32 +88,31 @@ int valid_LDIR(t_list *token)
 }
 
 // valid return 1, invalid returns 0
-// invvalid: >>>,>> >,> >>,> >,>EOF,>>EOF
-int valid_RDIR(t_list *token)
+// invvalid: ([>>,>],[>>,>]), ([>>,>],meta), ([>>,>],EOF)
+int valid_redirect(t_list *token)
 {
 	t_list *cur_token;
-	int flag_space;
-	int times_RDIR;
+	// int flag_space;
+	// int times_RDIR;
 	
 	cur_token = token->next;
-	flag_space = 0;
-	times_RDIR = 1;
-	while(cur_token != NULL)
+
+	// printf("DEBUG55:%s\n", ((t_token *)cur_token->content)->word);
+	while (cur_token != NULL)
 	{
-		if (is_token_redirect(cur_token) == LDIR || is_token_meta(cur_token))
-			return (0);
-		else if (is_token_redirect(cur_token) == RDIR)
+		if (is_token_redirect(cur_token) || is_token_meta(cur_token))
 		{
-			times_RDIR++;
-			if (flag_space || times_RDIR > 2)
-				return (0);
-			cur_token = cur_token->next;
-			continue;
+			return (0);
 		}
-		else if (((t_token*)cur_token->content)->type != SPACE)
+		if (((t_token*)cur_token->content)->type == REDFD)
+		{
+			cur_token = cur_token->next;
+			continue ;
+		}
+		if (((t_token*)cur_token->content)->type != MYSPACE)
 			return (1);
-		flag_space++;
-		cur_token = cur_token->next;
+		else
+			cur_token = cur_token->next;
 	}
 	return (0);
 }
@@ -117,16 +120,27 @@ int valid_RDIR(t_list *token)
 // valid return 1, invalid returns 0
 int valid_redirect_syntax(t_list *token)
 {
-	if (is_token_redirect(token) == LDIR && valid_LDIR(token) == 0)
-		return (0);
-	if (is_token_redirect(token) == RDIR && valid_RDIR(token) == 0)
-		return (0);
+	if (is_token_redirect(token) > 0)
+	{
+		if (valid_redirect(token) == 0)
+			return (0);
+	}
+
+	// if ((is_token_redirect(token) == LDIR || is_token_redirect(token) == LLDIR)
+	// && valid_LDIR(token) == 0)
+	// 	return (0);
+	// if ((is_token_redirect(token) == RDIR || is_token_redirect(token) == RRDIR)
+	// && valid_RDIR(token) == 0)
+	// {
+	// 	printf("DEBUG:RDIR syntax ERROR\n");
+	// 	return (0);
+	// }
 	return (1);
 }
 
 void swich_quote_flag(t_list *cur_token,int *flag_squote,int *flag_dquote)
 {
-	if(((t_token*)cur_token->content)->type == SQUOTE)	
+	if(((t_token*)cur_token->content)->type == SQUOTE)
 		*flag_squote ^= 1;
 	if(((t_token*)cur_token->content)->type == DQUOTE)
 		*flag_dquote ^= 1;
@@ -147,7 +161,6 @@ int validator(t_list *token_list)
 	while(cur_token != NULL)
 	{
 		// printf("DEBUG:%s\n",((t_token*)cur_token->content)->word);
-
 		swich_quote_flag(cur_token, &flag_squote, &flag_dquote);
 		if(!(valid_meta_syntax(cur_token)))
 		{

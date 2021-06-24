@@ -1,4 +1,3 @@
-
 #include "../include/commonlib.h"
 #include "../include/parse.h"
 #include "../include/validator.h"
@@ -6,6 +5,7 @@
 #include "../include/env_operations.h"
 #include "../include/setup.h"
 #include "../include/main.h"
+#include "../include/signal.h"
 
 
 void print_cmdlist_withmeta(t_list *cmd_list)
@@ -80,6 +80,8 @@ int main(int argc, char *argv[], char **envp)
 	t_list *token_list;
 	t_env_list *env_list;
 
+	setup_signals();
+
 	env_list = make_envlist(envp);
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
@@ -93,12 +95,12 @@ int main(int argc, char *argv[], char **envp)
 		usr_input = tmp;
 			
 		token_list = make_tokenlist(usr_input);
-
-
+		
 		if (validator(token_list) == 0)
 		{
 			printf("INVALID\n");
 			free(usr_input);
+			usr_input = NULL;
 			continue ;
 		}
 		else
@@ -110,6 +112,7 @@ int main(int argc, char *argv[], char **envp)
 		print_cmdlist(cmd_list);
 
 		setup_op(cmd_list);
+
 		process_cmdlist(cmd_list, env_list);
 
 		free(usr_input);
