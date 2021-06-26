@@ -11,8 +11,8 @@ extern char **environ;
 
 int main(void)
 {
-	char *s = "HELLO WORLD";
-	char *usr_input;
+	// char *s = "HELLO WORLD";
+	// char *usr_input;
 
 	// write(0,s,strlen(s));
 
@@ -21,8 +21,14 @@ int main(void)
 	// dup2(file_fd,0);
 	// close(file_fd);
 
-	char *argv[] = {"/bin/cat", NULL};
-	execve(argv[0],argv,environ);
+
+	// usr_input = readline("INPUT: ");
+	// printf("DEBUG:%s\n",usr_input);
+
+	// char *argv[] = {"/bin/cat", NULL};
+	// execve(argv[0],argv,environ);
+
+	unlink("./hello.txt");
 
 	return 0;
 }

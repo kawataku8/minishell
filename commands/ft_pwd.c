@@ -1,30 +1,44 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-//カレントディレクトリを取得して表示するのみ
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/19 00:16:46 by stakabay          #+#    #+#             */
+/*   Updated: 2021/06/26 12:08:47 by takuya           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	put_string_fd(char *str, int fd);
-void	put_endl(int fd);
 
-void		ft_pwd(char **argv)
+#include "../include/command.h"
+
+int	ft_pwd(void)
 {
 	char	*pwd_buf;
 
-	if ((pwd_buf = getcwd(NULL, 0)) == NULL)
+	pwd_buf = getcwd(NULL, 0);
+	if (pwd_buf == NULL)
 	{
-		perror("");
-		exit(1);
+		if (errno == ENOENT)
+			ft_putendl_fd("No such file or directory", STD_ERR);
+		if (errno == EACCES)
+			ft_putendl_fd("Permission denied", STD_ERR);
+		if (errno == ENAMETOOLONG)
+			ft_putendl_fd("File name too long", STD_ERR);
+		return (ERROR);
 	}
-	put_string_fd(pwd_buf, 1);
-	put_endl(1);
+	ft_putendl_fd(pwd_buf, 1);
 	free(pwd_buf);
+	return (SUCCESS);
 }
 
-// int		main(int argc, char **argv)
-// {
-// 	ft_pwd(argv);
-// 	chdir("/Users/user/Desktop/42tokyo");
-// 	ft_pwd(argv);
-// 	return(0);
-// }
+/*
+int	main()
+{
+	ft_pwd();
+	chdir("/Users/user/Desktop/42tokyo");
+	ft_pwd();
+	return (0);
+}
+*/

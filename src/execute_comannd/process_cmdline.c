@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/13 18:25:09 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/26 11:45:43 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 {
 	int status;
+	int r;
 	t_list *cur_cmdlist;
 	t_cmd_node *cmd_node;
 	
@@ -40,8 +41,10 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 			// waitpid(((t_cmd_node*)cur_cmdlist->content)->pid,&status,0);
 			// TODO:forkした回数child processをwaitして回収
 			// しないと出力の順番が崩れる
-			wait(&status);
-			wait(&status);
+			while ((r = wait(&status)) != -1)
+			{
+				printf("STATUS:%d\n", r);
+			}
 		}
 	
 		//リダイレクトによって変更したデフォfd(0,1,2)のリセット

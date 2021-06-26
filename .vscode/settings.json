@@ -13,6 +13,7 @@
         "main.h": "c",
         "readline.h": "c",
         "setup.h": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "ft_cd.h": "c"
     }
 }

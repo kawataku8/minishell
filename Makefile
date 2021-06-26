@@ -13,7 +13,16 @@ SRCS =  ./src/main.c\
 	./src/signal/signal.c\
 	./commands/ft_echo.c\
 	./commands/ft_pwd.c\
-	./commands/util.c
+	./commands/ft_unset.c\
+	./commands/ft_env.c\
+	./commands/ft_exit.c\
+	./commands/export/export_env_list.c\
+	./commands/export/mergesort.c\
+	./commands/export/ft_export.c\
+	./commands/cd/ft_cd.c\
+	./commands/cd/set_pwd_oldpwd.c\
+	./commands/util.c\
+	./commands/list_operation.c
 
 OBJS    = $(SRCS:.c=.o)
 NAME    = minishell

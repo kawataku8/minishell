@@ -1,13 +1,27 @@
-#ifndef CONSTANTS_H
-# define CONSTANTS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/25 08:28:47 by stakabay          #+#    #+#             */
+/*   Updated: 2021/06/26 12:04:56y takuya           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../libft/libft.h"
-// #include "exit_status.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h> 
+#ifndef COMMAND_H
+# define COMMAND_H
+
 #include "commonlib.h"
+
+// # include "../libft/libft.h"
+# include "exit_status.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
+# include <stdlib.h> 
+# include <errno.h> 
 
 # define STD_IN 0
 # define STD_OUT 1
@@ -19,35 +33,41 @@
 # define FALSE 0
 # define TRUE 1
 
-// typedef struct	s_env_node
+
+// defined in mystruct.h
+// typedef struct s_env_node
 // {
-// 	char				*key;           // ノードに格納されるkey
-// 	char				*value;         // ノードに格納されるデータ
-// 	struct s_env_node	*next;    // 次のノードへの参照（最後尾の場合は null）
-// 	struct s_env_node	*prev;    // 前のノードへの参照（先頭の場合は null）
+// 	char				*key;
+// 	char				*value;
+// 	struct s_env_node	*next;
+// 	struct s_env_node	*prev;
 // }				t_env_node;
 
-// typedef struct      s_env_list
+// typedef struct s_env_list
 // {
-//     t_env_node *head;       //双方向リストの先頭を指すアドレス
-//     t_env_node *tail;       //双方向リストの末尾を指すアドレス
-// }                   t_env_list;
+// 	t_env_node			*head;
+// 	t_env_node			*tail;
+// }				t_env_list;
 
 void			put_string_fd(char *str, int fd);
 void			put_endl(int fd);
-// t_env_node		*make_node(char *key, char *value);
-// void			insert_end(t_env_list *list, t_env_node *new_node);
-// void			merge_sort(t_env_list *list);
-// t_env_node		*serch_nodes(t_env_list *list, char *keybuf);
+t_env_node		*make_env_node(char *key, char *value);
+void			insert_end(t_env_list *list, t_env_node *new_node);
+void			merge_sort(t_env_node **head);
+t_env_node		*serch_nodes(t_env_list *list, char *keybuf);
 int				ft_cd(int argc, char **argv, t_env_list *list);
-void			ft_echo(int argc, char **argv);
-void			ft_env(t_env_list *list);
-// // int				ft_pa_exit(char **argv, int argc);
-// int				ft_ch_exit(char **argv, int argc);
-// void			ft_export(char **argv, t_env_list *list);
-void			ft_pwd(char **argv);
-// int				ft_unset(char **argv, t_env_list *list);
-
-
+int				ft_echo(char **argv);
+int				ft_env(t_env_list *list);
+int				ft_pa_exit(char **argv, int argc);
+int				ft_ch_exit(char **argv, int argc);
+int				ft_export(char **argv, t_env_list *list);
+int				ft_pwd(void);
+int				ft_unset(char **argv, t_env_list *list);
+int				malloc_error(void);
+int				is_valid_env_key(char *key);
+void			put_space(int fd);
+void			export_env_list(t_env_list *list);
+char	*set_oldpwd_path(t_env_list *list);
+void	set_pwd_and_oldpwd(t_env_list *list, char *path);
 
 #endif

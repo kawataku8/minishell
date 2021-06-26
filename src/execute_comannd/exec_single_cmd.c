@@ -6,12 +6,11 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/13 16:44:36 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/26 12:03:23 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
-#include "../../include/command.h"
 
 extern char **environ;
 
@@ -26,19 +25,19 @@ char **init_ft_cmd_names(void)
 int exec_mycmds(int index, t_cmd_node *cmd_node,t_env_list *env_list)
 {
 	if (index == 0)
-		ft_echo(cmd_node->argc, cmd_node->argv);
-	// else if(index == 1)
-	// 	ft_cd(cmd_node->argc, cmd_node->argv, env_list);
+		ft_echo(cmd_node->argv);
+	else if(index == 1)
+		ft_cd(cmd_node->argc, cmd_node->argv, env_list);
 	else if(index == 2)
-		ft_pwd(cmd_node->argv);
-	// else if(index == 3)
-	// 	return ft_export();
-	// else if(index == 4)
-	// 	return ft_unset();
-	// else if(index == 5)
-	// 	ft_env(env_list);
+		ft_pwd();
+	else if(index == 3)
+		ft_export(cmd_node->argv, env_list);
+	else if(index == 4)
+		ft_unset(cmd_node->argv, env_list);
+	else if(index == 5)
+		ft_env(env_list);
 	// else if(index == 6)
-	// 	return ft_exit();
+	// 	ft_exit();
 	
 	return -1;
 }

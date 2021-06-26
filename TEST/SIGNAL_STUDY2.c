@@ -1,6 +1,7 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
 #include <readline/readline.h>
@@ -8,10 +9,12 @@
 
 void sigint_handler(int signum)
 {
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	printf("11111\n");
+}
+
+void sigint_handler2(int signum)
+{
+	printf("222222\n");
 }
 
 void sigquit_handler(int signum)
@@ -22,17 +25,31 @@ void sigquit_handler(int signum)
 int main(void)
 {
 	signal(SIGINT, &sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-		
-	char *usr_input;
-
-	printf("THIS IS DEBUG\n");
+	// / signal(SIGQUIT, SIG_IGN);
 	
-	while((usr_input = readline("minishell$ ")) != NULL)
+
+	for(int i = 0; i < 10; i++)
 	{
-		printf("%s\n",usr_input);
-		free(usr_input);
-		usr_input = NULL;
+		printf("1-%d\n",i);
+		sleep(1);
+		i++;
+	}
+	
+	signal(SIGINT, &sigint_handler2);
+
+	for(int i = 0; i < 10; i++)
+	{
+		printf("2-%d\n",i);
+		sleep(1);
+		i++;
+	}
+
+	signal(SIGINT, &sigint_handler);
+	for (int i = 0; i < 10; i++)
+	{
+		printf("3-%d\n",i);
+		sleep(1);
+		i++;
 	}
 
 	exit(1);
