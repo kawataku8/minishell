@@ -18,5 +18,7 @@ t_list *make_cmdlist(t_list *token_list);
 int is_num_str(char *str);
 void set_redirect_fd(t_list *token_list);
 
+void save_orig_fd(int *orig_stdin, int *orig_stdout, int *orig_stderr);
+
 
 #endif

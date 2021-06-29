@@ -19,19 +19,31 @@ t_list *get_red_filepath_token(t_list *cur_token)
 	return (cur_token);
 }
 
-
+//input	:
+//output:good returns 1, open error returns 0
+//description: 
 int connect_redirect(int red_type,int red_fd,char *red_filepath)
 {
 	int open_mode;
-	
-	if (red_type == RDIR)
-	{
-		
-	}
-	else if (red_type == LDIR || red_type == LLDIR)
-	{
+	int file_fd;
 
+	if (red_type == RDIR)
+		file_fd = open(red_filepath, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+	else if (red_type == RRDIR)
+		file_fd = open(red_filepath, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+	else if (red_type == LDIR || red_type == LLDIR)
+		file_fd = open(red_filepath, O_RDWR, S_IRWXU);
+
+	if (file_fd == -1)
+	{
+		// TODO: check errno and error handle 
+		return 0;
 	}
+	close(red_fd);
+	dup2(file_fd, red_fd);
+	close(file_fd);
+
+	return (1);
 }
 
 void set_red_fd(int *red_fd, int red_type)
