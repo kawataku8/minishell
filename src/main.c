@@ -60,12 +60,12 @@ void free_cmdlist(t_list **cmd_list)
 	while (cur_cmdlist != NULL)
 	{
 		next_cmdlist = cur_cmdlist->next;
-		if (((t_cmd_node*)cur_cmdlist->content)->red_in_filepath != NULL)
-			free(((t_cmd_node *)cur_cmdlist->content)->red_in_filepath);
-		if (((t_cmd_node*)cur_cmdlist->content)->red_out_filepath != NULL)
-			free(((t_cmd_node *)cur_cmdlist->content)->red_out_filepath);
-		if (((t_cmd_node*)cur_cmdlist->content)->red_err_filepath != NULL)
-			free(((t_cmd_node *)cur_cmdlist->content)->red_err_filepath);
+		// if (((t_cmd_node*)cur_cmdlist->content)->red_in_filepath != NULL)
+		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_in_filepath);
+		// if (((t_cmd_node*)cur_cmdlist->content)->red_out_filepath != NULL)
+		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_out_filepath);
+		// if (((t_cmd_node*)cur_cmdlist->content)->red_err_filepath != NULL)
+		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_err_filepath);
 		// free_splitstr(((t_cmd_node*)cur_cmdlist->content)->argv);
 		ft_lstclear(&((t_cmd_node*)cur_cmdlist->content)->token_list, &del_token);
 		cur_cmdlist = next_cmdlist;

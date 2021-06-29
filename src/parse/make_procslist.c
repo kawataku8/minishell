@@ -8,9 +8,9 @@ t_cmd_node *new_cmdnode(void)
 	cmd_node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
 	cmd_node->pid = -999;
 	cmd_node->op = 0;
-	cmd_node->red_in_filepath = NULL;
-	cmd_node->red_out_filepath = NULL;
-	cmd_node->red_err_filepath = NULL;
+	// cmd_node->red_in_filepath = NULL;
+	// cmd_node->red_out_filepath = NULL;
+	// cmd_node->red_err_filepath = NULL;
 	cmd_node->argc = 0;
 	cmd_node->argv = NULL;
 	return (cmd_node);

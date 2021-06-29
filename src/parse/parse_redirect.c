@@ -24,7 +24,14 @@ int connect_redirect(int red_type,int red_fd,char *red_filepath)
 {
 	int open_mode;
 	
-	if (red_type == )
+	if (red_type == RDIR)
+	{
+		
+	}
+	else if (red_type == LDIR || red_type == LLDIR)
+	{
+
+	}
 }
 
 void set_red_fd(int *red_fd, int red_type)
