@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/30 14:43:12 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/30 22:07:30 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 		// コマンド実行後にfdを初期値に戻すために、初期値を保存
 		save_orig_fd(&orig_stdin, &orig_stdout, &orig_stderr);
 
-		printf("====================================\n");
+		// printf("====================================\n");
 		if (cmd_node->op == SCOLON)
 		{
 			expand_env(cmd_node->token_list, env_list);
 			parse_redirect(cmd_node->token_list);
 			setup_argv_argc(cmd_node);
 			exec_single_cmd(cmd_node, env_list);
+			close_red_filefds(cmd_node->token_list);
 		}
 		else
 		{

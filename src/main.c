@@ -103,13 +103,13 @@ int main(int argc, char *argv[], char **envp)
 			usr_input = NULL;
 			continue ;
 		}
-		else
-			printf("GOOD\n");
+		// else
+		// 	printf("GOOD\n");
 
 		//token_listからcmd_list生成
 		t_list *cmd_list;
 		cmd_list = make_cmdlist(token_list);
-		print_cmdlist(cmd_list);
+		// print_cmdlist(cmd_list);
 
 		setup_op(cmd_list);
 
