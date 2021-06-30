@@ -7,6 +7,8 @@
 
 extern char **environ;
 
+
+// save original fds and reset them
 int main(void)
 {
     int fd;

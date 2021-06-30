@@ -14,7 +14,11 @@ t_list *get_red_filepath_token(t_list *cur_token)
 	while (cur_token != NULL)
 	{
 		if (((t_token*)cur_token->content)->type == STR)
+		{
+			((t_token*)cur_token->content)->type = REDFILEPATH;
 			break ;
+		}
+		cur_token = cur_token->next;
 	}
 	return (cur_token);
 }
@@ -32,7 +36,12 @@ int connect_redirect(int red_type,int red_fd,char *red_filepath)
 	else if (red_type == RRDIR)
 		file_fd = open(red_filepath, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
 	else if (red_type == LDIR || red_type == LLDIR)
+	{
+		// TODO: if tyep is LLDIR red_filepath == NULL
+		// if (red_type == LLDIR)
+		// 	red_filepath = "../tmp/heredoc_tmp";
 		file_fd = open(red_filepath, O_RDWR, S_IRWXU);
+	}
 
 	if (file_fd == -1)
 	{
@@ -86,6 +95,7 @@ void parse_redirect(t_list *token_list)
 			cur_token = get_red_filepath_token(cur_token);
 			red_filepath = ((t_token*)cur_token->content)->word;
 			// TODO: error handle if file donesnt' exist
+			
 			connect_redirect(red_type, red_fd, red_filepath);
 		}
 

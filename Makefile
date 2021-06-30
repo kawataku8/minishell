@@ -3,6 +3,7 @@ SRCS =  ./src/main.c\
 	./src/parse/make_procslist.c\
 	./src/parse/set_redirect_fd.c\
 	./src/parse/manage_fd.c\
+	./src/parse/parse_redirect.c\
 	./src/validator/validator.c\
 	./src/execute_comannd/expand_env.c\
 	./src/env_operations/make_envlist.c\

@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/17 22:11:02 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/30 15:32:22 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,18 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 
 		// execve(cmd_node->argv[0],cmd_node->argv, environ);
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
+		{
+			// TODO: check retun value and do error handle
 			execute_buildin(cmd_node, env_list);
+			exit(1);
+		}
 		else
 		{
-			execve(cmd_node->argv[0], cmd_node->argv, environ);
+			// TODO; if execve fails, returns -1. Check errno and Do error handle
+			if (execve(cmd_node->argv[0], cmd_node->argv, environ) == -1)
+			{
+				exit(1);
+			}
 		}
 	}
 	

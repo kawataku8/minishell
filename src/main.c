@@ -80,7 +80,7 @@ int main(int argc, char *argv[], char **envp)
 	t_list *token_list;
 	t_env_list *env_list;
 
-	setup_signals();
+	// setup_signals();
 
 	env_list = make_envlist(envp);
 	while ((usr_input = readline("minishell$ ")) != NULL)
