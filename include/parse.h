@@ -17,6 +17,16 @@ t_list *make_cmdlist(t_list *token_list);
 
 int is_num_str(char *str);
 void set_redirect_fd(t_list *token_list);
+void close_red_filefds(t_list *token_list);
+
+void save_orig_fd(int *orig_stdin, int *orig_stdout, int *orig_stderr);
+void reset_fds_orig(int orig_stdin, int orig_stdout, int orig_stderr);
+
+int is_red_token(t_token *token);
+t_list *get_red_filepath_token(t_list *cur_token);
+int connect_redirect(int red_type,int red_fd,char *red_filepath);
+void set_red_fd(int *red_fd, int red_type);
+void parse_redirect(t_list *token_list);
 
 
 #endif

@@ -60,12 +60,12 @@ void free_cmdlist(t_list **cmd_list)
 	while (cur_cmdlist != NULL)
 	{
 		next_cmdlist = cur_cmdlist->next;
-		if (((t_cmd_node*)cur_cmdlist->content)->red_in_filepath != NULL)
-			free(((t_cmd_node *)cur_cmdlist->content)->red_in_filepath);
-		if (((t_cmd_node*)cur_cmdlist->content)->red_out_filepath != NULL)
-			free(((t_cmd_node *)cur_cmdlist->content)->red_out_filepath);
-		if (((t_cmd_node*)cur_cmdlist->content)->red_err_filepath != NULL)
-			free(((t_cmd_node *)cur_cmdlist->content)->red_err_filepath);
+		// if (((t_cmd_node*)cur_cmdlist->content)->red_in_filepath != NULL)
+		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_in_filepath);
+		// if (((t_cmd_node*)cur_cmdlist->content)->red_out_filepath != NULL)
+		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_out_filepath);
+		// if (((t_cmd_node*)cur_cmdlist->content)->red_err_filepath != NULL)
+		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_err_filepath);
 		// free_splitstr(((t_cmd_node*)cur_cmdlist->content)->argv);
 		ft_lstclear(&((t_cmd_node*)cur_cmdlist->content)->token_list, &del_token);
 		cur_cmdlist = next_cmdlist;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[], char **envp)
 	t_list *token_list;
 	t_env_list *env_list;
 
-	setup_signals();
+	// setup_signals();
 
 	env_list = make_envlist(envp);
 	while ((usr_input = readline("minishell$ ")) != NULL)
@@ -103,13 +103,13 @@ int main(int argc, char *argv[], char **envp)
 			usr_input = NULL;
 			continue ;
 		}
-		else
-			printf("GOOD\n");
+		// else
+		// 	printf("GOOD\n");
 
 		//token_listからcmd_list生成
 		t_list *cmd_list;
 		cmd_list = make_cmdlist(token_list);
-		print_cmdlist(cmd_list);
+		// print_cmdlist(cmd_list);
 
 		setup_op(cmd_list);
 

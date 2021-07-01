@@ -1,17 +1,29 @@
 #include <unistd.h>
+#include <sys/wait.h>
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
 
 extern char **environ;
 
 int main(void)
 {
-	
-	fh
-	char *argv[] = {"/bin/echo", "./hello.txt", NULL};
-	execve(argv[0], argv, environ);
+	int status, r;
 
-	printf("YOYOY\n");
+
+	pid_t child = fork();
+	if(child == 0)
+	{
+		char *argv[] = {"/bin/echo", "HELLOHELLO", NULL};
+		execve(argv[0], argv, environ);
+		if (execve(argv[0], argv, environ) == -1)
+			printf("MISSION FAIL\n");
+		exit(1);
+	}
+
+	r = wait(&status);
+	printf("%d,%d\n",r,status);
 
 	return 1;
 }

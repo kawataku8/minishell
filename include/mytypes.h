@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 14:55:07 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/24 15:57:44 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/30 13:14:42 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@
 // # define ESC 16     // '\'
 // # define SSTR 17    // single_quote内の文字列。 使わなかった。
 # define RINT 18    // 2>file の[2]
-
+#define REDFILEPATH 19
 
 #endif

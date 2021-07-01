@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 07:45:47 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/21 22:15:20 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/29 16:34:09 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ typedef struct	s_cmd_node
 {
 	pid_t pid;
 	int op;
-	char *red_in_filepath;
-	char *red_out_filepath;
-	char *red_err_filepath;
-	int red_in_fd;
-	int red_out_fd;
-	int red_err_fd;
-	// default 0;
-	int red_in_num;
-	// defautl 1;
-	int red_out_num;
+	// char *red_in_filepath;
+	// char *red_out_filepath;
+	// char *red_err_filepath;
+	// int red_in_fd;
+	// int red_out_fd;
+	// int red_err_fd;
+	// // default 0;
+	// int red_in_num;
+	// // defautl 1;
+	// int red_out_num;
 	int argc;
 	char **argv;
 	t_list *token_list;

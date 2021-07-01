@@ -6,12 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/17 22:11:02 by takuya           ###   ########.fr       */
+/*   Updated: 2021/06/30 18:41:31 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
-
+#include "../../include/parse.h"
 
 extern char **environ;
 
@@ -70,13 +70,22 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 		}
 		
 		// TODO: redirectのfd繋ぎかえ　fd 0, fd 1 (fd 2はパースの時点で繋ぎかえ)
+	 	parse_redirect(cmd_node->token_list);
 
 		// execve(cmd_node->argv[0],cmd_node->argv, environ);
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
+		{
+			// TODO: check retun value and do error handle
 			execute_buildin(cmd_node, env_list);
+			exit(1);
+		}
 		else
 		{
-			execve(cmd_node->argv[0], cmd_node->argv, environ);
+			// TODO; if execve fails, returns -1. Check errno and Do error handle
+			if (execve(cmd_node->argv[0], cmd_node->argv, environ) == -1)
+			{
+				exit(1);
+			}
 		}
 	}
 	
@@ -107,7 +116,6 @@ t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 	{
 		cmd_node = ((t_cmd_node*)cur_cmd_list->content);
 		expand_env(cmd_node->token_list, env_list);
-		//parse_redirect(cur_cmdlist);
 		setup_argv_argc(cmd_node);
 		cmd_node->pid = start_command(cmd_node, env_list, haspipe, lastpipe);
 		if ((haspipe = ispipe(cmd_node)) == 1)
