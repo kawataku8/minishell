@@ -66,7 +66,7 @@ char	**make_env_arr(t_env_list *list)
 	merge_sort(&node);
 	while (node != NULL)
 	{
-		if (ft_strncmp(node->key, "_", 2))
+		if (ft_strncmp(node->key, "_", 2) && ft_strncmp(node->key, "$?", 2))
 		{
 			env_arr[i] = ft_strdup(node->key);
 			if (env_arr[i] == NULL)

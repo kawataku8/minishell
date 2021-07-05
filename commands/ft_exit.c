@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 13:44:01 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:22:16 by takuya           ###   ########.fr       */
+/*   Updated: 2021/07/01 23:21:08 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_ch_exit(char **argv, int argc)
 //exit statusは0-255で256以上は255の余剰となる
 int	ft_pa_exit(char **argv, int argc)
 {
-	ft_putendl_fd("exit", STD_OUT);
+	//ft_putendl_fd("exit", STD_OUT);
 	if (!is_num(argv[1]) && argv[1])
 	{
 		put_string_fd("minishell: exit: ", STD_ERR);

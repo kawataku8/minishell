@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 07:59:06 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:22:41 by takuya           ###   ########.fr       */
+/*   Updated: 2021/07/04 21:05:06 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_env(t_env_list *list)
 	ndptr = list->head;
 	while (ndptr != NULL)
 	{
-		if (ndptr->value)
+		if (ndptr->value && ft_strncmp(ndptr->key, "$?", 2))
 		{
 			put_string_fd(ndptr->key, STD_OUT);
 			put_string_fd("=", STD_OUT);

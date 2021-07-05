@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 22:25:20 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:32:19 by takuya           ###   ########.fr       */
+/*   Updated: 2021/07/05 22:00:53 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	ft_export(char **argv, t_env_list *list)
 
 	i = 1;
 	renum = SUCCESS;
+	//printf("\n--%s--\n", argv[1]);
 	if (!argv[1])
 		export_env_list(list);
 	while (argv[i])
@@ -101,7 +102,7 @@ int	ft_export(char **argv, t_env_list *list)
 	return (renum);
 }
 
-
+// 
 // int		main(int argc, char **argv, char **envp)
 // {
 // 	t_env_list	env_list;
