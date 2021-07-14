@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/30 18:41:31 by takuya           ###   ########.fr       */
+/*   Updated: 2021/07/14 20:36:06 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
 		{
 			// TODO: check retun value and do error handle
-			execute_buildin(cmd_node, env_list);
+			execute_buildin(cmd_node, env_list, 2);
+			// TODO: this exit should have exit-status from execute_buildin
+			// exit(execute_buildin());
 			exit(1);
 		}
 		else

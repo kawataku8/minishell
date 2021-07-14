@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/26 12:03:23 by takuya           ###   ########.fr       */
+/*   Updated: 2021/07/14 20:22:11 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,25 @@ int get_ft_buildin_idx(char **argv)
 	return (i);
 }
 
-void execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list)
+// in parent process -> 1
+// in child process -> 2
+// TODO: this function need to return exit-status
+void execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list, int pa_ch_flag)
 {
 	int	ft_buildin_idx;
 
 	if ((ft_buildin_idx = get_ft_buildin_idx(cmd_node->argv)) > -1)
+	{
+		if (ft_buildin_idx == 6)
+		{
+			if (pa_ch_flag == 1)
+				ft_pa_exit(cmd_node->argv, cmd_node->argc);
+			if (pa_ch_flag == 2)
+				ft_ch_exit(cmd_node->argv, cmd_node->argc);
+			return ;
+		}
 		exec_mycmds(ft_buildin_idx,cmd_node, env_list);
+	}
 	return ;
 }
 
@@ -79,7 +92,7 @@ void exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 
 	if (get_ft_buildin_idx(cmd_node->argv) > -1)
 	{
-		execute_buildin(cmd_node, env_list);
+		execute_buildin(cmd_node, env_list, 1);
 		return ;
 	}
 	else
