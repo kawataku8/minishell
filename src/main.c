@@ -120,6 +120,6 @@ int main(int argc, char *argv[], char **envp)
 		free_cmdlist(&cmd_list);
 	}
 	
-	exit(1);
+	exit(0);
 	return 0;
 }
