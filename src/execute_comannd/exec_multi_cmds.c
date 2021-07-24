@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/07/14 20:49:32 by takuya           ###   ########.fr       */
+/*   Updated: 2021/07/24 15:23:10 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,11 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 		}
 		else
 		{
+			find_abscmd_path(cmd_node->argv);
 			// TODO; if execve fails, returns -1. Check errno and Do error handle
 			if (execve(cmd_node->argv[0], cmd_node->argv, environ) == -1)
 			{
+				// code for fail execve()
 				exit(1);
 			}
 		}

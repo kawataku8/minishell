@@ -3,7 +3,8 @@
 
 #include "commonlib.h"
 #include "setup.h"
-
+#include <dirent.h>
+#include <sys/types.h>
 #include "command.h"
 
 int ispipe(t_cmd_node *cur_cmd_node);
@@ -32,5 +33,8 @@ void expand_env(t_list *token_list, t_env_list *env_list);
 void edit_env(t_list *cmd_list, t_env_list *env_list);
 
 int process_cmdlist(t_list *cmd_list, t_env_list *env_list);
+
+char *make_cmd_path(char *target_dir, char *cmd_name);
+void find_abscmd_path(char **cmd_argv);
 
 #endif
