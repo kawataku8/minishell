@@ -12,6 +12,7 @@ SRCS =  ./src/main.c\
 	./src/execute_comannd/process_cmdline.c\
 	./src/execute_comannd/exec_single_cmd.c\
 	./src/execute_comannd/exec_multi_cmds.c\
+	./src/execute_comannd/find_abscmd_path.c\
 	./src/signal/signal.c\
 	./commands/ft_echo.c\
 	./commands/ft_pwd.c\

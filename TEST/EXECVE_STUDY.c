@@ -15,7 +15,7 @@ int main(void)
 	pid_t child = fork();
 	if(child == 0)
 	{
-		char *argv[] = {"/bin/echo", "HELLOHELLO", NULL};
+		char *argv[] = {"/bin/ls", "./FEJOIJFEO", NULL};
 		execve(argv[0], argv, environ);
 		if (execve(argv[0], argv, environ) == -1)
 			printf("MISSION FAIL\n");

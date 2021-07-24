@@ -1,12 +1,13 @@
 #include <stdio.h>
 
+void print_str(char *str)
+{
+	printf("DEBUG:%s\n",str);
+}
+
 int main(void)
 {
-	char s[3];
-
-	s[0] = 'a';
-	s[1] = '2';
-	s[2] = '\0';
-	printf("%s\n",s);
-	
+	char *str = "/hello";
+	printf("D:%d\n",str[0]);
+	return 0;
 }
