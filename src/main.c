@@ -7,6 +7,7 @@
 #include "../include/main.h"
 #include "../include/signal.h"
 
+extern char **environ;
 
 void print_cmdlist_withmeta(t_list *cmd_list)
 {
@@ -73,6 +74,15 @@ void free_cmdlist(t_list **cmd_list)
 
 }
 
+void print_double_charlist(char **d_list)
+{
+	int i = 0;
+	while (d_list[i] != NULL)
+	{
+		printf("%s\n",d_list[i++]);
+	}
+}
+
 int main(int argc, char *argv[], char **envp)
 {
 	char *usr_input;
@@ -81,8 +91,8 @@ int main(int argc, char *argv[], char **envp)
 	t_env_list *env_list;
 
 	// setup_signals();
-
 	env_list = make_envlist(envp);
+	
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
 		if (ft_strlen(usr_input) > 0)

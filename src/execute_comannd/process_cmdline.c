@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/30 22:07:30 by takuya           ###   ########.fr       */
+/*   Updated: 2021/07/27 12:35:20 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 		save_orig_fd(&orig_stdin, &orig_stdout, &orig_stderr);
 
 		// printf("====================================\n");
+		// if cmd_node->op is SCOLON, it's single command
+		// others are pipe list
 		if (cmd_node->op == SCOLON)
 		{
 			expand_env(cmd_node->token_list, env_list);

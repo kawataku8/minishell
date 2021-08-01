@@ -6,11 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/07/24 15:16:57 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/01 15:09:52 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
+#include "../../include/env_operations.h"
 
 extern char **environ;
 
@@ -87,8 +88,7 @@ void execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list, int pa_ch_flag)
 void exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
 	int status;
-	int	i;
-	char **ft_cmd_names;
+	char **dchar_envlist;
 
 	if (get_ft_buildin_idx(cmd_node->argv) > -1)
 	{
@@ -101,7 +101,10 @@ void exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 		if (cmd_node->pid == 0)
 		{
 			find_abscmd_path(cmd_node->argv);
-			execve(cmd_node->argv[0], cmd_node->argv, environ);
+			dchar_envlist = make_char_envlist(env_list); 
+			// TODO: error handle for execve when it fails
+			// execve(cmd_node->argv[0], cmd_node->argv, environ);
+			execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist);
 		}
 		wait(&status);
 	}
