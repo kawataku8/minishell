@@ -6,21 +6,24 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/07/27 12:35:20 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/02 21:28:40 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/parse.h"
+#include "../../include/env_operations.h"
 
 int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 {
 	int status;
 	int r;
+	int exit_status;
 	int orig_stdin, orig_stdout, orig_stderr;
 	t_list *cur_cmdlist;
 	t_cmd_node *cmd_node;
-	
+
+	exit_status = 0;
 	cur_cmdlist = cmd_list;
 	while(cur_cmdlist != NULL)
 	{
@@ -37,21 +40,28 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 			expand_env(cmd_node->token_list, env_list);
 			parse_redirect(cmd_node->token_list);
 			setup_argv_argc(cmd_node);
-			exec_single_cmd(cmd_node, env_list);
+			// TODO: exec_single_cmdからコマンドの終了ステータスを受け取る
+			exit_status = exec_single_cmd(cmd_node, env_list);
+			// exec_single_cmd(cmd_node, env_list);
 			close_red_filefds(cmd_node->token_list);
 		}
 		else
 		{
 			cur_cmdlist = exec_multi_cmds(cur_cmdlist,env_list);
 			// waitpid(((t_cmd_node*)cur_cmdlist->content)->pid,&status,0);
-			// TODO:forkした回数child processをwaitして回収
-			// しないと出力の順番が崩れる
+			
+			// TODO:一番最後(pipe_listの右端)のコマンドの終了ステータスをstatusから取得して,
+			// exit_statusに入れる
+			// exit_status = _____();
 			while ((r = wait(&status)) != -1)
 			{
 				// printf("STATUS:%d\n", r);
 				continue ;
 			}
 		}
+
+		// TODO:env_listに入っている終了ステータス(?=0)をexit_statusに更新
+		mod_envlist_value("?",ft_itoa(exit_status),env_list);
 	
 		//リダイレクトによって変更したデフォfd(0,1,2)のリセット
 		// save_original_fd()で保存した値を使用
