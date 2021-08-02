@@ -33,9 +33,12 @@ t_env_list *make_envlist(char **envp)
 		value = ft_substr(*envp,eql_idx+1,ft_strlen(*envp)-eql_idx+1);
 		new_envnode = make_node(key,value);
 		insert_end(env_list,new_envnode);
-		
 		envp++;
 	}
+	key = ft_strdup("?");
+	value = ft_strdup("0");
+	new_envnode = make_node(key, value);
+	insert_end(env_list, new_envnode);
 
 	return (env_list);
 }

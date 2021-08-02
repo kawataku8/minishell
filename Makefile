@@ -7,6 +7,7 @@ SRCS =  ./src/main.c\
 	./src/validator/validator.c\
 	./src/execute_comannd/expand_env.c\
 	./src/env_operations/make_envlist.c\
+	./src/env_operations/make_char_envlist.c\
 	./src/dlist_operations/dlist_operations.c\
 	./src/setup/setup.c\
 	./src/execute_comannd/process_cmdline.c\
