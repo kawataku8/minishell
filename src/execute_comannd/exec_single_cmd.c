@@ -6,14 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/01 15:09:52 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/02 21:29:05 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/env_operations.h"
-
-extern char **environ;
 
 char **init_ft_cmd_names(void)
 {
@@ -25,22 +23,24 @@ char **init_ft_cmd_names(void)
 
 int exec_mycmds(int index, t_cmd_node *cmd_node,t_env_list *env_list)
 {
+	int exit_status;
+
+	exit_status = -1;
 	if (index == 0)
-		ft_echo(cmd_node->argv);
+		exit_status = ft_echo(cmd_node->argv);
 	else if(index == 1)
-		ft_cd(cmd_node->argc, cmd_node->argv, env_list);
+		exit_status = ft_cd(cmd_node->argc, cmd_node->argv, env_list);
 	else if(index == 2)
-		ft_pwd();
+		exit_status = ft_pwd();
 	else if(index == 3)
-		ft_export(cmd_node->argv, env_list);
+		exit_status = ft_export(cmd_node->argv, env_list);
 	else if(index == 4)
-		ft_unset(cmd_node->argv, env_list);
+		exit_status = ft_unset(cmd_node->argv, env_list);
 	else if(index == 5)
-		ft_env(env_list);
+		exit_status = ft_env(env_list);
 	// else if(index == 6)
 	// 	ft_exit();
-	
-	return -1;
+	return (exit_status);
 }
 
 int get_ft_buildin_idx(char **argv)
@@ -63,12 +63,13 @@ int get_ft_buildin_idx(char **argv)
 	return (i);
 }
 
-// in parent process -> 1
-// in child process -> 2
+// in parent process -> pa_ch_flag == 1
+// in child process -> pa_ch_flag == 2
 // TODO: this function need to return exit-status
-void execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list, int pa_ch_flag)
+int execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list, int pa_ch_flag)
 {
 	int	ft_buildin_idx;
+	int	exit_status;
 
 	if ((ft_buildin_idx = get_ft_buildin_idx(cmd_node->argv)) > -1)
 	{
@@ -78,22 +79,30 @@ void execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list, int pa_ch_flag)
 				ft_pa_exit(cmd_node->argv, cmd_node->argc);
 			if (pa_ch_flag == 2)
 				ft_ch_exit(cmd_node->argv, cmd_node->argc);
-			return ;
+			return  (0);
 		}
-		exec_mycmds(ft_buildin_idx,cmd_node, env_list);
+		// exec_mycmds(ft_buildin_idx,cmd_node, env_list);
+		exit_status = exec_mycmds(ft_buildin_idx,cmd_node, env_list);
+		
+		// printf("DEBUG:%d\n",exit_status);
+
 	}
-	return ;
+	// return ;
+	return (exit_status);
 }
 
-void exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
+int exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
 	int status;
 	char **dchar_envlist;
+	int exit_status;
 
+	exit_status = 0;
 	if (get_ft_buildin_idx(cmd_node->argv) > -1)
 	{
-		execute_buildin(cmd_node, env_list, 1);
-		return ;
+		// execute_buildin(cmd_node, env_list, 1);
+		exit_status = execute_buildin(cmd_node, env_list, 1);
+		return (exit_status);
 	}
 	else
 	{
@@ -103,10 +112,10 @@ void exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 			find_abscmd_path(cmd_node->argv);
 			dchar_envlist = make_char_envlist(env_list); 
 			// TODO: error handle for execve when it fails
-			// execve(cmd_node->argv[0], cmd_node->argv, environ);
 			execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist);
 		}
 		wait(&status);
 	}
+	return (exit_status);
 }
 

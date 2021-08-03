@@ -6,15 +6,13 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/01 19:37:21 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/02 15:31:00 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/parse.h"
 #include "../../include/env_operations.h"
-
-extern char **environ;
 
 int ispipe(t_cmd_node *cur_cmd_node)
 {
@@ -35,14 +33,6 @@ void del_cmdnode(void *content)
 	}
 	free((t_cmd_node*)content);
 }
-
-// void exec_cmd_inpipe(t_cmd_node *cmd_node, t_env_list *env_list)
-// {
-// 	if (get_ft_buildin_idx(cmd_node->argv) > -1)
-// 		execute_buildin(cmd_node, env_list);
-// 	else
-// 		execve(cmd_node->argv[0], cmd_node->argv, environ);
-// }
 
 pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int lastpipe[2])
 {
@@ -74,7 +64,6 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 		// TODO: redirectのfd繋ぎかえ　fd 0, fd 1 (fd 2はパースの時点で繋ぎかえ)
 	 	parse_redirect(cmd_node->token_list);
 
-		// execve(cmd_node->argv[0],cmd_node->argv, environ);
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
 		{
 			// TODO: check retun value and do error handle

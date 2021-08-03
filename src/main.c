@@ -7,8 +7,6 @@
 #include "../include/main.h"
 #include "../include/signal.h"
 
-extern char **environ;
-
 void print_cmdlist_withmeta(t_list *cmd_list)
 {
 	t_list *cur_node = cmd_list;
