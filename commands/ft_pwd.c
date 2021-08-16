@@ -30,7 +30,7 @@ int	ft_pwd(void)
 	}
 	ft_putendl_fd(pwd_buf, 1);
 	free(pwd_buf);
-	return (SUCCESS);
+	return (SUCCEEDED);
 }
 
 /*

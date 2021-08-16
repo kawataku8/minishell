@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_env_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 09:27:31 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:06:43 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/11 06:49:32 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ void	print_env_arr(char **env_arr)
 	}
 }
 
-char	**malloc_arr(t_env_list *list)
+char	**malloc_arr(t_env_node *node)
 {
 	char		**env_arr;
 	int			envcount;
-	t_env_node	*node;
 
 	envcount = 0;
-	node = list->head;
 	while (node != NULL)
 	{
 		envcount++;
@@ -56,17 +54,24 @@ char	**malloc_arr(t_env_list *list)
 
 char	**make_env_arr(t_env_list *list)
 {
-	t_env_node	*node;
 	int			i;
 	char		**env_arr;
+	t_env_node	*node;
+	t_env_node	*ndpr;
 
 	i = 0;
-	env_arr = malloc_arr(list);
 	node = list->head;
-	merge_sort(&node);
+	env_arr = malloc_arr(node);
+	//merge_sort(&node);
+	// ndpr = list->head;
+	// while(ndpr->next)
+	// {
+	// 	printf("○○%s○○\n",ndpr->key);
+	// 	ndpr = ndpr->next;
+	// }
 	while (node != NULL)
 	{
-		if (ft_strncmp(node->key, "_", 2))
+		if (ft_strncmp(node->key, "_", 1) && ft_strncmp(node->key, "?", 1))
 		{
 			env_arr[i] = ft_strdup(node->key);
 			if (env_arr[i] == NULL)
@@ -89,9 +94,12 @@ char	**make_env_arr(t_env_list *list)
 
 void	export_env_list(t_env_list *list)
 {
-	char	**env_arr;
-	char	**ptr;
+	char		**env_arr;
+	char		**ptr;
+	t_env_node	*node;
+	t_env_node	*ndpr;
 
+	node = list->head;
 	env_arr = make_env_arr(list);
 	print_env_arr(env_arr);
 	ptr = env_arr;

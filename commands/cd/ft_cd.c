@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 08:38:07 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:29:41 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/16 07:40:58 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ char	*set_path(char **argv, int argc, t_env_list *list)
 
 int	is_valid_arg(int argc, t_env_list *list)
 {
-	if (argc >= 3)
-	{
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
-		return (FALSE);
-	}
+	// if (argc >= 3)
+	// {
+	// 	ft_putendl_fd("minishell: cd: too many arguments", 2);
+	// 	return (FALSE);
+	// }
 	if (argc == 1 && !serch_nodes(list, "HOME"))
 	{
 		ft_putendl_fd("minishell: cd: HOME not set", 2);
@@ -77,7 +77,13 @@ int	chdir_error_message(char *path)
 		put_string_fd(path, STD_ERR);
 		ft_putendl_fd(": File name too long", STD_ERR);
 	}
-	return (FALSE);
+	else if (errno == ENOTDIR)
+	{
+		put_string_fd("minishell: cd: ", STD_ERR);
+		put_string_fd(path, STD_ERR);
+		ft_putendl_fd(": Not a directory", STD_ERR);
+	}
+	return (GENERAL_ERRORS);
 }
 
 int	ft_cd(int argc, char **argv, t_env_list *list)
