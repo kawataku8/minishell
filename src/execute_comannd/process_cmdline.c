@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/02 21:28:40 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/12 13:15:03 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 			setup_argv_argc(cmd_node);
 			// TODO: exec_single_cmdからコマンドの終了ステータスを受け取る
 			exit_status = exec_single_cmd(cmd_node, env_list);
+
 			// exec_single_cmd(cmd_node, env_list);
 			close_red_filefds(cmd_node->token_list);
 		}

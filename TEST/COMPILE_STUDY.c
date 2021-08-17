@@ -1,4 +1,9 @@
+#include <unistd.h>
+#include <sys/wait.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
 
 void print_str(char *str)
 {
@@ -7,7 +12,11 @@ void print_str(char *str)
 
 int main(void)
 {
-	char *str = "/hello";
-	printf("D:%d\n",str[0]);
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%d\n",i);
+		sleep(1);
+	}
+	
 	return 0;
 }

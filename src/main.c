@@ -93,6 +93,7 @@ int main(int argc, char *argv[], char **envp)
 	
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
+		
 		if (ft_strlen(usr_input) > 0)
 			add_history(usr_input);
 		else
