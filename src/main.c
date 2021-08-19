@@ -7,6 +7,8 @@
 #include "../include/main.h"
 #include "../include/signal.h"
 
+volatile sig_atomic_t signal_handled = 0;
+
 void print_cmdlist_withmeta(t_list *cmd_list)
 {
 	t_list *cur_node = cmd_list;
@@ -93,6 +95,7 @@ int main(int argc, char *argv[], char **envp)
 	
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
+		
 		if (ft_strlen(usr_input) > 0)
 			add_history(usr_input);
 		else
