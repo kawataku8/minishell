@@ -13,9 +13,13 @@ volatile sig_atomic_t signal_handled = 0;
 
 void sigint_handler(int signum)
 {
-	// printf("SIGNAL\n");
-	// exit_status = 5;
-	signal_handled = 1;
+	if (signal_handled == 0)
+	{
+		printf("INPUT HANDLE 22 \n");
+		signal_handled = 1;
+		return ;
+	}
+	printf("SIG HANDLER 11\n");
 	// exit(3);
 }
 
@@ -35,63 +39,95 @@ static int check_state()
 	return 0;
 }
 
+// int main(void)
+// {
+// 	char *user_input = NULL;
+// 	int r, status,file_fd;
+// 	pid_t child1 = fork();
+
+// 	signal(SIGINT, sigint_handler);
+// 	// signal(SIGQUIT, sigint_handler);
+
+// 	if (child1 == 0)
+// 	{
+// 		rl_event_hook = check_state;
+// 		printf("IN CHILD PROCESS\n");
+// 		char *line = NULL;
+// 		while (1)
+// 		{
+// 			line = readline("> ");
+// 			if (signal_handled)
+// 			{
+// 				exit(signal_handled);
+// 			}
+// 			printf("line is [%s]\n", line);
+// 			free(line);
+// 		}
+// 		printf("AFTER LOOP\n");
+// 		exit(2);
+// 	}
+
+// 	// r = waitpid(child1, &status, 0);
+// 	// r = wait(&status);
+// 	// if (WIFSIGNALED(status))
+// 	// {
+// 	// 	printf("SIGNAL CAUGHT!!!\n");
+// 	// 	printf("CHILD PROCESS STOPPED by SIGNAL[%d]\n", WTERMSIG(status));
+// 	// }
+// 	// // printf("%d:%d\n", r, stats);
+// 	// printf("EXIT status is [%d]\n", WEXITSTATUS(status));
+
+// 	while ((r = wait(&status)) != -1)
+// 	{
+// 		if (WIFSIGNALED(status))
+// 			printf("CHILD PROCESS STOPPED by SIGNAL [%d]\n",WTERMSIG(status));
+// 		if (WIFSTOPPED(status))
+// 		{
+// 			printf("SIGNAL is [%d]\n", WSTOPSIG(status));
+// 		}
+// 		printf("%d:%d\n", r, status);
+// 		printf("EXIT status is [%d]\n", WEXITSTATUS(status));
+// 	}
+
+// 	signal_handled = 2;
+
+// 	printf("-------------sleep 5----------\n");
+// 	for (int i = 0; i < 5; i++)
+// 	{
+// 		printf("%d\n",i);
+// 		sleep(1);
+// 	}
+
+// 	return 0;
+// }
+
+
+
+void ch_procs(void)
+{
+	pid_t child1 = fork();
+
+	if (child1 == 0)
+	{
+		printf("IM CHILD \n");
+		exit(2);
+	}
+	printf("pid is [%d]\n",child1);
+	printf("IM PARENT!!\n");
+}
+
 int main(void)
 {
-	char *user_input = NULL;
-	int r, status,file_fd;
-	// pid_t child1 = fork();
+	int r, status, file_fd;
 
-	signal(SIGINT, sigint_handler);
-	// signal(SIGQUIT, sigint_handler);
+	printf("=====11111111=====\n");
+	ch_procs();
+	printf("=====22222222=====\n");
 
-	rl_event_hook = check_state;
-
-	char *line = NULL;
-	while (1)
+	while ((r = wait(&status)) != -1)
 	{
-		line = readline("> ");
-		if (signal_handled == 1)
-		{
-			break;
-		}
-		printf("line is [%s]\n", line);
-		free(line);
+		printf("%d:%d\n", r, status);
+		printf("EXIT status is [%d]\n", WEXITSTATUS(status));
 	}
-	printf("\nexit\n");
-
-	// if (child1 == 0)
-	// {
-	// 	// char *argv[] = {"/bin/sleep", "5",NULL};
-	// 	// if (execve(argv[0], argv, environ) == -1)
-	// 	// 	printf("MISSION FAIL\n");
-	// 	user_input = readline("INPUT:");
-	// 	printf("555:%s\n",user_input);
-	// 	exit(2);
-	// }
-
-	// r = waitpid(child1, &status, 0);
-	// r = wait(&status);
-	// if (WIFSIGNALED(status))
-	// {
-	// 	printf("SIGNAL CAUGHT!!!\n");
-	// 	printf("CHILD PROCESS STOPPED by SIGNAL[%d]\n", WTERMSIG(status));
-	// }
-	// // printf("%d:%d\n", r, stats);
-	// printf("EXIT status is [%d]\n", WEXITSTATUS(status));
-
-	// while ((r = wait(&status)) != -1)
-	// {
-	// 	if (user_input != NULL)
-	// 		free(user_input);
-	// 	if (WIFSIGNALED(status))
-	// 		printf("CHILD PROCESS STOPPED by SIGNAL [%d]\n",WTERMSIG(status));
-	// 	if (WIFSTOPPED(status))
-	// 	{
-	// 		printf("SIGNAL is [%d]\n", WSTOPSIG(status));
-	// 	}
-	// 	printf("%d:%d\n", r, status);
-	// 	printf("EXIT status is [%d]\n", WEXITSTATUS(status));
-	// }
-
-	return 0;
+	return (0);
 }

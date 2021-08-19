@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/02 21:29:05 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/18 00:00:39 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 			// TODO: error handle for execve when it fails
 			execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist);
 		}
-		wait(&status);
+		waitpid(cmd_node->pid, &status, 0);
+		exit_status = WEXITSTATUS(status);
 	}
 	return (exit_status);
 }

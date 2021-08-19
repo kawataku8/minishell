@@ -1,33 +1,33 @@
-# SRCS =  ./src/main.c\
-# 	./src/parse/tokenizer.c\
-# 	./src/parse/make_procslist.c\
-# 	./src/parse/set_redirect_fd.c\
-# 	./src/parse/manage_fd.c\
-# 	./src/parse/parse_redirect.c\
-# 	./src/validator/validator.c\
-# 	./src/execute_comannd/expand_env.c\
-# 	./src/env_operations/make_envlist.c\
-# 	./src/env_operations/make_char_envlist.c\
-# 	./src/env_operations/mod_envlist.c\
-# 	./src/dlist_operations/dlist_operations.c\
-# 	./src/setup/setup.c\
-# 	./src/execute_comannd/process_cmdline.c\
-# 	./src/execute_comannd/exec_single_cmd.c\
-# 	./src/execute_comannd/exec_multi_cmds.c\
-# 	./src/execute_comannd/find_abscmd_path.c\
-# 	./src/signal/signal.c\
-# 	./commands/ft_echo.c\
-# 	./commands/ft_pwd.c\
-# 	./commands/ft_unset.c\
-# 	./commands/ft_env.c\
-# 	./commands/ft_exit.c\
-# 	./commands/export/export_env_list.c\
-# 	./commands/export/mergesort.c\
-# 	./commands/export/ft_export.c\
-# 	./commands/cd/ft_cd.c\
-# 	./commands/cd/set_pwd_oldpwd.c\
-# 	./commands/util.c\
-# 	./commands/list_operation.c
+SRCS =  ./src/main.c\
+	./src/parse/tokenizer.c\
+	./src/parse/make_procslist.c\
+	./src/parse/set_redirect_fd.c\
+	./src/parse/manage_fd.c\
+	./src/parse/parse_redirect.c\
+	./src/validator/validator.c\
+	./src/execute_comannd/expand_env.c\
+	./src/env_operations/make_envlist.c\
+	./src/env_operations/make_char_envlist.c\
+	./src/env_operations/mod_envlist.c\
+	./src/dlist_operations/dlist_operations.c\
+	./src/setup/setup.c\
+	./src/execute_comannd/process_cmdline.c\
+	./src/execute_comannd/exec_single_cmd.c\
+	./src/execute_comannd/exec_multi_cmds.c\
+	./src/execute_comannd/find_abscmd_path.c\
+	./src/signal/signal.c\
+	./commands/ft_echo.c\
+	./commands/ft_pwd.c\
+	./commands/ft_unset.c\
+	./commands/ft_env.c\
+	./commands/ft_exit.c\
+	./commands/export/export_env_list.c\
+	./commands/export/mergesort.c\
+	./commands/export/ft_export.c\
+	./commands/cd/ft_cd.c\
+	./commands/cd/set_pwd_oldpwd.c\
+	./commands/util.c\
+	./commands/list_operation.c
 
 OBJS    = $(SRCS:.c=.o)
 NAME    = minishell

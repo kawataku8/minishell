@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/02 15:31:00 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/17 23:20:42 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void del_cmdnode(void *content)
 	free((t_cmd_node*)content);
 }
 
+// returns each command's pid
 pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int lastpipe[2])
 {
 	pid_t pid;
 	int newpipe[2];
+	int exit_status;
 	char **dchar_envlist;
 
 	if (ispipe(cmd_node))
@@ -67,10 +69,10 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
 		{
 			// TODO: check retun value and do error handle
-			execute_buildin(cmd_node, env_list, 2);
+			exit_status = execute_buildin(cmd_node, env_list, 2);
 			// TODO: this exit should have exit-status from execute_buildin
 			// exit(execute_buildin());
-			exit(1);
+			exit(exit_status);
 		}
 		else
 		{
@@ -79,6 +81,7 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 			// TODO; if execve fails, returns -1. Check errno and Do error handle
 			if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
 			{
+				// TODO: check errno
 				// code for fail execve()
 				exit(1);
 			}
@@ -99,6 +102,7 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 	return (pid);
 }
 
+// piple list の実行されたものの中で最後(右端)のコマンドのポインタを返す
 t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 {
 	t_cmd_node *cmd_node;
@@ -119,9 +123,6 @@ t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 		else
 			break ;
 	}
-	//一番最後に実行したコマンドのwait
-	// waitpid(cmd_node->pid,&status,0);
-	// wait(&status);
 
 	return (cur_cmd_list);
 }

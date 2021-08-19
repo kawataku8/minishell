@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/12 13:15:03 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/18 00:01:00 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,15 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 			// TODO:一番最後(pipe_listの右端)のコマンドの終了ステータスをstatusから取得して,
 			// exit_statusに入れる
 			// exit_status = _____();
+			waitpid(((t_cmd_node*)(cur_cmdlist->content))->pid, &status, 0);
+			exit_status = WEXITSTATUS(status);
 			while ((r = wait(&status)) != -1)
 			{
 				// printf("STATUS:%d\n", r);
 				continue ;
 			}
+			// TODO: cur_cmdlist をopがセミコロンになるまで進める
+			// A|B|C  でBで止まってるパターンある(BでCtrl C)
 		}
 
 		// TODO:env_listに入っている終了ステータス(?=0)をexit_statusに更新
