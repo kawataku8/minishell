@@ -6,7 +6,7 @@
 /*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 08:37:56 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/11 06:48:54 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/08/23 06:25:45 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_env_node	*merge(t_env_node *a, t_env_node *b)
 	t_env_node	*result;
 	size_t		len;
 
+	result = NULL;
 	if (a == NULL)
 		return (b);
 	else if (b == NULL)
@@ -51,7 +52,7 @@ t_env_node	*merge(t_env_node *a, t_env_node *b)
 	*/
 
 void	merge_sort_rec(t_env_node *head,
-						t_env_node **headref, t_env_node **backref)
+						t_env_node **frontref, t_env_node **backref)
 {
 	t_env_node	*slow;
 	t_env_node	*fast;
@@ -67,7 +68,7 @@ void	merge_sort_rec(t_env_node *head,
 			fast = fast->next;
 		}
 	}
-	*headref = head;
+	*frontref = head;
 	*backref = slow->next;
 	slow->next = NULL;
 }
