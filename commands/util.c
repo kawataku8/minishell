@@ -26,7 +26,7 @@ t_env_node		*serch_nodes(t_env_list *list, char *keybuf)
 		if (!(ft_strncmp(ndptr->key, keybuf, ft_strlen(keybuf))))
 		{
 			//keyがリストの中にあった場合
-			if (ndptr->value)
+			//if (ndptr->value)
 				return (ndptr);
 		}
 		ndptr = ndptr->next;

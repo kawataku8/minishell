@@ -6,7 +6,7 @@
 /*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 22:25:20 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/11 06:57:37 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/08/23 06:23:17 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,18 @@ void	insert_node_to_list(t_env_list *list, t_env_node *node)
 	ndptr = serch_nodes(list, node->key);
 	if (ndptr == NULL)
 		insert_end(list, node);
-	else if (!ndptr->value && node->value)
+	else if (node->value)
 	{
 		ndptr->value = ft_strdup(node->value);
 		if (ndptr->value == NULL)
 			exit(malloc_error());
+		free(node);
 	}
-	free(node);
 }
 
 int	ft_export(char **argv, t_env_list *list)
 {
 	t_env_node	*node;
-	t_env_node	*ndpr;
 	int			renum;
 	int			i;
 

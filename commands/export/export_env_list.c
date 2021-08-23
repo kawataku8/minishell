@@ -6,7 +6,7 @@
 /*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 09:27:31 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/11 06:49:32 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/08/23 06:21:41 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,8 @@ char	**make_env_arr(t_env_list *list)
 	i = 0;
 	node = list->head;
 	env_arr = malloc_arr(node);
-	//merge_sort(&node);
-	// ndpr = list->head;
-	// while(ndpr->next)
-	// {
-	// 	printf("○○%s○○\n",ndpr->key);
-	// 	ndpr = ndpr->next;
-	// }
+	merge_sort(&node);
+	list->head = node;
 	while (node != NULL)
 	{
 		if (ft_strncmp(node->key, "_", 1) && ft_strncmp(node->key, "?", 1))
