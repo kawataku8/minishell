@@ -90,11 +90,17 @@ int main(int argc, char *argv[], char **envp)
 	t_list *token_list;
 	t_env_list *env_list;
 
-	// setup_signals();
+	setup_signals();
 	env_list = make_envlist(envp);
-	
+	rl_event_hook = check_state;
+
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
+		if (signal_handled)
+		{
+			signal_handled = 0;
+			continue ;
+		}
 		
 		if (ft_strlen(usr_input) > 0)
 			add_history(usr_input);
