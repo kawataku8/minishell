@@ -9,4 +9,6 @@ void sigint_handler(int signum);
 void sigquit_handler(int signum);
 void setup_signals(void);
 
+int check_state(void);
+
 #endif
