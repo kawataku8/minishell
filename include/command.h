@@ -69,5 +69,6 @@ void			put_space(int fd);
 void			export_env_list(t_env_list *list);
 char	*set_oldpwd_path(t_env_list *list);
 void	set_pwd_and_oldpwd(t_env_list *list, char *path);
+void 		clear_env_list(t_env_list *stack);
 
 #endif

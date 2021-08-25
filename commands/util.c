@@ -54,3 +54,25 @@ int		is_valid_env_key(char *key)
 	}
 	return (TRUE);
 }
+
+void clear_env_list(t_env_list *stack)
+{
+	t_env_node *cur_node;
+	t_env_node *next_env_node;
+
+	if((cur_node = stack->head) != NULL)
+	{
+		while (cur_node->next != NULL)
+		{
+			next_env_node = cur_node->next;
+			free(cur_node->key);
+			free(cur_node->value);
+			free(cur_node);
+			cur_node = next_env_node;
+		}
+		free(cur_node->key);
+		free(cur_node->value);
+		free(cur_node);
+	}
+	// free(stack);
+}
