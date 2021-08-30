@@ -67,7 +67,9 @@ int				malloc_error(void);
 int				is_valid_env_key(char *key);
 void			put_space(int fd);
 void			export_env_list(t_env_list *list);
-char	*set_oldpwd_path(t_env_list *list);
-void	set_pwd_and_oldpwd(t_env_list *list, char *path);
+char			*set_oldpwd_path(t_env_list *list);
+void			set_pwd_and_oldpwd(t_env_list *list, char *path);
+void 			clear_env_list(t_env_list *stack);
+void			remove_env_node(t_env_list *stack,t_env_node *node);
 
 #endif

@@ -23,7 +23,7 @@ t_env_node		*serch_nodes(t_env_list *list, char *keybuf)
 	ndptr = list->head;
 	while (ndptr)
 	{
-		if (!(ft_strncmp(ndptr->key, keybuf, ft_strlen(keybuf))))
+		if (!(ft_strncmp(ndptr->key, keybuf, ft_strlen(keybuf) + 1)))
 		{
 			//keyがリストの中にあった場合
 			//if (ndptr->value)
@@ -53,4 +53,41 @@ int		is_valid_env_key(char *key)
 		++key;
 	}
 	return (TRUE);
+}
+
+void clear_env_list(t_env_list *stack)
+{
+	t_env_node *cur_node;
+	t_env_node *next_env_node;
+
+	if((cur_node = stack->head) != NULL)
+	{
+		while (cur_node->next != NULL)
+		{
+			next_env_node = cur_node->next;
+			free(cur_node->key);
+			free(cur_node->value);
+			free(cur_node);
+			cur_node = next_env_node;
+		}
+		free(cur_node->key);
+		free(cur_node->value);
+		free(cur_node);
+	}
+	free(stack);
+}
+
+void remove_env_node(t_env_list *stack,t_env_node *node)
+{
+	if (node->prev == NULL)
+		stack->head = node->next;
+	else
+		node->prev->next = node->next;
+	if (node->next == NULL)
+		stack->tail = node->prev;
+	else
+		node->next->prev = node->prev;
+	free(node->key);
+	free(node->value);
+	free(node);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_pwd_oldpwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 08:38:12 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:30:01 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/30 08:12:07 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	set_pwd_and_oldpwd(t_env_list *list, char *path)
 		ndptr->value = ft_strdup(node->value);
 		if (!ndptr->value)
 			exit(malloc_error());
-		node->value = ft_strdup(path);
+		node->value = ft_strdup(getcwd(NULL, 0));
 		if (!node->value)
 			exit(malloc_error());
 	}

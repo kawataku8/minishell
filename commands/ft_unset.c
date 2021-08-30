@@ -23,8 +23,7 @@ int	ft_unset(char **argv, t_env_list *list)
 			node = serch_nodes(list, *argv);
 			if (node)
 			{
-				node->prev->next = node->next;
-				node->next->prev = node->prev;
+				remove_env_node(list, node);
 			}
 		}
 		argv++;

@@ -6,7 +6,7 @@
 /*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 09:27:31 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/23 06:21:41 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/08/29 20:56:34 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	**make_env_arr(t_env_list *list)
 	int			i;
 	char		**env_arr;
 	t_env_node	*node;
-	t_env_node	*ndpr;
 
 	i = 0;
 	node = list->head;
@@ -87,15 +86,35 @@ char	**make_env_arr(t_env_list *list)
 	return (env_arr);
 }
 
+t_env_list	*dup_list(t_env_list *source_list)
+{
+	t_env_list	*dest_list;
+	t_env_node	*snode;
+	t_env_node	*dnode;
+
+	dest_list = (t_env_list *)malloc(sizeof(t_env_list));
+	dest_list->head = NULL;
+	dest_list->tail = NULL;
+	dnode = NULL;
+	snode = source_list->head;
+	while (snode != NULL)
+	{
+		dnode = make_env_node(snode->key, snode->value);
+		insert_end(dest_list, dnode);
+		snode = snode->next;
+	}
+	return (dest_list);
+}
+
 void	export_env_list(t_env_list *list)
 {
 	char		**env_arr;
 	char		**ptr;
-	t_env_node	*node;
-	t_env_node	*ndpr;
+	t_env_list	*copy_list;
 
-	node = list->head;
-	env_arr = make_env_arr(list);
+	copy_list = dup_list(list);
+	env_arr = make_env_arr(copy_list);
+	clear_env_list(copy_list);
 	print_env_arr(env_arr);
 	ptr = env_arr;
 	while (*ptr)
