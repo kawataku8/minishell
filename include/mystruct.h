@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 07:45:47 by takuya            #+#    #+#             */
-/*   Updated: 2021/06/29 16:34:09 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/30 22:42:16 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct	s_cmd_node
 	int argc;
 	char **argv;
 	t_list *token_list;
+	int heredoc_flag;
 }				t_cmd_node;
 
 typedef struct s_token

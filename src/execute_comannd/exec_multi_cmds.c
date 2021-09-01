@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/17 23:20:42 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/25 16:36:26 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 		expand_env(cmd_node->token_list, env_list);
 		setup_argv_argc(cmd_node);
 		cmd_node->pid = start_command(cmd_node, env_list, haspipe, lastpipe);
+
+		// コマンドがパイプを持たなくなったらbreak ループを抜ける
 		if ((haspipe = ispipe(cmd_node)) == 1)
 			cur_cmd_list = cur_cmd_list->next;
 		else

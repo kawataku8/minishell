@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/18 00:01:00 by takuya           ###   ########.fr       */
+/*   Updated: 2021/08/24 16:14:19 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 
 		// コマンド実行後にfdを初期値に戻すために、初期値を保存
 		save_orig_fd(&orig_stdin, &orig_stdout, &orig_stderr);
+
 
 		// printf("====================================\n");
 		// if cmd_node->op is SCOLON, it's single command
