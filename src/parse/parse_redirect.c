@@ -72,31 +72,39 @@ void parse_redirect(t_list *token_list)
 	int red_fd;
 	int red_type;
 	char *red_filepath;
+	char *heredoc_delim;
 	
 	last_token = token_list;
 	cur_token = token_list->next;
 	while(cur_token != NULL)
 	{
+		// token->type が >,>>,<,>>のどれかで if条件true
 		if ((red_type = is_red_token(((t_token*)cur_token->content))) != 0)
 		{
-			// TODO: get userinput for heredoc
-			// if (red_type == LLDIR)
-			// {
-			// 	get_heredoc();
-			// }
 
 			// TODO: error handle if red_fd is out of range of integer
 			red_fd = -1;
 			if (((t_token*)last_token->content)->type == REDFD)
 				red_fd = ft_atoi(((t_token*)last_token->content)->word);
+
+			// >, >> -> red_fd = 1.   <, << -> red_fd = 0
 			set_red_fd(&red_fd, red_type);
 
+
 			// TODO: error handle if get_red_filepath_token returns NULL
-			cur_token = get_red_filepath_token(cur_token);
-			red_filepath = ((t_token*)cur_token->content)->word;
+			if (red_type == LLDIR)
+				red_filepath = ft_strdup("tmp/heredoc_tmp");
+			else
+			{
+				cur_token = get_red_filepath_token(cur_token);
+				red_filepath = ((t_token *)cur_token->content)->word;
+			}
 			// TODO: error handle if file donesnt' exist
 			
 			connect_redirect(red_type, red_fd, red_filepath);
+			
+			if (red_type == LLDIR)
+				free(red_filepath);
 		}
 
 		last_token = cur_token;

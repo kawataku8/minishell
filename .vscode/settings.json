@@ -14,7 +14,9 @@
         "readline.h": "c",
         "setup.h": "c",
         "signal.h": "c",
-        "ft_cd.h": "c"
+        "ft_cd.h": "c",
+        "command.h": "c",
+        "mytypes.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

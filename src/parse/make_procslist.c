@@ -13,6 +13,7 @@ t_cmd_node *new_cmdnode(void)
 	// cmd_node->red_err_filepath = NULL;
 	cmd_node->argc = 0;
 	cmd_node->argv = NULL;
+	cmd_node->heredoc_flag = 0;
 	return (cmd_node);
 }
 

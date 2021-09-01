@@ -96,11 +96,18 @@ int main(int argc, char *argv[], char **envp)
 
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
+		// Ctrl + Cが押された時の挙動
 		if (signal_handled)
 		{
 			signal_handled = 0;
 			continue ;
 		}
+
+		// Ctrl + Dが押された時の挙動
+		// if (line == NULL)
+		// {
+		// 	exit(1);
+		// }
 		
 		if (ft_strlen(usr_input) > 0)
 			add_history(usr_input);
@@ -126,9 +133,12 @@ int main(int argc, char *argv[], char **envp)
 		//token_listからcmd_list生成
 		t_list *cmd_list;
 		cmd_list = make_cmdlist(token_list);
-		// print_cmdlist(cmd_list);
 
 		setup_op(cmd_list);
+
+		// print_cmdlist(cmd_list);
+		
+		process_heredoc(cmd_list);
 
 		process_cmdlist(cmd_list, env_list);
 
