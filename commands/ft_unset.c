@@ -31,7 +31,6 @@ int	ft_unset(char **argv, t_env_list *list)
 	return (renum);
 }
 
-
 // int	main(int argc, char **argv, char **envp)
 // {
 // 	t_env_list	env_list;
@@ -39,7 +38,7 @@ int	ft_unset(char **argv, t_env_list *list)
 // 	char		*keybuf;
 // 	char		*valuebuf;
 // 	char		*ptr;
-	
+
 // 	argc = 0;
 // 	while (*envp)
 // 	{

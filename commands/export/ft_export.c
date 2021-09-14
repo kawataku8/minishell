@@ -6,7 +6,7 @@
 /*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 22:25:20 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/23 06:23:17 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/09/11 21:09:41 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	ft_export(char **argv, t_env_list *list)
 	}
 	return (renum);
 }
-
 
 // int		main(int argc, char **argv, char **envp)
 // {
