@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 00:16:46 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/19 15:15:43 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/14 09:24:51 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../include/command.h"
 

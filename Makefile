@@ -26,6 +26,7 @@ SRCS =  ./src/main.c\
 	./commands/export/export_env_list.c\
 	./commands/export/mergesort.c\
 	./commands/export/ft_export.c\
+	./commands/export/make_env_arr.c\
 	./commands/cd/ft_cd.c\
 	./commands/cd/set_pwd_oldpwd.c\
 	./commands/util.c\
