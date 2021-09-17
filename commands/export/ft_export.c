@@ -1,28 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/24 22:25:20 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/11 21:09:41 by stakabay         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/command.h"
-
-/*
-**--export--
-**①引数なし　⇨　環境変数一覧の出力
-**②引数あり　⇨　環境変数の登録
-**
-**②
-**新しいノードを作成し、引数を分解して入力。
-**引数が複数ある場合は登録する。
-**既存のkeyと被り、value登録あり　⇨　exportを無視し、変化なし。
-**被りあり、valueなし　⇨　新valueを登録。
-*/
 
 t_env_node	*make_newnode_from_arg(char *argv, t_env_node *node)
 {
@@ -100,41 +76,3 @@ int	ft_export(char **argv, t_env_list *list)
 	}
 	return (renum);
 }
-
-// int		main(int argc, char **argv, char **envp)
-// {
-// 	t_env_list	env_list;
-// 	t_env_node	*ndptr;
-// 	t_env_node	*node;
-// 	char		*ptr;
-// 	char		*keybuf;
-// 	char		*valuebuf;
-
-// 	while (*envp)
-// 	{
-// 		ptr = ft_strchr(*envp, '=');
-// 		keybuf = ft_substr(*envp, 0, ptr - *envp);
-// 		valuebuf = ft_strdup(*envp + (ptr - *envp + 1));
-// 		node = make_env_node(keybuf, valuebuf);
-// 		//printf("declare -x %s=", node->key);
-// 		//printf("%s\n", node->value);
-// 		insert_end(&env_list, node);
-// 		node = node->next;
-// 		envp++;
-// 	}
-// 	if (argc == 1)
-// 		return (0);
-// 	argv++;
-// 	ft_export(argv, &env_list);
-
-// 	if (argv[1])
-// 	{
-// 		ndptr = env_list.head;
-// 		while (ndptr)
-// 		{
-// 			printf("%s=%s\n", ndptr->key,ndptr->value);
-// 			ndptr = ndptr->next;
-// 		}
-// 	}
-// 	return (0);
-// }

@@ -1,21 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/25 08:38:07 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/11 21:08:42 by stakabay         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/command.h"
-
-// 	1. to home directory >> no args || "--"
-// 	2. to previous directory >> only'-'
-// 		bash: cd: OLDPWD not set
-// 	3. replace with home directory path >> '~' || !arg
 
 char	*set_path(char **argv, int argc, t_env_list *list)
 {
@@ -94,44 +77,3 @@ int	ft_cd(int argc, char **argv, t_env_list *list)
 	free(path);
 	return (SUCCEEDED);
 }
-
-/*
-int		main(int argc, char **argv, char **envp)
-{
-	t_env_list	env_list;
-	t_env_node	*node;
-	char		*keybuf;
-	char		*valuebuf;
-	char		*ptr;
-
-	while (*envp)
-	{
-		ptr = ft_strchr(*envp, '=');
-		keybuf = ft_substr(*envp, 0, ptr - *envp);
-		valuebuf = ft_strdup(*envp + (ptr - *envp + 1));
-		node = make_env_node(keybuf, valuebuf);
-		//printf("declare -x %s=", node->key);
-		//printf("%s\n", node->value);
-		insert_end(&env_list, node);
-		node = node->next;
-		envp++;
-	}
-	if (argc >= 2)
-	{
-		argv++;
-		argc--;
-	}	
-	printf("befor cwd :%s\n", getcwd(NULL, 0));
-	node = serch_nodes(&env_list, "PWD");
-	printf("befor PWD :%s\n", node->value);
-	if ((node = serch_nodes(&env_list, "OLDPWD")) != NULL)
-		printf("befor OLDPWD :%s\n", node->value);
-	ft_cd(argc, argv, &env_list);
-	printf("after cwd :%s\n", getcwd(NULL, 0));
-	node = serch_nodes(&env_list, "PWD");
-	printf("after PWD :%s\n", node->value);
-	if ((node = serch_nodes(&env_list, "OLDPWD")) != NULL)
-		printf("after OLDPWD :%s\n", node->value);
-	return (0);
-}
-*/

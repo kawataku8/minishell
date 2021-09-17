@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/25 08:37:34 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:22:10 by takuya           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/command.h"
 
 int	check_newline_flag(char *arg)
@@ -47,11 +35,3 @@ int	ft_echo(char **argv)
 		put_endl(1);
 	return (SUCCEEDED);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	argv++;
-// 	argc = 0;
-// 	ft_echo(argv);
-// 	return (0);
-// }
