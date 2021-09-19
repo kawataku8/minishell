@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mergesort.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/25 08:37:56 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/23 06:25:45 by stakabay         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/command.h"
 
 t_env_node	*merge(t_env_node *a, t_env_node *b)
@@ -37,19 +25,6 @@ t_env_node	*merge(t_env_node *a, t_env_node *b)
 	}
 	return (result);
 }
-	/*
-	**fastはslowの二倍の速さで進むので、
-	**fastが終端に着いた時、slowは真ん中。
-	**
-	**    a     b
-	** 123456789
-	**      ↓
-	**    h  a
-	** 1) 1234N
-	**    x    b
-	** 2) 56789N
-	**
-	*/
 
 void	merge_sort_rec(t_env_node *head,
 						t_env_node **frontref, t_env_node **backref)
