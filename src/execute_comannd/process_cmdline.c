@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/24 16:14:19 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/20 20:52:28 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 		if (cmd_node->op == SCOLON)
 		{
 			expand_env(cmd_node->token_list, env_list);
-			parse_redirect(cmd_node->token_list);
+			parse_redirect(cmd_node);
 			setup_argv_argc(cmd_node);
 			// TODO: exec_single_cmdからコマンドの終了ステータスを受け取る
 			exit_status = exec_single_cmd(cmd_node, env_list);

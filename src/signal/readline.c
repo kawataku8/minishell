@@ -6,7 +6,7 @@ int check_state(void)
 {
 	if (signal_handled)
 	{
-		// signal_handled = 0;
+		signal_handled = 0;
 
 		/* 入力中のテキストを破棄 */
 		rl_delete_text(0, rl_end);

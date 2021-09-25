@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/18 00:00:39 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/18 16:55:09 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,9 @@ int execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list, int pa_ch_flag)
 				ft_ch_exit(cmd_node->argv, cmd_node->argc);
 			return  (0);
 		}
-		// exec_mycmds(ft_buildin_idx,cmd_node, env_list);
 		exit_status = exec_mycmds(ft_buildin_idx,cmd_node, env_list);
-		
-		// printf("DEBUG:%d\n",exit_status);
 
 	}
-	// return ;
 	return (exit_status);
 }
 
@@ -112,7 +108,11 @@ int exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 			find_abscmd_path(cmd_node->argv);
 			dchar_envlist = make_char_envlist(env_list); 
 			// TODO: error handle for execve when it fails
-			execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist);
+			if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
+			{
+				printf("ERROR:execve failed!\n");
+				exit(1);
+			}
 		}
 		waitpid(cmd_node->pid, &status, 0);
 		exit_status = WEXITSTATUS(status);

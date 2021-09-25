@@ -65,7 +65,7 @@ void set_red_fd(int *red_fd, int red_type)
 		*red_fd = 0;
 }
 
-void parse_redirect(t_list *token_list)
+void parse_redirect(t_cmd_node *cmd_node)
 {
 	t_list *cur_token;
 	t_list *last_token;
@@ -74,8 +74,8 @@ void parse_redirect(t_list *token_list)
 	char *red_filepath;
 	char *heredoc_delim;
 	
-	last_token = token_list;
-	cur_token = token_list->next;
+	last_token = cmd_node->token_list;
+	cur_token = cmd_node->token_list->next;
 	while(cur_token != NULL)
 	{
 		// token->type が >,>>,<,>>のどれかで if条件true
@@ -93,7 +93,8 @@ void parse_redirect(t_list *token_list)
 
 			// TODO: error handle if get_red_filepath_token returns NULL
 			if (red_type == LLDIR)
-				red_filepath = ft_strdup("tmp/heredoc_tmp");
+				// red_filepath = ft_strdup("tmp/heredoc_tmp1");
+				red_filepath = cmd_node->heredoc_filepath;
 			else
 			{
 				cur_token = get_red_filepath_token(cur_token);
@@ -102,15 +103,9 @@ void parse_redirect(t_list *token_list)
 			// TODO: error handle if file donesnt' exist
 			
 			connect_redirect(red_type, red_fd, red_filepath);
-			
-			if (red_type == LLDIR)
-				free(red_filepath);
 		}
 
 		last_token = cur_token;
 		cur_token = cur_token->next;
 	}
-
-	
-
 }

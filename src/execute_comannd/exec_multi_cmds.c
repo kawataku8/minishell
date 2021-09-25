@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/08/25 16:36:26 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/20 21:03:55 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void del_cmdnode(void *content)
 	}
 	free((t_cmd_node*)content);
 }
+
 
 // returns each command's pid
 pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int lastpipe[2])
@@ -64,7 +65,7 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 		}
 		
 		// TODO: redirectのfd繋ぎかえ　fd 0, fd 1 (fd 2はパースの時点で繋ぎかえ)
-	 	parse_redirect(cmd_node->token_list);
+	 	parse_redirect(cmd_node);
 
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
 		{
@@ -101,6 +102,7 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 	}
 	return (pid);
 }
+
 
 // piple list の実行されたものの中で最後(右端)のコマンドのポインタを返す
 t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)

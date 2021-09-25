@@ -61,12 +61,11 @@ void free_cmdlist(t_list **cmd_list)
 	while (cur_cmdlist != NULL)
 	{
 		next_cmdlist = cur_cmdlist->next;
-		// if (((t_cmd_node*)cur_cmdlist->content)->red_in_filepath != NULL)
-		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_in_filepath);
-		// if (((t_cmd_node*)cur_cmdlist->content)->red_out_filepath != NULL)
-		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_out_filepath);
-		// if (((t_cmd_node*)cur_cmdlist->content)->red_err_filepath != NULL)
-		// 	free(((t_cmd_node *)cur_cmdlist->content)->red_err_filepath);
+		if (((t_cmd_node*)cur_cmdlist->content)->heredoc_filepath != NULL)
+		{
+			unlink(((t_cmd_node *)cur_cmdlist->content)->heredoc_filepath);
+			free(((t_cmd_node *)cur_cmdlist->content)->heredoc_filepath);
+		}
 		// free_splitstr(((t_cmd_node*)cur_cmdlist->content)->argv);
 		ft_lstclear(&((t_cmd_node*)cur_cmdlist->content)->token_list, &del_token);
 		cur_cmdlist = next_cmdlist;
@@ -96,19 +95,14 @@ int main(int argc, char *argv[], char **envp)
 
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
-		// Ctrl + Cが押された時の挙動
-		if (signal_handled)
+		// readline中に
+		// Ctrl + Cが押された時
+		// 何も入力されずreturnキーだけ押された時 
+		if (usr_input[0] == 0)
 		{
-			signal_handled = 0;
 			continue ;
 		}
 
-		// Ctrl + Dが押された時の挙動
-		// if (line == NULL)
-		// {
-		// 	exit(1);
-		// }
-		
 		if (ft_strlen(usr_input) > 0)
 			add_history(usr_input);
 		else
@@ -119,6 +113,9 @@ int main(int argc, char *argv[], char **envp)
 		usr_input = tmp;
 			
 		token_list = make_tokenlist(usr_input);
+
+		// DEBUG
+		// print_tokenlist(token_list);
 		
 		if (validator(token_list) == 0)
 		{
@@ -139,6 +136,13 @@ int main(int argc, char *argv[], char **envp)
 		// print_cmdlist(cmd_list);
 		
 		process_heredoc(cmd_list);
+		// TODO: check return value from process_heredoc()
+		// if it returns error, continue ;
+		// if (res == -1)
+		// {
+		// 	// free everything;
+		// 	// continue;
+		// }
 
 		process_cmdlist(cmd_list, env_list);
 
