@@ -88,6 +88,7 @@ int main(int argc, char *argv[], char **envp)
 	char *tmp;
 	t_list *token_list;
 	t_env_list *env_list;
+	int res;
 
 	setup_signals();
 	env_list = make_envlist(envp);
@@ -100,6 +101,7 @@ int main(int argc, char *argv[], char **envp)
 		// 何も入力されずreturnキーだけ押された時 
 		if (usr_input[0] == 0)
 		{
+			free(usr_input);
 			continue ;
 		}
 
@@ -135,14 +137,15 @@ int main(int argc, char *argv[], char **envp)
 
 		// print_cmdlist(cmd_list);
 		
-		process_heredoc(cmd_list);
+		res = process_heredoc(cmd_list);
 		// TODO: check return value from process_heredoc()
 		// if it returns error, continue ;
-		// if (res == -1)
-		// {
-		// 	// free everything;
-		// 	// continue;
-		// }
+		if (res == 1)
+		{
+			// free everything;
+			free_cmdlist(&cmd_list);
+			continue ;
+		}
 
 		process_cmdlist(cmd_list, env_list);
 

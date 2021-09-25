@@ -34,7 +34,7 @@ t_list *get_heredoc_delim_token(t_list *cur_token);
 int open_heredoc_tmp(char *file_path);
 int write_heredoc_tmp(int heredoc_fd, char *heredoc_delim);
 int make_heredoc(t_list *cur_cmd, int heredoc_tmp_num);
-void process_heredoc(t_list *cmd_list);
+int process_heredoc(t_list *cmd_list);
 
 
 #endif
