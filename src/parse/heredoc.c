@@ -1,6 +1,8 @@
 #include "../../include/parse.h"
 #include "../../include/cmd.h"
 
+extern volatile sig_atomic_t signal_handled;
+
 t_list *get_heredoc_delim_token(t_list *cur_token)
 {
 	while (cur_token != NULL)
@@ -44,8 +46,10 @@ int write_heredoc_tmp(int heredoc_fd, char *heredoc_delim)
 	while ((usr_input = readline("> ")) != NULL)
 	{
 		// Ctrl + Cが押された時の挙動
-		if (usr_input[0] == 0)
+		if (signal_handled)
 		{
+			signal_handled = 0;
+			printf("DEBUG:22\n");
 			free(usr_input);
 			return (1) ;
 		}

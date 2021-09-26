@@ -6,13 +6,15 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/20 20:52:28 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/26 22:58:28 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/parse.h"
 #include "../../include/env_operations.h"
+
+extern volatile sig_atomic_t signal_handled;
 
 int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 {
@@ -50,16 +52,27 @@ int process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 		else
 		{
 			cur_cmdlist = exec_multi_cmds(cur_cmdlist,env_list);
-			// waitpid(((t_cmd_node*)cur_cmdlist->content)->pid,&status,0);
 			
-			// TODO:一番最後(pipe_listの右端)のコマンドの終了ステータスをstatusから取得して,
-			// exit_statusに入れる
-			// exit_status = _____();
 			waitpid(((t_cmd_node*)(cur_cmdlist->content))->pid, &status, 0);
 			exit_status = WEXITSTATUS(status);
+
+			if (WIFSIGNALED(status))
+			{
+				if (WTERMSIG(status) == 2)
+				{
+					exit_status = 130;
+					signal_handled = 0;
+				}
+				else if (WTERMSIG(status) == 3)
+				{
+					printf("Quit: 3\n");
+					exit_status = 131;
+				}
+			}
+
 			while ((r = wait(&status)) != -1)
 			{
-				// printf("STATUS:%d\n", r);
+				printf("DEBUG:STATUS:[%d]\n",WTERMSIG(status));
 				continue ;
 			}
 			// TODO: cur_cmdlist をopがセミコロンになるまで進める

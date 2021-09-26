@@ -99,8 +99,9 @@ int main(int argc, char *argv[], char **envp)
 		// readline中に
 		// Ctrl + Cが押された時
 		// 何も入力されずreturnキーだけ押された時 
-		if (usr_input[0] == 0)
+		if (usr_input[0] == 0 || signal_handled)
 		{
+			signal_handled = 0;
 			free(usr_input);
 			continue ;
 		}
