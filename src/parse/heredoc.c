@@ -49,7 +49,6 @@ int write_heredoc_tmp(int heredoc_fd, char *heredoc_delim)
 		if (signal_handled)
 		{
 			signal_handled = 0;
-			printf("DEBUG:22\n");
 			free(usr_input);
 			return (1) ;
 		}
@@ -60,7 +59,6 @@ int write_heredoc_tmp(int heredoc_fd, char *heredoc_delim)
 			free(usr_input);
 			return (0);
 		}
-
 
 		write(heredoc_fd, usr_input, ft_strlen(usr_input));
 		write(heredoc_fd, &"\n", 1);

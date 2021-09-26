@@ -101,7 +101,11 @@ int main(int argc, char *argv[], char **envp)
 		// 何も入力されずreturnキーだけ押された時 
 		if (usr_input[0] == 0 || signal_handled)
 		{
-			signal_handled = 0;
+			if (signal_handled)
+			{
+				signal_handled = 0;
+				mod_envlist_value("?",ft_itoa(1),env_list);
+			}
 			free(usr_input);
 			continue ;
 		}
@@ -144,6 +148,7 @@ int main(int argc, char *argv[], char **envp)
 		if (res == 1)
 		{
 			// free everything;
+			mod_envlist_value("?",ft_itoa(res),env_list);
 			free_cmdlist(&cmd_list);
 			continue ;
 		}
