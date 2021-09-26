@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/26 17:32:08 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/26 17:40:23 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 			}
 			else if (WTERMSIG(status) == 3)
 			{
+				printf("Quit: 3\n");
 				exit_status = 131;
 			}
 		}

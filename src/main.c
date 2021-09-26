@@ -147,7 +147,9 @@ int main(int argc, char *argv[], char **envp)
 			continue ;
 		}
 
+		signal(SIGQUIT, &sigquit_handler);
 		process_cmdlist(cmd_list, env_list);
+		signal(SIGQUIT, SIG_IGN);
 
 		free(usr_input);
 		usr_input = NULL;
