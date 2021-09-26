@@ -4,6 +4,7 @@ extern volatile sig_atomic_t signal_handled;
 
 int check_state(void)
 {
+	// readline中に押された場合
 	if (signal_handled)
 	{
 		signal_handled = 0;
@@ -14,5 +15,8 @@ int check_state(void)
 		/* readline()をreturnさせる */
 		rl_done = 1;
 	}
+
+	// コマンド実行中に押された場合
+
 	return 0;
 }

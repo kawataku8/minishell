@@ -153,7 +153,9 @@ int main(int argc, char *argv[], char **envp)
 		usr_input = NULL;
 		free_cmdlist(&cmd_list);
 	}
-	
+
+	printf("DEBUG:exit\n");
+
 	exit(0);
 	return 0;
 }

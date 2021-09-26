@@ -95,6 +95,7 @@ int make_heredoc(t_list *cur_cmd, int heredoc_tmp_num)
 		delim_word = ((t_token*)(cur_token->content))->word;
 
 		// "../../tmp/heredoctmp" + heredoc_tmp_num のstrjoin
+		// この産業を一つの関数にできる
 		num_str = ft_itoa(heredoc_tmp_num);
 		file_path = ft_strjoin("tmp/heredoc_tmp", num_str);
 		free(num_str);

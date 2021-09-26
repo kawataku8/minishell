@@ -6,12 +6,14 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/18 16:55:09 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/26 17:32:08 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/env_operations.h"
+
+extern volatile sig_atomic_t signal_handled;
 
 char **init_ft_cmd_names(void)
 {
@@ -98,7 +100,7 @@ int exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 	{
 		// execute_buildin(cmd_node, env_list, 1);
 		exit_status = execute_buildin(cmd_node, env_list, 1);
-		return (exit_status);
+		// return (exit_status);
 	}
 	else
 	{
@@ -110,12 +112,25 @@ int exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 			// TODO: error handle for execve when it fails
 			if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
 			{
-				printf("ERROR:execve failed!\n");
-				exit(1);
+				printf("minishell: command not found\n");
+				exit(127);
 			}
 		}
 		waitpid(cmd_node->pid, &status, 0);
 		exit_status = WEXITSTATUS(status);
+		
+		if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == 2)
+			{
+				exit_status = 130;
+				signal_handled = 0;
+			}
+			else if (WTERMSIG(status) == 3)
+			{
+				exit_status = 131;
+			}
+		}
 	}
 	return (exit_status);
 }
