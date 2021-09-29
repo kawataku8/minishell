@@ -5,7 +5,7 @@
 #include "setup.h"
 
 void setup_op(t_list *cmd_list);
-int count_STR(t_list *token);
+int count_strtoken(t_list *token);
 void setup_argv_argc(t_cmd_node *cmd_node);
 
 

@@ -6,13 +6,13 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 20:36:01 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/19 21:08:48 by takuya           ###   ########.fr       */
+/*   Updated: 2021/09/28 16:58:28 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/setup.h"
 
-int	count_STR(t_list *token)
+int	count_strtoken(t_list *token)
 {
 	int		counter;
 	t_list	*cur_token;
@@ -31,13 +31,13 @@ int	count_STR(t_list *token)
 // TODO: ft_studup()でnew_argvに入れるべき？
 void	setup_argv_argc(t_cmd_node *cmd_node)
 {
-	int	new_argc;
-	int	i;
+	int		new_argc;
+	int		i;
 	t_list	*cur_token;
 	char	**new_argv;
 
 	cur_token = cmd_node->token_list;
-	new_argc = count_STR(cur_token);
+	new_argc = count_strtoken(cur_token);
 	new_argv = (char **)malloc(sizeof(char *) * new_argc + 1);
 	i = 0;
 	while (cur_token != NULL)

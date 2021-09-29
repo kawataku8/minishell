@@ -21,8 +21,8 @@ int is_num_str(char *str);
 void set_redirect_fd(t_list *token_list);
 void close_red_filefds(t_list *token_list);
 
-void save_orig_fd(int *orig_stdin, int *orig_stdout, int *orig_stderr);
-void reset_fds_orig(int orig_stdin, int orig_stdout, int orig_stderr);
+int *dup_original_fds(void);
+void reset_fds_orig(int *original_fds);
 
 int is_red_token(t_token *token);
 t_list *get_red_filepath_token(t_list *cur_token);
