@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/20 21:03:55 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/02 13:10:16 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,65 +14,67 @@
 #include "../../include/parse.h"
 #include "../../include/env_operations.h"
 
-int ispipe(t_cmd_node *cur_cmd_node)
+int	ispipe(t_cmd_node *cur_cmd_node)
 {
 	if (cur_cmd_node->op == PIPE)
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
-void del_cmdnode(void *content)
+void	del_cmdnode(void *content)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(((t_cmd_node*)content)->argv[i] != NULL)
+	while (((t_cmd_node *)content)->argv[i] != NULL)
 	{
-		free(((t_cmd_node*)content)->argv[i]);
+		free(((t_cmd_node *)content)->argv[i]);
 		i++;
 	}
-	free((t_cmd_node*)content);
+	free((t_cmd_node *)content);
 }
 
+void	dup_lastpipe(int haspipe, int *lastpipe)
+{
+	if (haspipe)
+	{
+		close(lastpipe[1]);
+		dup2(lastpipe[0], 0);
+		close(lastpipe[0]);
+	}
+}
+
+void	dup_newpipe(t_cmd_node *cmd_node, int *newpipe)
+{
+	if (ispipe(cmd_node))
+	{
+		close(newpipe[0]);
+		dup2(newpipe[1], 1);
+		close(newpipe[1]);
+	}
+}
 
 // returns each command's pid
-pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int lastpipe[2])
+pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int *lastpipe)
 {
-	pid_t pid;
-	int newpipe[2];
-	int exit_status;
-	char **dchar_envlist;
+	pid_t	pid;
+	int		newpipe[2];
+	int		exit_status;
+	char	**dchar_envlist;
 
 	if (ispipe(cmd_node))
 		pipe(newpipe);
 	pid = fork();
-	//子プロセス
 	if (pid == 0)
 	{
-		//左にパイプあり　入力としてpipeに繋がったfd0を使う
-		if (haspipe)
-		{
-			close(lastpipe[1]);
-			dup2(lastpipe[0],0);
-			close(lastpipe[0]);
-		}
-		//右にパイプあり　出力をpipeに繋がったfd1に流す
-		if (ispipe(cmd_node))
-		{
-			close(newpipe[0]);
-			dup2(newpipe[1], 1);
-			close(newpipe[1]);
-		}
+		dup_lastpipe(haspipe, lastpipe);
+		dup_newpipe(cmd_node, newpipe);
 		
-		// TODO: redirectのfd繋ぎかえ　fd 0, fd 1 (fd 2はパースの時点で繋ぎかえ)
 	 	parse_redirect(cmd_node);
 
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
 		{
-			// TODO: check retun value and do error handle
 			exit_status = execute_buildin(cmd_node, env_list, 2);
-			// TODO: this exit should have exit-status from execute_buildin
-			// exit(execute_buildin());
 			exit(exit_status);
 		}
 		else
@@ -84,12 +86,12 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 			{
 				// TODO: check errno
 				// code for fail execve()
-				exit(1);
+				printf("minishell: command not found\n");
+				exit(127);
 			}
 		}
 	}
 	
-	// 上の子プロセスですでに左のパイプの入出力の受け渡しは終了しているので一個前に使ったpipeをclose
 	if (haspipe)
 	{
 		close(lastpipe[0]);
@@ -103,30 +105,46 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 	return (pid);
 }
 
+int	*set_up_pipe(void)
+{
+	int	*new_pipe;
+
+	new_pipe = (int *)malloc(sizeof(int) * 2);
+	if (new_pipe == NULL)
+	{
+		printf("ERROR: mallloc error\n");
+		exit(1);
+	}
+	new_pipe[0] = -1;
+	new_pipe[1] = -1;
+	return (new_pipe);
+}
 
 // piple list の実行されたものの中で最後(右端)のコマンドのポインタを返す
-t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
+t_list	*exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 {
-	t_cmd_node *cmd_node;
-	int i = 0;
-	int pid, status;
-	int	haspipe = 0;
-	int	lastpipe[2] = { -1, -1 };
+	t_cmd_node	*cmd_node;
+	t_list		*cur_cmd_list;
+	int			pid;
+	int			status;
+	int			haspipe;
+	int			*lastpipe;
 
-	t_list *cur_cmd_list = cmd_list;
+	haspipe = 0;
+	cur_cmd_list = cmd_list;
+	lastpipe = set_up_pipe();
 	while (cur_cmd_list != NULL)
 	{
-		cmd_node = ((t_cmd_node*)cur_cmd_list->content);
+		cmd_node = ((t_cmd_node *)cur_cmd_list->content);
 		expand_env(cmd_node->token_list, env_list);
 		setup_argv_argc(cmd_node);
 		cmd_node->pid = start_command(cmd_node, env_list, haspipe, lastpipe);
-
-		// コマンドがパイプを持たなくなったらbreak ループを抜ける
-		if ((haspipe = ispipe(cmd_node)) == 1)
+		haspipe = ispipe(cmd_node);
+		if (haspipe == 1)
 			cur_cmd_list = cur_cmd_list->next;
 		else
 			break ;
 	}
-
+	free(lastpipe);
 	return (cur_cmd_list);
 }

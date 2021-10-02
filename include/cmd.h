@@ -9,7 +9,7 @@
 
 int ispipe(t_cmd_node *cur_cmd_node);
 void del_cmdnode(void *content);
-pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int lastpipe[2]);
+pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int *lastpipe);
 t_list *exec_multi_cmds(t_list *cmd_list, t_env_list *env_list);
 
 
@@ -33,6 +33,7 @@ void expand_env(t_list *token_list, t_env_list *env_list);
 void edit_env(t_list *cmd_list, t_env_list *env_list);
 
 void process_cmdlist(t_list *cmd_list, t_env_list *env_list);
+int	make_exit_status(int status);
 
 char *make_cmd_path(char *target_dir, char *cmd_name);
 void find_abscmd_path(char **cmd_argv);

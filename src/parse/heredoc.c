@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:53:05 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/28 16:53:46 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/02 15:26:11 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 
 extern volatile sig_atomic_t signal_handled;
 
-t_list *get_heredoc_delim_token(t_list *cur_token)
+t_list	*get_heredoc_delim_token(t_list *cur_token)
 {
 	while (cur_token != NULL)
 	{
-		// TODO: error handle
-		// >> STR　の間にSTR以外のタイプがある場合　-> NULL返す
 		if (((t_token *)cur_token->content)->type == STR)
 		{
 			((t_token *)cur_token->content)->type = HEREDOC_DELIM;
@@ -35,43 +33,62 @@ int	open_heredoc_tmp(char *file_path)
 {
 	char	*heredoc_tmp;
 	int		file_fd;
-	// file_pathをmallocして変数に保存
-	// heredoc_tmp = ft_strdup(file_path);
-	// file_pathからファイルを作る
-	// file_fd = open("tmp/heredoc_tmp", O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+
 	file_fd = open(file_path, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 	return (file_fd);
 }
-
 
 // returns
 // normal, Ctrl+D: 0
 // Ctrl+C: 1
 int	write_heredoc_tmp(int heredoc_fd, char *heredoc_delim)
 {
-	char *usr_input;
-	
-	while ((usr_input = readline("> ")) != NULL)
+	char	*usr_input;
+
+	while (1)
 	{
+		usr_input = readline("> ");
+		if (usr_input == NULL)
+			break ;
 		if (signal_handled)
 		{
 			signal_handled = 0;
 			free(usr_input);
-			return (1) ;
+			return (1);
 		}
-
 		if (my_strcmp(usr_input, heredoc_delim) == 0)
 		{
 			free(usr_input);
 			return (0);
 		}
-
 		write(heredoc_fd, usr_input, ft_strlen(usr_input));
 		write(heredoc_fd, &"\n", 1);
 		free(usr_input);
 		usr_input = NULL;
 	}
 	return (0);
+}
+
+char	*make_heredoc_filepath(int heredoc_tmp_num)
+{
+	char	*num_str;
+	char	*file_path;
+
+	num_str = ft_itoa(heredoc_tmp_num);
+	file_path = ft_strjoin("tmp/heredoc_tmp", num_str);
+	free(num_str);
+	return (file_path);
+}
+
+int	open_write_herecdoc(char *file_path, char *delim_word)
+{
+	int	heredoc_fd;
+	int	res;
+
+	heredoc_fd = open_heredoc_tmp(file_path);
+	res = write_heredoc_tmp(heredoc_fd, delim_word);
+	close(heredoc_fd);
+	return (res);
 }
 
 // returns: 
@@ -82,7 +99,6 @@ int	make_heredoc(t_list *cur_cmd, int heredoc_tmp_num)
 {
 	t_list	*cur_token;
 	char	*delim_word;
-	char	*num_str;
 	char	*file_path;
 	int		heredoc_fd;
 	int		res;
@@ -96,25 +112,16 @@ int	make_heredoc(t_list *cur_cmd, int heredoc_tmp_num)
 			continue ;
 		}
 		cur_token = get_heredoc_delim_token(cur_token);
-		// if (cur_token == NULL)
-			// error handle
+		if (cur_token == NULL)
+			return (1);
 		delim_word = ((t_token *)(cur_token->content))->word;
-
-		// "../../tmp/heredoctmp" + heredoc_tmp_num のstrjoin
-		// この産業を一つの関数にできる
-		num_str = ft_itoa(heredoc_tmp_num);
-		file_path = ft_strjoin("tmp/heredoc_tmp", num_str);
-		free(num_str);
+		file_path = make_heredoc_filepath(heredoc_tmp_num);
 		((t_cmd_node *)cur_cmd->content)->heredoc_filepath = file_path;
-		heredoc_fd = open_heredoc_tmp(file_path);
-		res = write_heredoc_tmp(heredoc_fd, delim_word);
-		close(heredoc_fd);
+		res = open_write_herecdoc(file_path, delim_word);
 	}
 	return (res);
 }
 
-// cmd_list の大外ループ
-// heredoc_tmpの連番をこの関数のループで管理
 int	process_heredoc(t_list *cmd_list)
 {
 	t_list	*cur_cmd;
@@ -127,12 +134,10 @@ int	process_heredoc(t_list *cmd_list)
 	while (cur_cmd != NULL)
 	{
 		res = make_heredoc(cur_cmd, heredoc_tmp_num);
-		// heredocを作る途中でエラーになった時のハンドル
-
-		// heredoc 入力中に Ctrl+C押された場合
 		if (res == 1)
 		{
 			// error handle
+			printf("ERROR: heredoc error\n");
 			break ;
 		}
 		heredoc_tmp_num++;

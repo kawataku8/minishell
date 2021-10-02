@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 23:13:12 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/28 23:27:06 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/01 17:23:00 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@ int	my_strcmp(const char *s1, const char *s2)
 {
 	while ((unsigned char)*s1 == (unsigned char)*s2)
 	{
-		if(*s1 == '\0' && *s2 == '\0')
+		if (*s1 == '\0' && *s2 == '\0')
 			return (0);
 		s1++;
 		s2++;
 	}
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
-
 
 char	*get_value_from_envlist(char *key, t_env_list *env_list)
 {
@@ -56,12 +55,13 @@ int	envvar_exist(char *word, int *i, int *j)
 		if (word[*i] == '\\' && word[*i + 1] != '\0')
 		{
 			i += 2;
-			continue;
+			continue ;
 		}
 		if (word[*i] == '$')
 		{
 			*j = *i + 1;
-			while (word[*j] != '\0' && word[*j] != ' ' && word[*j] != '$' && word[*j] != '\\')
+			while (word[*j] != '\0' && word[*j] != ' '
+				&& word[*j] != '$' && word[*j] != '\\')
 				(*j)++;
 			if (*j > *i + 1)
 				return (1);
@@ -87,7 +87,7 @@ char	*get_env_value(char *word, t_env_list *env_list)
 	value = NULL;
 	if (envvar_exist(word, &i, &j))
 	{
-		key = ft_substr(word, i+1, j-(i+1));
+		key = ft_substr(word, i + 1, j - (i + 1));
 		value = get_value_from_envlist(key, env_list);
 		free(key);
 		if (value == NULL)
@@ -104,13 +104,14 @@ char	*make_new_word(char *word, char *env_value)
 	int		env_i;
 	int		env_j;
 	int		new_word_len;
-	
+
 	envvar_exist(word, &env_i, &env_j);
-	new_word_len = ft_strlen(word) + (ft_strlen(env_value) - (env_j-env_i));
+	new_word_len = ft_strlen(word) + (ft_strlen(env_value) - (env_j - env_i));
 	new_word = (char *)malloc(sizeof(char) * new_word_len + 1);
 	ft_strlcpy(new_word, word, new_word_len + 1);
 	ft_strlcpy(new_word + env_i, env_value, new_word_len + 1);
-	ft_strlcpy(new_word + (env_i + ft_strlen(env_value)), word + env_j, new_word_len + 1);
+	ft_strlcpy(new_word + (env_i + ft_strlen(env_value)),
+		word + env_j, new_word_len + 1);
 	return (new_word);
 }
 
@@ -174,7 +175,8 @@ t_list	*expand_env_in_token(t_list *token, char *env_value, int flag_dquote)
 		ft_lstadd_back(&new_tokenlist, ft_lstnew((void *)new_token));
 	}
 	else
-		new_tokenlist = make_new_tokens(((t_token *)token->content)->word, env_value);
+		new_tokenlist = make_new_tokens(((t_token *)token->content)->word,
+				env_value);
 	return (new_tokenlist);
 }
 
@@ -185,36 +187,54 @@ void	free_token(t_list *token)
 	free(token);
 }
 
+void	flag_quote(t_list *cur_token, int *flag_dquote, int *flag_squote)
+{
+	if ((((t_token *)cur_token->content)->type) == DQUOTE)
+		*flag_dquote ^= 1;
+	if ((((t_token *)cur_token->content)->type) == SQUOTE)
+		*flag_squote ^= 1;
+}
+
+t_list	*make_expanded_tokenlist(t_list *cur_token, t_list *last_token,
+char *env_value, int flag_dquote)
+{
+	t_list	*new_tokenlist;
+	t_list	*next_token;
+
+	new_tokenlist = expand_env_in_token(cur_token, env_value, flag_dquote);
+	next_token = cur_token->next;
+	ft_lstadd_back(&new_tokenlist, next_token);
+	if (last_token != NULL)
+		last_token->next = new_tokenlist;
+	free_token(cur_token);
+	return (new_tokenlist);
+}
+
 // //input: "echo"->" "->"hello"->"$NAME"->";"
 // //output:"echo"->" "->"hello"->"takuya"->";"
 // //t_list->content == t_token
-void expand_env(t_list *token_list, t_env_list *env_list)
+void	expand_env(t_list *token_list, t_env_list *env_list)
 {
-	int		i;
-	int		j;
 	int		flag_dquote;
+	int		flag_squote;
 	char	*env_value;
 	t_list	*cur_token;
-	t_list	*new_tokenlist;
-	t_list	*next_token;
 	t_list	*last_token;
-	
+
 	flag_dquote = 0;
+	flag_squote = 0;
 	cur_token = token_list;
+	last_token = NULL;
 	while (cur_token != NULL)
 	{
-		if ((((t_token *)cur_token->content)->type) == DQUOTE)
-			flag_dquote ^= 1;
-		if ((env_value = get_env_value(((t_token *)cur_token->content)->word, env_list)) != NULL)
+		flag_quote(cur_token, &flag_dquote, &flag_squote);
+		env_value = get_env_value(((t_token *)cur_token->content)->word,
+				env_list);
+		if (flag_squote == 0 && env_value != NULL)
 		{
-			new_tokenlist = expand_env_in_token(cur_token, env_value, flag_dquote);
-			next_token = cur_token->next;
-			ft_lstadd_back(&new_tokenlist,next_token);
-			if (last_token != NULL)
-				last_token->next = new_tokenlist;
-			free_token(cur_token);
-			cur_token = new_tokenlist;
-			continue;
+			cur_token = make_expanded_tokenlist(cur_token, last_token,
+					env_value, flag_dquote);
+			continue ;
 		}
 		last_token = cur_token;
 		cur_token = cur_token->next;

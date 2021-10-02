@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/28 23:10:53 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/01 14:57:21 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 
 extern volatile sig_atomic_t signal_handled;
 
-
-int process_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
+int	process_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
-	int exit_status;
+	int	exit_status;
 
 	expand_env(cmd_node->token_list, env_list);
 	parse_redirect(cmd_node);
@@ -29,11 +28,10 @@ int process_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 	return (exit_status);
 }
 
-
-void wait_children(int status)
+void	wait_children(int status)
 {
-	int res;
-	
+	int	res;
+
 	while (1)
 	{
 		res = wait(&status);
@@ -69,13 +67,13 @@ int	make_exit_status(int status)
 	return (exit_status);
 }
 
-void process_cmdlist(t_list *cmd_list, t_env_list *env_list)
+void	process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 {
-	int status;
-	int exit_status;
-	int *original_fds;
-	t_list *cur_cmdlist;
-	t_cmd_node *cmd_node;
+	int			status;
+	int			exit_status;
+	int			*original_fds;
+	t_list		*cur_cmdlist;
+	t_cmd_node	*cmd_node;
 
 	exit_status = 0;
 	cur_cmdlist = cmd_list;
@@ -87,12 +85,12 @@ void process_cmdlist(t_list *cmd_list, t_env_list *env_list)
 			exit_status = process_single_cmd(cmd_node, env_list);
 		else
 		{
-			cur_cmdlist = exec_multi_cmds(cur_cmdlist,env_list);
+			cur_cmdlist = exec_multi_cmds(cur_cmdlist, env_list);
 			waitpid(((t_cmd_node *)(cur_cmdlist->content))->pid, &status, 0);
 			exit_status = make_exit_status(status);
 			wait_children(status);
 		}
-		mod_envlist_value("?",ft_itoa(exit_status),env_list);
+		mod_envlist_value("?", ft_itoa(exit_status), env_list);
 		reset_fds_orig(original_fds);
 		cur_cmdlist = cur_cmdlist->next;
 	}

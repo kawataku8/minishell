@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:08:34 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/19 20:55:21 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/02 15:28:56 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	idx_next_dquote(char *usr_input, int start)
 		if (usr_input[end] == '\\')
 		{
 			if (usr_input[end + 1] && (usr_input[end + 1] == '\\'
-				|| usr_input[end + 1] == '"'))
+					|| usr_input[end + 1] == '"'))
 			{
 				end += 2;
 				continue ;
@@ -109,12 +109,12 @@ int	idx_next_delim(char *usr_input, int start)
 	return (end);
 }
 
-t_token		*make_token(char *usr_input, int *i,int in_squote, int in_dquote)
+t_token	*make_token(char *usr_input, int *i, int in_squote, int in_dquote)
 {
 	t_token		*new_token;
-	int		type;
-	int		start;
-	int		end;
+	int			type;
+	int			start;
+	int			end;
 
 	type = specify_tokentype(usr_input[*i]);
 	if (in_squote && type != SQUOTE)
@@ -125,7 +125,7 @@ t_token		*make_token(char *usr_input, int *i,int in_squote, int in_dquote)
 		end = idx_with_red(usr_input, *i);
 	else
 		end = idx_next_delim(usr_input, *i);
-	new_token = (t_token*)malloc(sizeof(t_token));
+	new_token = (t_token *)malloc(sizeof(t_token));
 	new_token->word = ft_substr(usr_input, *i, end - (*i) + 1);
 	if (type == RDIR && ft_strlen(new_token->word) == 2)
 		new_token->type = RRDIR;
@@ -143,9 +143,9 @@ t_list	*make_tokenlist(char *usr_input)
 {
 	t_list	*token_list;
 	t_token	*new_token;
-	int	i;
-	int	in_dquote;
-	int	in_squote;
+	int		i;
+	int		in_dquote;
+	int		in_squote;
 
 	token_list = NULL;
 	i = 0;

@@ -27,7 +27,8 @@ void reset_fds_orig(int *original_fds);
 int is_red_token(t_token *token);
 t_list *get_red_filepath_token(t_list *cur_token);
 int connect_redirect(int red_type,int red_fd,char *red_filepath);
-void set_red_fd(int *red_fd, int red_type);
+// void set_red_fd(int *red_fd, int red_type);
+int set_red_fd(t_list *last_token, int red_type);
 void parse_redirect(t_cmd_node *cmd_node);
 
 t_list *get_heredoc_delim_token(t_list *cur_token);
