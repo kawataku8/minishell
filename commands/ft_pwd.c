@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/19 00:16:46 by stakabay          #+#    #+#             */
-/*   Updated: 2021/08/19 15:15:43 by takuya           ###   ########.fr       */
+/*   Created: 2021/09/19 21:50:51 by stakabay          #+#    #+#             */
+/*   Updated: 2021/09/19 21:50:53 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../include/command.h"
 
@@ -32,13 +31,3 @@ int	ft_pwd(void)
 	free(pwd_buf);
 	return (SUCCEEDED);
 }
-
-/*
-int	main()
-{
-	ft_pwd();
-	chdir("/Users/user/Desktop/42tokyo");
-	ft_pwd();
-	return (0);
-}
-*/

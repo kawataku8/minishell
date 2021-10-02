@@ -5,14 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/19 13:44:01 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/19 19:48:27 by takuya           ###   ########.fr       */
+/*   Created: 2021/09/19 21:50:54 by stakabay          #+#    #+#             */
+/*   Updated: 2021/09/19 21:50:56 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/command.h"
-
-//exit statusはlong型の最大値までしか取れない。(19桁)
 
 int	is_num(char *argv)
 {
@@ -57,8 +55,6 @@ int	ft_ch_exit(char **argv, int argc)
 	return (SUCCEEDED);
 }
 
-//引数が何個であろうと、先頭の引数が数値でない場合はエラーをはくが、exitは成功する。
-//exit statusは0-255で256以上は255の余剰となる
 int	ft_pa_exit(char **argv, int argc)
 {
 	ft_putendl_fd("exit", STD_ERR);
@@ -80,11 +76,3 @@ int	ft_pa_exit(char **argv, int argc)
 		exit(ft_atoi(argv[1]) & 255);
 	return (SUCCEEDED);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	argv++;
-// 	argc--;
-// 	ft_pa_exit(argv, argc);
-// 	return (0);
-// }

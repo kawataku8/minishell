@@ -71,5 +71,6 @@ char			*set_oldpwd_path(t_env_list *list);
 void			set_pwd_and_oldpwd(t_env_list *list, char *path);
 void 			clear_env_list(t_env_list *stack);
 void			remove_env_node(t_env_list *stack,t_env_node *node);
+char			**make_env_arr(t_env_list *list);
 
 #endif

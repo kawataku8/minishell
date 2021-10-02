@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/25 08:37:34 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:22:10 by takuya           ###   ########.fr       */
+/*   Created: 2021/09/19 21:51:00 by stakabay          #+#    #+#             */
+/*   Updated: 2021/09/19 21:51:03 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,3 @@ int	ft_echo(char **argv)
 		put_endl(1);
 	return (SUCCEEDED);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	argv++;
-// 	argc = 0;
-// 	ft_echo(argv);
-// 	return (0);
-// }

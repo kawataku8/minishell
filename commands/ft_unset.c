@@ -1,7 +1,16 @@
-#include "../include/command.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/19 21:50:48 by stakabay          #+#    #+#             */
+/*   Updated: 2021/09/19 21:50:50 by stakabay         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//環境変数の鍵は頭は数字はだめ。
-//また、全体で数字とアルファベット以外は_をのぞいてだめ
+#include "../include/command.h"
 
 int	ft_unset(char **argv, t_env_list *list)
 {
@@ -30,47 +39,3 @@ int	ft_unset(char **argv, t_env_list *list)
 	}
 	return (renum);
 }
-
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_env_list	env_list;
-// 	t_env_node	*node;
-// 	char		*keybuf;
-// 	char		*valuebuf;
-// 	char		*ptr;
-	
-// 	argc = 0;
-// 	while (*envp)
-// 	{
-// 		ptr = ft_strchr(*envp, '=');
-// 		keybuf = ft_substr(*envp, 0, ptr - *envp);
-// 		valuebuf = ft_strdup(*envp + (ptr - *envp + 1));
-// 		node = make_env_node(keybuf, valuebuf);
-// 		// printf("declare -x %s=", node->key);
-// 		//printf("%s\n", node->value);
-// 		insert_end(&env_list, node);
-// 		node = node->next;
-// 		envp++;
-// 	}
-
-// 	node = env_list.head;
-// 	printf("=before unset=======\n");
-// 	while (node)
-// 	{
-// 		printf("%s\n", node->key);
-// 		node = node->next;
-// 	}
-
-// 	argv++;
-// 	ft_unset(argv, &env_list);
-
-// 	node = env_list.head;
-// 	printf("=after unset=======\n");
-// 	while (node)
-// 	{
-// 		printf("%s\n", node->key);
-// 		node = node->next;
-// 	}
-// 	return (0);
-// }

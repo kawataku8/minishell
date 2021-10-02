@@ -1,42 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_operation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/19 21:50:45 by stakabay          #+#    #+#             */
+/*   Updated: 2021/09/19 21:50:47 by stakabay         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/command.h"
 
-// void insert_after(t_env_list *stack, t_env_node *node, t_env_node *new_node)
-// {
-// 	new_node->prev = node;
-// 	new_node->next = node->next;
-// 	if (node->next == NULL)
-// 		stack->tail = new_node;
-// 	else
-// 		node->next->prev = new_node;
-// 	node->next = new_node;
-// }
+t_env_node	*serch_nodes(t_env_list *list, char *keybuf)
+{
+	t_env_node		*ndptr;
 
-// void insert_before(t_env_list *stack, t_env_node *node, t_env_node *new_node)
-// {
-// 	new_node->prev = node->prev;
-// 	new_node->next = node;
-// 	if (node->prev == NULL)
-// 		stack->head = new_node;
-// 	else
-// 		node->prev->next = new_node;
-// 	node->prev = new_node;
-// }
+	ndptr = list->head;
+	while (ndptr)
+	{
+		if (!(ft_strncmp(ndptr->key, keybuf, ft_strlen(keybuf) + 1)))
+		{
+			return (ndptr);
+		}
+		ndptr = ndptr->next;
+	}
+	return (NULL);
+}
 
-// void insert_beginning(t_env_list *stack, t_env_node *new_node)
-// {
-// 	if (stack->head == NULL)
-// 	{
-// 		stack->head = new_node;
-// 		stack->tail = new_node;
-// 		new_node->prev = NULL;
-// 		new_node->next = NULL;
-// 	}
-// 	else
-// 		insert_before(stack,stack->head, new_node);
-// }
+void	clear_env_list(t_env_list *stack)
+{
+	t_env_node	*cur_node;
+	t_env_node	*next_env_node;
 
-t_env_node *make_env_node(char *key, char *value)
+	cur_node = stack->head;
+	if (cur_node != NULL)
+	{
+		while (cur_node->next != NULL)
+		{
+			next_env_node = cur_node->next;
+			free(cur_node->key);
+			free(cur_node->value);
+			free(cur_node);
+			cur_node = next_env_node;
+		}
+		free(cur_node->key);
+		free(cur_node->value);
+		free(cur_node);
+	}
+	free(stack);
+}
+
+void	remove_env_node(t_env_list *stack, t_env_node *node)
+{
+	if (node->prev == NULL)
+		stack->head = node->next;
+	else
+		node->prev->next = node->next;
+	if (node->next == NULL)
+		stack->tail = node->prev;
+	else
+		node->next->prev = node->prev;
+	free(node->key);
+	free(node->value);
+	free(node);
+}
+
+t_env_node	*make_env_node(char *key, char *value)
 {
 	t_env_node	*new_node;
 
@@ -56,20 +86,3 @@ t_env_node *make_env_node(char *key, char *value)
 	new_node->prev = NULL;
 	return (new_node);
 }
-
-// void insert_end(t_env_list *list, t_env_node *new_node)
-// {
-// 	if ((list->head == NULL) && (list->tail == NULL))
-// 	{
-// 		list->head = new_node;
-// 		list->tail = new_node;
-// 		new_node->prev = NULL;
-// 		new_node->next = NULL;
-// 	}
-// 	else
-// 	{
-// 		new_node->prev = list->tail;
-// 		list->tail->next = new_node;
-// 		list->tail = new_node;
-// 	}
-// }
