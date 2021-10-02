@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/02 16:02:04 by takuya            #+#    #+#             */
+/*   Updated: 2021/10/02 17:21:25 by takuya           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/commonlib.h"
 #include "../include/parse.h"
 #include "../include/validator.h"
@@ -9,121 +21,93 @@
 
 volatile sig_atomic_t signal_handled = 0;
 
-void print_cmdlist_withmeta(t_list *cmd_list)
+void	print_cmdlist_withmeta(t_list *cmd_list)
 {
-	t_list *cur_node = cmd_list;
-	t_cmd_node *cur_cmd;
+	t_list		*cur_node;
+	t_cmd_node	*cur_cmd;
 
-	while(cur_node != NULL)
+	cur_node = cmd_list;
+	while (cur_node != NULL)
 	{
-		cur_cmd = ((t_cmd_node*)cur_node->content);
-		printf("pid:[%d]\n",cur_cmd->pid);
-		printf("op:[%d]\n",cur_cmd->op);
-		printf("argc:[%d]\n",cur_cmd->argc);
+		cur_cmd = ((t_cmd_node *)cur_node->content);
+		printf("pid:[%d]\n", cur_cmd->pid);
+		printf("op:[%d]\n", cur_cmd->op);
+		printf("argc:[%d]\n", cur_cmd->argc);
 		printf("---------------------------\n");
 		cur_node = cur_node->next;
 	}
 }
 
-t_list *null_test(t_list *token_list)
+void	del_token(void *content)
 {
-	t_list *cur_node = token_list;
-	t_list *end_node = cur_node;
-	t_list *res_node;
-	int i = 0;
-
-	while(end_node != NULL)
-	{
-		if(i == 3)
-		{
-			res_node = end_node->next;
-			end_node->next = NULL;
-			break;
-		}
-		i++;
-		end_node = end_node->next;
-	}
-	return (res_node);
+	free(((t_token *)content)->word);
+	free((t_token *)content);
 }
 
-void del_token(void *content)
+void	free_cmdlist(t_list **cmd_list)
 {
-	free(((t_token*)content)->word);
-	free((t_token*)content);
-}
-
-void free_cmdlist(t_list **cmd_list)
-{
-	t_list *cur_cmdlist;
-	t_list *next_cmdlist;
+	t_list	*cur_cmdlist;
+	t_list	*next_cmdlist;
 
 	cur_cmdlist = *cmd_list;
 	while (cur_cmdlist != NULL)
 	{
 		next_cmdlist = cur_cmdlist->next;
-		if (((t_cmd_node*)cur_cmdlist->content)->heredoc_filepath != NULL)
+		if (((t_cmd_node *)cur_cmdlist->content)->heredoc_filepath != NULL)
 		{
 			unlink(((t_cmd_node *)cur_cmdlist->content)->heredoc_filepath);
 			free(((t_cmd_node *)cur_cmdlist->content)->heredoc_filepath);
 		}
 		// free_splitstr(((t_cmd_node*)cur_cmdlist->content)->argv);
-		ft_lstclear(&((t_cmd_node*)cur_cmdlist->content)->token_list, &del_token);
+		ft_lstclear(&((t_cmd_node *)cur_cmdlist->content)->token_list, &del_token);
 		cur_cmdlist = next_cmdlist;
 	}
-
 }
 
-void print_double_charlist(char **d_list)
-{
-	int i = 0;
-	while (d_list[i] != NULL)
-	{
-		printf("%s\n",d_list[i++]);
-	}
-}
+// void print_double_charlist(char **d_list)
+// {
+// 	int i = 0;
+// 	while (d_list[i] != NULL)
+// 	{
+// 		printf("%s\n",d_list[i++]);
+// 	}
+// }
 
-int main(int argc, char *argv[], char **envp)
+// readline中に
+// Ctrl + Cが押された時
+// 何も入力されずreturnキーだけ押された時
+int	main(int argc, char *argv[], char **envp)
 {
-	char *usr_input;
-	char *tmp;
-	t_list *token_list;
-	t_env_list *env_list;
-	int res;
+	char		*usr_input;
+	char		*tmp;
+	t_list		*token_list;
+	t_env_list	*env_list;
+	t_list		*cmd_list;
+	int			res;
 
 	setup_signals();
 	env_list = make_envlist(envp);
 	rl_event_hook = check_state;
-
 	while ((usr_input = readline("minishell$ ")) != NULL)
 	{
-		// readline中に
-		// Ctrl + Cが押された時
-		// 何も入力されずreturnキーだけ押された時 
 		if (usr_input[0] == 0 || signal_handled)
 		{
 			if (signal_handled)
 			{
 				signal_handled = 0;
-				mod_envlist_value("?",ft_itoa(1),env_list);
+				mod_envlist_value("?", ft_itoa(1), env_list);
 			}
 			free(usr_input);
 			continue ;
 		}
-
 		if (ft_strlen(usr_input) > 0)
 			add_history(usr_input);
 		else
 			continue ;
-
-		tmp = ft_strtrim(usr_input,"	 ");
+		tmp = ft_strtrim(usr_input, "	 ");
 		free(usr_input);
 		usr_input = tmp;
-			
 		token_list = make_tokenlist(usr_input);
-
-		// DEBUG
-		// print_tokenlist(token_list);
-		
 		if (validator(token_list) == 0)
 		{
 			printf("INVALID\n");
@@ -131,39 +115,23 @@ int main(int argc, char *argv[], char **envp)
 			usr_input = NULL;
 			continue ;
 		}
-		// else
-		// 	printf("GOOD\n");
-
-		//token_listからcmd_list生成
-		t_list *cmd_list;
 		cmd_list = make_cmdlist(token_list);
-
 		setup_op(cmd_list);
-
-		// print_cmdlist(cmd_list);
-		
 		res = process_heredoc(cmd_list);
-		// TODO: check return value from process_heredoc()
-		// if it returns error, continue ;
 		if (res == 1)
 		{
 			// free everything;
-			mod_envlist_value("?",ft_itoa(res),env_list);
+			mod_envlist_value("?", ft_itoa(res), env_list);
 			free_cmdlist(&cmd_list);
 			continue ;
 		}
-
 		signal(SIGQUIT, &sigquit_handler);
 		process_cmdlist(cmd_list, env_list);
 		signal(SIGQUIT, SIG_IGN);
-
 		free(usr_input);
 		usr_input = NULL;
 		free_cmdlist(&cmd_list);
 	}
-
-	printf("DEBUG:exit\n");
-
 	exit(0);
-	return 0;
+	return (0);
 }

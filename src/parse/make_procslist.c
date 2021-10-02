@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 20:34:00 by takuya            #+#    #+#             */
-/*   Updated: 2021/09/20 16:05:55 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/02 15:48:51 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,21 @@ t_cmd_node	*new_cmdnode(void)
 // 	}
 // }
 
+t_list	*next_scolon_pipe_token(t_list *i_token)
+{
+	t_list	*j_token;
+
+	j_token = i_token;
+	while (j_token != NULL)
+	{
+		if (((t_token *)j_token->content)->type == SCOLON
+			|| ((t_token *)j_token->content)->type == PIPE)
+			break ;
+		j_token = j_token->next;
+	}
+	return (j_token);
+}
+
 t_list	*make_cmdlist(t_list *token_list)
 {
 	t_list		*cmd_list;
@@ -56,14 +71,7 @@ t_list	*make_cmdlist(t_list *token_list)
 	i_token = token_list;
 	while (i_token != NULL)
 	{
-		j_token = i_token;
-		while (j_token != NULL)
-		{
-			if (((t_token *)j_token->content)->type == SCOLON
-				|| ((t_token *)j_token->content)->type == PIPE)
-				break ;
-			j_token = j_token->next;
-		}
+		j_token = next_scolon_pipe_token(i_token);
 		if (j_token == NULL)
 			next_i = NULL;
 		else
