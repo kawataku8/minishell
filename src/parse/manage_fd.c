@@ -1,34 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_fd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/01 22:10:44 by takuya            #+#    #+#             */
+/*   Updated: 2021/10/01 22:11:46 by takuya           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parse.h"
 
-void save_orig_fd(int *orig_stdin, int *orig_stdout, int *orig_stderr)
+int	*dup_original_fds(void)
 {
-	*orig_stdin = dup(0);
-	*orig_stdout = dup(1);
-	*orig_stderr = dup(2);
+	int	*original_fds;
+
+	original_fds = (int *)malloc(sizeof(int) * 3);
+	if (original_fds == NULL)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
+	original_fds[0] = dup(0);
+	original_fds[1] = dup(1);
+	original_fds[2] = dup(2);
+	return (original_fds);
 }
 
-void reset_fds_orig(int orig_stdin, int orig_stdout, int orig_stderr)
+void	reset_fds_orig(int *original_fds)
 {
 	close(0);
-	dup2(orig_stdin, 0);
-	close(orig_stdin);
+	dup2(original_fds[0], 0);
+	close(original_fds[0]);
 	close(1);
-	dup2(orig_stdout, 1);
-	close(orig_stdout);
+	dup2(original_fds[1], 1);
+	close(original_fds[1]);
 	close(2);
-	dup2(orig_stderr, 2);
-	close(orig_stderr);
+	dup2(original_fds[2], 2);
+	close(original_fds[2]);
+	free(original_fds);
 }
 
-void close_red_filefds(t_list *token_list)
+void	close_red_filefds(t_list *token_list)
 {
-	t_list *cur_list;
-	t_token *token;
+	t_list	*cur_list;
+	t_token	*token;
 
 	cur_list = token_list;
 	while (cur_list != NULL)
 	{
-		token = ((t_token*)cur_list->content);
+		token = ((t_token *)cur_list->content);
 		if (token->type == REDFD)
 			close(ft_atoi(token->word));
 		cur_list = cur_list->next;

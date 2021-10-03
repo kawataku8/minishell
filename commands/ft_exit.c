@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:50:54 by stakabay          #+#    #+#             */
 /*   Updated: 2021/09/19 21:50:56 by stakabay         ###   ########.fr       */

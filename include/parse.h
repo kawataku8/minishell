@@ -21,20 +21,21 @@ int is_num_str(char *str);
 void set_redirect_fd(t_list *token_list);
 void close_red_filefds(t_list *token_list);
 
-void save_orig_fd(int *orig_stdin, int *orig_stdout, int *orig_stderr);
-void reset_fds_orig(int orig_stdin, int orig_stdout, int orig_stderr);
+int *dup_original_fds(void);
+void reset_fds_orig(int *original_fds);
 
 int is_red_token(t_token *token);
 t_list *get_red_filepath_token(t_list *cur_token);
 int connect_redirect(int red_type,int red_fd,char *red_filepath);
-void set_red_fd(int *red_fd, int red_type);
-void parse_redirect(t_list *token_list);
+// void set_red_fd(int *red_fd, int red_type);
+int set_red_fd(t_list *last_token, int red_type);
+void parse_redirect(t_cmd_node *cmd_node);
 
 t_list *get_heredoc_delim_token(t_list *cur_token);
 int open_heredoc_tmp(char *file_path);
 int write_heredoc_tmp(int heredoc_fd, char *heredoc_delim);
-int make_heredoc(t_list *token_list);
-void process_heredoc(t_list *cmd_list);
+int make_heredoc(t_list *cur_cmd, int heredoc_tmp_num);
+int process_heredoc(t_list *cmd_list);
 
 
 #endif
