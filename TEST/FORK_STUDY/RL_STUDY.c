@@ -9,13 +9,13 @@
 #include <readline/history.h>
 
 extern char **environ;
-volatile sig_atomic_t signal_handled = 0;
+volatile sig_atomic_t g_signal_handled = 0;
 
 void sigint_handler(int signum)
 {
-	if (signal_handled == 0)
+	if (g_signal_handled == 0)
 	{
-		signal_handled = 1;
+		g_signal_handled = 1;
 		return ;
 	}	
 }
@@ -29,9 +29,9 @@ void sigquit_handler(int signum)
 /* readline()内から定期的に呼ばれる関数 */
 static int check_state()
 {
-	if (signal_handled)
+	if (g_signal_handled)
 	{
-		// signal_handled = 0;
+		// g_signal_handled = 0;
 
 		/* 入力中のテキストを破棄 */
 		rl_delete_text(0, rl_end);
@@ -54,9 +54,9 @@ int main(void)
 	char *line = NULL;
 	while((line = readline("> ")) != NULL)
 	{
-		if(signal_handled)
+		if(g_signal_handled)
 		{
-			signal_handled = 0;
+			g_signal_handled = 0;
 			continue ;
 		}
 		// line = readline("> ");

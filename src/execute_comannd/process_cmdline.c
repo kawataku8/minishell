@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/01 14:57:21 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/03 16:57:26 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../include/parse.h"
 #include "../../include/env_operations.h"
 
-extern volatile sig_atomic_t signal_handled;
+extern volatile sig_atomic_t	g_signal_handled;
 
 int	process_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
@@ -40,7 +40,7 @@ void	wait_children(int status)
 		if (WIFSIGNALED(status))
 		{
 			if (WTERMSIG(status) == 2)
-				signal_handled = 0;
+				g_signal_handled = 0;
 		}
 		continue ;
 	}
@@ -56,7 +56,7 @@ int	make_exit_status(int status)
 		if (WTERMSIG(status) == 2)
 		{
 			exit_status = 130;
-			signal_handled = 0;
+			g_signal_handled = 0;
 		}
 		else if (WTERMSIG(status) == 3)
 		{

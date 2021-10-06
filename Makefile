@@ -1,21 +1,29 @@
 SRCS =  ./src/main.c\
+	./src/main_utils.c\
 	./src/parse/tokenizer.c\
+	./src/parse/tokenizer_utils.c\
 	./src/parse/make_procslist.c\
 	./src/parse/set_redirect_fd.c\
 	./src/parse/manage_fd.c\
 	./src/parse/parse_redirect.c\
+	./src/parse/parse_redirect_utils.c\
 	./src/parse/heredoc.c\
+	./src/parse/heredoc_utils.c\
 	./src/validator/validator.c\
-	./src/execute_comannd/expand_env.c\
+	./src/validator/validator_utils.c\
 	./src/env_operations/make_envlist.c\
 	./src/env_operations/make_char_envlist.c\
 	./src/env_operations/mod_envlist.c\
 	./src/dlist_operations/dlist_operations.c\
+	./src/dlist_operations/dlist_operations_utils.c\
 	./src/setup/setup.c\
 	./src/execute_comannd/process_cmdline.c\
 	./src/execute_comannd/exec_single_cmd.c\
 	./src/execute_comannd/exec_multi_cmds.c\
 	./src/execute_comannd/find_abscmd_path.c\
+	./src/execute_comannd/expand_env.c\
+	./src/execute_comannd/expand_env_utils1.c\
+	./src/execute_comannd/expand_env_utils2.c\
 	./src/signal/signal.c\
 	./src/signal/readline.c\
 	./commands/ft_echo.c\

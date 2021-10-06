@@ -1,7 +1,6 @@
 #ifndef DLIST_OPERATIONS_H
 # define DLIST_OPERATIONS_H
 
-
 #include "commonlib.h"
 
 t_env_node *make_node(char *key, char *value);

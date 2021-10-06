@@ -6,37 +6,14 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:53:05 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/02 15:26:11 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/03 17:05:23 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/cmd.h"
 
-extern volatile sig_atomic_t signal_handled;
-
-t_list	*get_heredoc_delim_token(t_list *cur_token)
-{
-	while (cur_token != NULL)
-	{
-		if (((t_token *)cur_token->content)->type == STR)
-		{
-			((t_token *)cur_token->content)->type = HEREDOC_DELIM;
-			break ;
-		}
-		cur_token = cur_token->next;
-	}
-	return (cur_token);
-}
-
-int	open_heredoc_tmp(char *file_path)
-{
-	char	*heredoc_tmp;
-	int		file_fd;
-
-	file_fd = open(file_path, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
-	return (file_fd);
-}
+extern volatile sig_atomic_t	g_signal_handled;
 
 // returns
 // normal, Ctrl+D: 0
@@ -50,9 +27,9 @@ int	write_heredoc_tmp(int heredoc_fd, char *heredoc_delim)
 		usr_input = readline("> ");
 		if (usr_input == NULL)
 			break ;
-		if (signal_handled)
+		if (g_signal_handled)
 		{
-			signal_handled = 0;
+			g_signal_handled = 0;
 			free(usr_input);
 			return (1);
 		}
@@ -122,6 +99,7 @@ int	make_heredoc(t_list *cur_cmd, int heredoc_tmp_num)
 	return (res);
 }
 
+// TODO: error handle at line 138
 int	process_heredoc(t_list *cmd_list)
 {
 	t_list	*cur_cmd;
@@ -136,7 +114,6 @@ int	process_heredoc(t_list *cmd_list)
 		res = make_heredoc(cur_cmd, heredoc_tmp_num);
 		if (res == 1)
 		{
-			// error handle
 			printf("ERROR: heredoc error\n");
 			break ;
 		}
