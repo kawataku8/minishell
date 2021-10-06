@@ -6,14 +6,14 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/01 22:07:42 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/03 16:57:00 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/env_operations.h"
 
-extern volatile sig_atomic_t signal_handled;
+extern volatile sig_atomic_t	g_signal_handled;
 
 char	**init_ft_cmd_names(void)
 {

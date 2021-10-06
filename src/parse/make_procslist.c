@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 20:34:00 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/02 15:48:51 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/03 17:03:31 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_cmd_node	*new_cmdnode(void)
 // 		cur_token = ((t_cmd_node*)cur_node->content)->token_list;
 // 		while (cur_token != NULL)
 // 		{
-// 			printf("[%d:%s] ",((t_token*)cur_token->content)->type,((t_token*)cur_token->content)->word);
+// 			printf("[%d:%s] ",((t_token*)cur_token->content)->type,
+				// ((t_token*)cur_token->content)->word);
 // 			cur_token = cur_token->next;
 // 		}
 // 		printf("\n");

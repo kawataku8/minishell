@@ -6,19 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 21:35:45 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/01 21:35:47 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/03 17:14:28 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/validator.h"
-
-int	is_red_token(t_token *token)
-{
-	if (RDIR <= token->type && token->type <= LLDIR)
-		return (token->type);
-	return (0);
-}
 
 t_list	*get_red_filepath_token(t_list *cur_token)
 {
@@ -37,6 +30,7 @@ t_list	*get_red_filepath_token(t_list *cur_token)
 //input	:
 //output:good returns 1, open error returns 0
 //description: 
+// TODO:if line52 true, returns to main readline
 int	connect_redirect(int red_type, int red_fd, char *red_filepath)
 {
 	int	open_mode;
@@ -50,7 +44,6 @@ int	connect_redirect(int red_type, int red_fd, char *red_filepath)
 		file_fd = open(red_filepath, O_RDWR, S_IRWXU);
 	if (file_fd == -1)
 	{
-		// TODO: returns to userinput
 		printf("ERROR: file open error\n");
 		exit(1);
 		return (0);
