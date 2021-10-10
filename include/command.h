@@ -5,17 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/25 08:28:47 by stakabay          #+#    #+#             */
-/*   Updated: 2021/06/26 12:04:56y takuya           ###   ########.fr       */
+/*   Created: 2021/10/10 01:07:38 by takuya            #+#    #+#             */
+/*   Updated: 2021/10/10 01:07:41 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMAND_H
 # define COMMAND_H
 
-#include "commonlib.h"
-
-// # include "../libft/libft.h"
+# include "commonlib.h"
 # include "exit_status.h"
 # include <unistd.h>
 # include <stdio.h>
@@ -32,22 +30,6 @@
 
 # define FALSE 0
 # define TRUE 1
-
-
-// defined in mystruct.h
-// typedef struct s_env_node
-// {
-// 	char				*key;
-// 	char				*value;
-// 	struct s_env_node	*next;
-// 	struct s_env_node	*prev;
-// }				t_env_node;
-
-// typedef struct s_env_list
-// {
-// 	t_env_node			*head;
-// 	t_env_node			*tail;
-// }				t_env_list;
 
 void			put_string_fd(char *str, int fd);
 void			put_endl(int fd);
@@ -69,8 +51,8 @@ void			put_space(int fd);
 void			export_env_list(t_env_list *list);
 char			*set_oldpwd_path(t_env_list *list);
 void			set_pwd_and_oldpwd(t_env_list *list, char *path);
-void 			clear_env_list(t_env_list *stack);
-void			remove_env_node(t_env_list *stack,t_env_node *node);
+void			clear_env_list(t_env_list *stack);
+void			remove_env_node(t_env_list *stack, t_env_node *node);
 char			**make_env_arr(t_env_list *list);
 
 #endif

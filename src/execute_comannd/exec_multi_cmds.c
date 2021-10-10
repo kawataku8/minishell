@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/02 13:10:16 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/10 10:38:34 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,35 @@
 #include "../../include/parse.h"
 #include "../../include/env_operations.h"
 
-int	ispipe(t_cmd_node *cur_cmd_node)
+void	do_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
-	if (cur_cmd_node->op == PIPE)
-		return (1);
-	return (0);
+	int	exit_status;
+
+	exit_status = execute_buildin(cmd_node, env_list, 2);
+	exit(exit_status);
 }
 
-void	del_cmdnode(void *content)
+// TODO; if execve fails, returns -1. Check errno and Do error handle
+void	do_multi_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
-	int	i;
+	char	**dchar_envlist;
 
-	i = 0;
-	while (((t_cmd_node *)content)->argv[i] != NULL)
+	find_abscmd_path(cmd_node->argv);
+	dchar_envlist = make_char_envlist(env_list);
+	if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
 	{
-		free(((t_cmd_node *)content)->argv[i]);
-		i++;
-	}
-	free((t_cmd_node *)content);
-}
-
-void	dup_lastpipe(int haspipe, int *lastpipe)
-{
-	if (haspipe)
-	{
-		close(lastpipe[1]);
-		dup2(lastpipe[0], 0);
-		close(lastpipe[0]);
-	}
-}
-
-void	dup_newpipe(t_cmd_node *cmd_node, int *newpipe)
-{
-	if (ispipe(cmd_node))
-	{
-		close(newpipe[0]);
-		dup2(newpipe[1], 1);
-		close(newpipe[1]);
+		printf("minishell: command not found\n");
+		exit(127);
 	}
 }
 
 // returns each command's pid
-pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int *lastpipe)
+pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list,
+int haspipe, int *lastpipe)
 {
 	pid_t	pid;
 	int		newpipe[2];
 	int		exit_status;
-	char	**dchar_envlist;
 
 	if (ispipe(cmd_node))
 		pipe(newpipe);
@@ -69,39 +51,13 @@ pid_t	start_command(t_cmd_node *cmd_node, t_env_list *env_list, int haspipe, int
 	{
 		dup_lastpipe(haspipe, lastpipe);
 		dup_newpipe(cmd_node, newpipe);
-		
-	 	parse_redirect(cmd_node);
-
+		parse_redirect(cmd_node);
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
-		{
-			exit_status = execute_buildin(cmd_node, env_list, 2);
-			exit(exit_status);
-		}
+			do_single_cmd(cmd_node, env_list);
 		else
-		{
-			find_abscmd_path(cmd_node->argv);
-			dchar_envlist = make_char_envlist(env_list);
-			// TODO; if execve fails, returns -1. Check errno and Do error handle
-			if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
-			{
-				// TODO: check errno
-				// code for fail execve()
-				printf("minishell: command not found\n");
-				exit(127);
-			}
-		}
+			do_multi_cmd(cmd_node, env_list);
 	}
-	
-	if (haspipe)
-	{
-		close(lastpipe[0]);
-		close(lastpipe[1]);
-	}
-	if (ispipe(cmd_node))
-	{
-		lastpipe[0] = newpipe[0];
-		lastpipe[1] = newpipe[1];
-	}
+	close_pipe(cmd_node, haspipe, lastpipe, newpipe);
 	return (pid);
 }
 
@@ -125,8 +81,6 @@ t_list	*exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 {
 	t_cmd_node	*cmd_node;
 	t_list		*cur_cmd_list;
-	int			pid;
-	int			status;
 	int			haspipe;
 	int			*lastpipe;
 
