@@ -20,6 +20,7 @@ SRCS =  ./src/main.c\
 	./src/execute_comannd/process_cmdline.c\
 	./src/execute_comannd/exec_single_cmd.c\
 	./src/execute_comannd/exec_multi_cmds.c\
+	./src/execute_comannd/exec_multi_cmds_utils.c\
 	./src/execute_comannd/find_abscmd_path.c\
 	./src/execute_comannd/expand_env.c\
 	./src/execute_comannd/expand_env_utils1.c\
