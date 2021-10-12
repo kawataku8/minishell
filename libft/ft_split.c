@@ -6,13 +6,13 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/28 17:21:58 by tkawahar          #+#    #+#             */
-/*   Updated: 2021/10/12 22:01:39 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 23:05:56 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_get_num_words(char const *s, char c)
+static int	ft_get_num_words(char const *s, char c)
 {
 	int	i;
 	int	num_of_words;
@@ -34,7 +34,7 @@ static int		ft_get_num_words(char const *s, char c)
 	return (num_of_words);
 }
 
-static void		*ft_memfree(char **words, int index)
+static void	*ft_memfree(char **words, int index)
 {
 	while (index--)
 		free(words[index]);
@@ -45,9 +45,9 @@ static void		*ft_memfree(char **words, int index)
 static	char	**ft_getword(char **words, char const *s,
 char c, int num_of_words)
 {
-	int i;
-	int j;
-	int index;
+	int	i;
+	int	j;
+	int	index;
 
 	i = 0;
 	index = 0;
@@ -58,7 +58,8 @@ char c, int num_of_words)
 		j = i;
 		while (s[j] != c && s[j])
 			j++;
-		if (!(words[index] = (char *)malloc(sizeof(char) * (j - i + 1))))
+		words[index] = (char *)malloc(sizeof(char) * (j - i + 1));
+		if (!(words[index]))
 			return (ft_memfree(words, index));
 		(void)ft_strlcpy(words[index], (s + i), (j - i + 1));
 		i = j;
@@ -67,7 +68,7 @@ char c, int num_of_words)
 	return (words);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**words;
 	char	**result;
@@ -76,10 +77,12 @@ char			**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	num_of_words = ft_get_num_words(s, c);
-	if (!(words = (char **)malloc(sizeof(char *) * (num_of_words + 1))))
+	words = (char **)malloc(sizeof(char *) * (num_of_words + 1));
+	if (!(words))
 		return (NULL);
 	result = words;
-	if (!(words = ft_getword(words, s, c, num_of_words)))
+	words = ft_getword(words, s, c, num_of_words);
+	if (!(words))
 		return (NULL);
 	words[num_of_words] = NULL;
 	return (result);
