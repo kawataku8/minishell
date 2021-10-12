@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 01:00:44 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/10 10:36:26 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 21:45:13 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	dup_lastpipe(int haspipe, int *lastpipe);
 void	dup_newpipe(t_cmd_node *cmd_node, int *newpipe);
 void	close_pipe(t_cmd_node *cmd_node, int haspipe,
 			int *lastpipe, int *newpipe);
-
 
 char	**init_ft_cmd_names(void);
 int		exec_mycmds(int index, t_cmd_node *cmd_node, t_env_list *env_list);

@@ -6,12 +6,13 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 16:57:00 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 21:42:10 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/env_operations.h"
+#include "../../include/main.h"
 
 extern volatile sig_atomic_t	g_signal_handled;
 
@@ -104,7 +105,7 @@ int	exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 			dchar_envlist = make_char_envlist(env_list);
 			if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
 			{
-				printf("minishell: command not found\n");
+				my_write_err_msg(2, "minishell: ", errno);
 				exit(127);
 			}
 		}
