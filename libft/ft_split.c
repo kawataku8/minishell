@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkawahar <tkawahar@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/28 17:21:58 by tkawahar          #+#    #+#             */
-/*   Updated: 2021/01/14 18:03:05 by tkawahar         ###   ########.fr       */
+/*   Updated: 2021/10/12 22:01:39 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int		ft_get_num_words(char const *s, char c)
 {
-	int i;
-	int num_of_words;
+	int	i;
+	int	num_of_words;
 
 	i = 0;
 	num_of_words = 0;

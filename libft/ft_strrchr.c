@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkawahar <tkawahar@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 12:54:15 by tkawahar          #+#    #+#             */
-/*   Updated: 2020/07/05 12:57:51 by tkawahar         ###   ########.fr       */
+/*   Updated: 2021/10/12 22:20:21 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ char	*ft_strrchr(const char *s, int c)
 	found = NULL;
 	if (ch == '\0')
 		return (ft_strchr(s, '\0'));
-	while ((current_position = ft_strchr(s, ch)) != 0)
+	while (1)
 	{
+		current_position = ft_strchr(s, ch);
+		if (current_position == 0)
+			break ;
 		found = current_position;
 		s = current_position + 1;
 	}
