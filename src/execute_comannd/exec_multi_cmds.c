@@ -6,13 +6,14 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/10 10:38:34 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 21:35:38 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
 #include "../../include/parse.h"
 #include "../../include/env_operations.h"
+#include "../../include/main.h"
 
 void	do_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
@@ -22,7 +23,6 @@ void	do_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 	exit(exit_status);
 }
 
-// TODO; if execve fails, returns -1. Check errno and Do error handle
 void	do_multi_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
 	char	**dchar_envlist;
@@ -31,7 +31,7 @@ void	do_multi_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 	dchar_envlist = make_char_envlist(env_list);
 	if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
 	{
-		printf("minishell: command not found\n");
+		my_write_err_msg(2, "minishell: ", errno);
 		exit(127);
 	}
 }
@@ -68,7 +68,7 @@ int	*set_up_pipe(void)
 	new_pipe = (int *)malloc(sizeof(int) * 2);
 	if (new_pipe == NULL)
 	{
-		printf("ERROR: mallloc error\n");
+		my_write_err_msg(2, "minishell: ", errno);
 		exit(1);
 	}
 	new_pipe[0] = -1;

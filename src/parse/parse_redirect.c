@@ -6,12 +6,14 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 21:35:45 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 17:14:28 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 21:38:00 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/validator.h"
+#include "../../include/main.h"
+#include "../../include/cmd.h"
 
 t_list	*get_red_filepath_token(t_list *cur_token)
 {
@@ -44,7 +46,7 @@ int	connect_redirect(int red_type, int red_fd, char *red_filepath)
 		file_fd = open(red_filepath, O_RDWR, S_IRWXU);
 	if (file_fd == -1)
 	{
-		printf("ERROR: file open error\n");
+		my_write_err_msg(2, "minishell: ", errno);
 		exit(1);
 		return (0);
 	}

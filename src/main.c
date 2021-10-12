@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:02:04 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/06 22:09:05 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 21:41:08 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,6 @@
 #include "../include/signal.h"
 
 volatile sig_atomic_t	g_signal_handled = 0;
-
-// void	print_cmdlist_withmeta(t_list *cmd_list)
-// {
-// 	t_list		*cur_node;
-// 	t_cmd_node	*cur_cmd;
-
-// 	cur_node = cmd_list;
-// 	while (cur_node != NULL)
-// 	{
-// 		cur_cmd = ((t_cmd_node *)cur_node->content);
-// 		printf("pid:[%d]\n", cur_cmd->pid);
-// 		printf("op:[%d]\n", cur_cmd->op);
-// 		printf("argc:[%d]\n", cur_cmd->argc);
-// 		printf("---------------------------\n");
-// 		cur_node = cur_node->next;
-// 	}
-// }
 
 void	del_token(void *content)
 {
@@ -89,6 +72,7 @@ t_list	*pre_process(char **usr_input, t_env_list *env_list, int *bc_flag)
 	t_list	*token_list;
 	t_list	*cmd_list;
 
+	*usr_input = trim_usr_input(*usr_input);
 	res = manage_usr_input(*usr_input, env_list);
 	*bc_flag = 1;
 	if (res == 1)
@@ -96,13 +80,17 @@ t_list	*pre_process(char **usr_input, t_env_list *env_list, int *bc_flag)
 	*bc_flag = 2;
 	if (res == 2)
 		return (NULL);
-	*usr_input = trim_usr_input(*usr_input);
 	token_list = manage_tokenlist(*usr_input);
 	if (token_list == NULL)
+	{
+		mod_envlist_value("?", ft_itoa(258), env_list);
 		return (NULL);
+	}
 	cmd_list = manage_cmdlist(token_list, env_list);
 	if (cmd_list == NULL)
+	{
 		return (NULL);
+	}
 	*bc_flag = 0;
 	return (cmd_list);
 }
@@ -128,9 +116,7 @@ int	main(int argc, char *argv[], char **envp)
 			break ;
 		else if (bc_flag == 2)
 			continue ;
-		signal(SIGQUIT, &sigquit_handler);
-		process_cmdlist(cmd_list, env_list);
-		signal(SIGQUIT, SIG_IGN);
+		do_cmdlist(cmd_list, env_list);
 		free(usr_input);
 		usr_input = NULL;
 		free_cmdlist(&cmd_list);

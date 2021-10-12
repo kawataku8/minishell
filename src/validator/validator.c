@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 23:59:35 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 16:38:46 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/10 19:38:37 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,7 @@ int	validator(t_list *token_list)
 		swich_quote_flag(cur_token, &flag_squote, &flag_dquote);
 		if (!(valid_meta_syntax(cur_token))
 			|| !(valid_redirect_syntax(cur_token)))
-		{
-			printf("ERROR: syntax error\n");
 			return (0);
-		}
 		cur_token = cur_token->next;
 	}
 	if (flag_squote || flag_dquote)

@@ -1,5 +1,6 @@
 SRCS =  ./src/main.c\
 	./src/main_utils.c\
+	./src/main_utils_2.c\
 	./src/parse/tokenizer.c\
 	./src/parse/tokenizer_utils.c\
 	./src/parse/make_procslist.c\

@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:07:23 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/06 22:09:23 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 21:40:19 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_list	*manage_tokenlist(char *usr_input)
 	token_list = make_tokenlist(usr_input);
 	if (validator(token_list) == 0)
 	{
-		printf("INVALID\n");
+		my_write_err_msg(2, "minishell: syntax error", -1);
 		free(usr_input);
 		usr_input = NULL;
 		return (NULL);
@@ -66,4 +66,17 @@ void	my_add_history(char *usr_input)
 {
 	if (ft_strlen(usr_input) > 0)
 		add_history(usr_input);
+}
+
+void	my_write_err_msg(int fd, char *str, int err_num)
+{
+	char	*err_str;
+
+	write(fd, str, ft_strlen(str));
+	if (err_num > 0)
+	{
+		err_str = strerror(err_num);
+		write(fd, err_str, ft_strlen(err_str));
+	}
+	write(fd, &"\n", 1);
 }

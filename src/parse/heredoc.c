@@ -6,12 +6,13 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:53:05 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 17:05:23 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/10 19:57:54 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/cmd.h"
+#include "../../include/main.h"
 
 extern volatile sig_atomic_t	g_signal_handled;
 
@@ -114,7 +115,7 @@ int	process_heredoc(t_list *cmd_list)
 		res = make_heredoc(cur_cmd, heredoc_tmp_num);
 		if (res == 1)
 		{
-			printf("ERROR: heredoc error\n");
+			my_write_err_msg(2, "minishell: heredoc error", -1);
 			break ;
 		}
 		heredoc_tmp_num++;
