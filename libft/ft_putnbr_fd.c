@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkawahar <tkawahar@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 14:13:42 by tkawahar          #+#    #+#             */
-/*   Updated: 2021/01/08 14:55:02 by tkawahar         ###   ########.fr       */
+/*   Updated: 2021/10/12 22:11:56 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char temp_n;
+	char	temp_n;
 
 	if (n == -2147483648)
 		write(fd, "-2147483648", 11);

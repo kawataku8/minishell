@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkawahar <tkawahar@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 11:21:18 by tkawahar          #+#    #+#             */
-/*   Updated: 2020/07/05 13:20:26 by tkawahar         ###   ########.fr       */
+/*   Updated: 2021/10/12 21:59:57 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void *p;
+	void	*p;
 
 	if (count == 0 || size == 0)
 	{

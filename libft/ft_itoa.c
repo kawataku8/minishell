@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkawahar <tkawahar@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/28 21:24:42 by tkawahar          #+#    #+#             */
-/*   Updated: 2020/07/26 13:10:19 by tkawahar         ###   ########.fr       */
+/*   Updated: 2021/10/12 22:00:23 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int		ft_num_len(const int n)
 {
-	int len;
-	int temp_n;
-	int is_minus;
+	int	len;
+	int	temp_n;
+	int	is_minus;
 
 	len = 0;
 	temp_n = n;
@@ -37,7 +37,7 @@ static int		ft_num_len(const int n)
 
 static char		*ft_make_zero(size_t size)
 {
-	char *p;
+	char	*p;
 
 	if (!(p = (char *)malloc(size * 2)))
 		return (NULL);
