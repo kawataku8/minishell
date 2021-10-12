@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/28 21:24:42 by tkawahar          #+#    #+#             */
-/*   Updated: 2021/10/12 22:00:23 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/12 22:18:13 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_num_len(const int n)
+static int	ft_num_len(const int n)
 {
 	int	len;
 	int	temp_n;
@@ -35,18 +35,19 @@ static int		ft_num_len(const int n)
 	return (len);
 }
 
-static char		*ft_make_zero(size_t size)
+static char	*ft_make_zero(size_t size)
 {
 	char	*p;
 
-	if (!(p = (char *)malloc(size * 2)))
+	p = (char *)malloc(size * 2);
+	if (!p)
 		return (NULL);
 	p[0] = '0';
 	p[1] = '\0';
 	return (p);
 }
 
-static char		*ft_make_num_str(char *dst, int n, int len)
+static char	*ft_make_num_str(char *dst, int n, int len)
 {
 	dst[len] = '\0';
 	len--;
@@ -59,7 +60,7 @@ static char		*ft_make_num_str(char *dst, int n, int len)
 	return (dst);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*n_str;
 	int		len;
@@ -79,7 +80,8 @@ char			*ft_itoa(int n)
 		is_minus++;
 		n *= -1;
 	}
-	if (!(n_str = (char *)malloc(sizeof(char) * (len + 1))))
+	n_str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!(n_str))
 		return (NULL);
 	n_str = ft_make_num_str(n_str, n, len);
 	if (is_minus)
