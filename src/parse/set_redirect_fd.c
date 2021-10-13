@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 15:29:31 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/02 15:30:58 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/13 23:38:52 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	set_redirect_fd(t_list *token_list)
 	t_list	*cur_token;
 	t_list	*prev_token;
 
+	prev_token = token_list;
 	if (prev_token == NULL)
 		return ;
-	prev_token = token_list;
 	cur_token = token_list->next;
 	while (cur_token != NULL)
 	{

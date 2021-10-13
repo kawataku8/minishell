@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:02:04 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/12 21:41:08 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/13 23:36:36 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	main(int argc, char *argv[], char **envp)
 	t_list		*cmd_list;
 	int			bc_flag;
 
+	(void)argc;
+	(void)argv;
 	setup_signals();
 	env_list = make_envlist(envp);
 	rl_event_hook = check_state;

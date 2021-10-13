@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:52:18 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/19 21:52:20 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:51:09 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_cd(int argc, char **argv, t_env_list *list)
 	path = set_path(argv, argc, list);
 	if (chdir(path) == -1)
 		return (chdir_error_message(path));
-	set_pwd_and_oldpwd(list, path);
+	set_pwd_and_oldpwd(list);
 	free(path);
 	return (SUCCEEDED);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_pwd_oldpwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:52:16 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/19 21:52:17 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:46:25 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*set_oldpwd_path(t_env_list *list)
 	return (path);
 }
 
-void	set_pwd_and_oldpwd(t_env_list *list, char *path)
+void	set_pwd_and_oldpwd(t_env_list *list)
 {
 	t_env_node	*node;
 	t_env_node	*ndptr;

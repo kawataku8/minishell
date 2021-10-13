@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mergesort.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:52:05 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/19 21:52:06 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:45:30 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	merge_sort(t_env_node **headref)
 	t_env_node	*head;
 	t_env_node	*a;
 	t_env_node	*b;
-	t_env_node	*ndpr;
 
 	head = *headref;
 	if (head == NULL || head->next == NULL)

@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 21:35:45 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/12 21:38:00 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/13 23:41:20 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_list	*get_red_filepath_token(t_list *cur_token)
 // TODO:if line52 true, returns to main readline
 int	connect_redirect(int red_type, int red_fd, char *red_filepath)
 {
-	int	open_mode;
 	int	file_fd;
 
+	file_fd = -1;
 	if (red_type == RDIR)
 		file_fd = open(red_filepath, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 	else if (red_type == RRDIR)
