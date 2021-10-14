@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:53:05 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/10 19:57:54 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/13 23:49:07 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int	make_heredoc(t_list *cur_cmd, int heredoc_tmp_num)
 	t_list	*cur_token;
 	char	*delim_word;
 	char	*file_path;
-	int		heredoc_fd;
 	int		res;
 
+	res = 0;
 	cur_token = ((t_cmd_node *)cur_cmd->content)->token_list;
 	while (cur_token)
 	{

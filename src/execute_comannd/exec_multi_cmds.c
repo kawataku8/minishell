@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/12 21:35:38 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/13 23:43:35 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int haspipe, int *lastpipe)
 {
 	pid_t	pid;
 	int		newpipe[2];
-	int		exit_status;
 
 	if (ispipe(cmd_node))
 		pipe(newpipe);

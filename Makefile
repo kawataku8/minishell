@@ -46,7 +46,7 @@ OBJS    = $(SRCS:.c=.o)
 NAME    = minishell
 CC      = gcc
 RM      = rm -f
-CFLAGS = -I $(shell brew --prefix readline)/include
+CFLAGS = -Wall -Wextra -Werror -I $(shell brew --prefix readline)/include
 LDFLAGS = -lreadline -lhistory -L$(shell brew --prefix readline)/lib
 
 all: $(NAME)
@@ -62,7 +62,7 @@ clean:
 
 fclean: clean
 	$(MAKE) fclean -C ./libft
-	$(RM) $(NAME) minishell.a
+	$(RM) $(NAME)
 
 re: fclean all
 

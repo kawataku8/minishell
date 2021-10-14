@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 17:04:15 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 17:05:21 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/13 23:42:03 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_list	*get_heredoc_delim_token(t_list *cur_token)
 
 int	open_heredoc_tmp(char *file_path)
 {
-	char	*heredoc_tmp;
 	int		file_fd;
 
 	file_fd = open(file_path, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
