@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:08 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/13 23:43:06 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 17:14:22 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ int	execute_buildin(t_cmd_node *cmd_node, t_env_list *env_list, int pa_ch_flag)
 		if (ft_buildin_idx == 6)
 		{
 			if (pa_ch_flag == 1)
-				ft_pa_exit(cmd_node->argv, cmd_node->argc);
+				exit_status = ft_pa_exit(cmd_node->argv, cmd_node->argc);
 			if (pa_ch_flag == 2)
-				ft_ch_exit(cmd_node->argv, cmd_node->argc);
-			return (exit_status);
+				exit_status = ft_ch_exit(cmd_node->argv, cmd_node->argc);
 		}
-		exit_status = exec_mycmds(ft_buildin_idx, cmd_node, env_list);
+		else
+			exit_status = exec_mycmds(ft_buildin_idx, cmd_node, env_list);
 	}
 	return (exit_status);
 }
