@@ -106,7 +106,7 @@ int	exec_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 			dchar_envlist = make_char_envlist(env_list);
 			if (execve(cmd_node->argv[0], cmd_node->argv, dchar_envlist) == -1)
 			{
-				my_write_err_msg(2, "minishell: ", errno);
+				my_write_err_msg(2, "minishell: command not found", 0);
 				exit(127);
 			}
 		}

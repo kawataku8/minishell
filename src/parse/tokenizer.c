@@ -6,14 +6,14 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:08:34 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/13 23:37:07 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 22:14:53 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/validator.h"
 
-//return: startから次の ダブルクオートまたはEOF のindex
+//return: next dquote or EOF index
 int	idx_next_dquote(char *usr_input, int start)
 {
 	int	end;
@@ -54,8 +54,7 @@ int	idx_with_red(char *usr_input, int start)
 	return (end);
 }
 
-//return:次の 特殊文字またはEOF のindex
-// TODO: rdir,ldirの進めは別関数
+//return:next meta oor EOF index
 int	idx_next_delim(char *usr_input, int start)
 {
 	int	end;
@@ -99,8 +98,6 @@ t_token	*make_token(char *usr_input, int *i, int in_squote, int in_dquote)
 	return (new_token);
 }
 
-// ここでvalidationはしない
-// 特殊文字で区切ってtokenizeのみ
 t_list	*make_tokenlist(char *usr_input)
 {
 	t_list	*token_list;
