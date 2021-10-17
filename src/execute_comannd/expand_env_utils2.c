@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 17:24:15 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 17:25:11 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 22:16:28 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	free_splitstr(char **str)
 //input	  	:word = "12$TEST$USER"; env_value = "hello world"
 //output	:new_tokenlist = "12hello"->"world$USER"
 //description: 
-//normal fieldのwordにいる環境変数を展開する
-//valueをスペースでスプリット
-//$より前に文字がある場合は、スプリットされる前に先頭にくっつけてからスプリット
+//normal expand env val in field word
 t_list	*make_new_tokens(char *word, char *env_value)
 {
 	t_list	*new_tokenlist;
@@ -54,8 +52,6 @@ t_list	*make_new_tokens(char *word, char *env_value)
 
 //input: "$NAME"
 //output: "oda"->"joe"
-//環境変数が存在しなかった場合、env_valueには空文字””
-//受け取ったtokenはfree()
 t_list	*expand_env_in_token(t_list *token, char *env_value, int flag_dquote)
 {
 	t_list	*new_tokenlist;

@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:02:04 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/13 23:36:36 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/17 12:35:19 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,26 @@ void	free_cmdlist(t_list **cmd_list)
 	}
 }
 
-int	manage_usr_input(char *usr_input, t_env_list *env_list)
+// returns: 0 -> normal input
+// returns: 1 -> Ctrl D
+// returns: 2 -> Ctrl C or press Enter
+int	manage_usr_input(char **usr_input, t_env_list *env_list)
 {
-	if (usr_input == NULL)
+	if (*usr_input == NULL)
 		return (1);
-	if (usr_input[0] == 0 || g_signal_handled)
+	if (ft_strlen(*usr_input) > 0)
+		my_add_history(*usr_input);
+	*usr_input = trim_usr_input(*usr_input);
+	if (*usr_input[0] == 0 || g_signal_handled)
 	{
 		if (g_signal_handled)
 		{
 			g_signal_handled = 0;
 			mod_envlist_value("?", ft_itoa(1), env_list);
 		}
-		free(usr_input);
+		free(*usr_input);
 		return (2);
 	}
-	my_add_history(usr_input);
 	return (0);
 }
 
@@ -72,8 +77,7 @@ t_list	*pre_process(char **usr_input, t_env_list *env_list, int *bc_flag)
 	t_list	*token_list;
 	t_list	*cmd_list;
 
-	*usr_input = trim_usr_input(*usr_input);
-	res = manage_usr_input(*usr_input, env_list);
+	res = manage_usr_input(usr_input, env_list);
 	*bc_flag = 1;
 	if (res == 1)
 		return (NULL);
@@ -88,16 +92,11 @@ t_list	*pre_process(char **usr_input, t_env_list *env_list, int *bc_flag)
 	}
 	cmd_list = manage_cmdlist(token_list, env_list);
 	if (cmd_list == NULL)
-	{
 		return (NULL);
-	}
 	*bc_flag = 0;
 	return (cmd_list);
 }
 
-// readline中に
-// Ctrl + Cが押された時
-// 何も入力されずreturnキーだけ押された時
 int	main(int argc, char *argv[], char **envp)
 {
 	char		*usr_input;
@@ -123,6 +122,7 @@ int	main(int argc, char *argv[], char **envp)
 		usr_input = NULL;
 		free_cmdlist(&cmd_list);
 	}
+	// TODO: not good
 	exit(0);
 	return (0);
 }

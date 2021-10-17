@@ -6,13 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 16:40:33 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 16:50:03 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 22:17:13 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/dlist_operations.h"
 
-//key,valueは事前にmallocされている前提
 t_env_node	*make_node(char *key, char *value)
 {
 	t_env_node	*new_node;
