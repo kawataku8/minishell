@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 17:17:29 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 17:18:41 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 22:15:11 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	specify_tokentype(char c)
 	return (0);
 }
 
-//return: 次の シングルオートまたはEOF のindex
+//return: next squote or EOF index
 int	idx_next_squote(char *usr_input, int start)
 {
 	int	end;

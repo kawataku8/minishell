@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:53:05 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/13 23:49:07 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 22:15:36 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	make_heredoc(t_list *cur_cmd, int heredoc_tmp_num)
 	return (res);
 }
 
-// TODO: error handle at line 138
 int	process_heredoc(t_list *cmd_list)
 {
 	t_list	*cur_cmd;
