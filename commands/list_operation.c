@@ -6,7 +6,7 @@
 /*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:50:45 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/19 21:50:47 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/10/17 16:29:41 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ t_env_node	*make_env_node(char *key, char *value)
 	t_env_node	*new_node;
 
 	new_node = (t_env_node *)malloc(sizeof(t_env_node));
-	new_node->key = strdup(key);
+	new_node->key = ft_strdup(key);
 	if (!new_node || !new_node->key)
 		exit(malloc_error());
 	if (value == NULL)
 		new_node->value = NULL;
 	else
 	{
-		new_node->value = strdup(value);
+		new_node->value = ft_strdup(value);
 		if (!new_node->value)
 			exit(malloc_error());
 	}
