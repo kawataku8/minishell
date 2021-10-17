@@ -75,7 +75,6 @@ int	*set_up_pipe(void)
 	return (new_pipe);
 }
 
-// piple list の実行されたものの中で最後(右端)のコマンドのポインタを返す
 t_list	*exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 {
 	t_cmd_node	*cmd_node;
