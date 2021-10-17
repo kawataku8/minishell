@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/13 23:43:35 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 22:16:56 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	*set_up_pipe(void)
 	return (new_pipe);
 }
 
-// piple list の実行されたものの中で最後(右端)のコマンドのポインタを返す
 t_list	*exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 {
 	t_cmd_node	*cmd_node;

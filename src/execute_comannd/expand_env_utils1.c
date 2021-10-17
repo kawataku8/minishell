@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_env_utils.c                                 :+:      :+:    :+:   */
+/*   expand_env_utils1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 17:20:53 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 17:22:16 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/16 22:16:43 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ char	*get_value_from_envlist(char *key, t_env_list *env_list)
 
 //input: "hello $TEST"
 //output: 1->exist, 0->nah
-//description: 文字列に$環境変数があるかをチェックする
-//ある->i, j は環境変数の文字indexを示す
 int	envvar_exist(char *word, int *i, int *j)
 {
 	*i = 0;
@@ -73,10 +71,6 @@ int	envvar_exist(char *word, int *i, int *j)
 
 //input: "$NAME"
 //output:"takuya"
-//環境変数をkeyで探して、valueを返す
-//$が見つからなければ NULL を返す
-//$はあるがそのkeyでvalueが存在しなければ空文字列"""を返す
-//key取り出すときの区切り　[スペース、バックスラッシュ、EOL]
 char	*get_env_value(char *word, t_env_list *env_list)
 {
 	int		i;

@@ -102,7 +102,6 @@ int	make_heredoc(t_list *cur_cmd, int heredoc_tmp_num)
 	return (res);
 }
 
-// TODO: error handle at line 138
 int	process_heredoc(t_list *cmd_list)
 {
 	t_list	*cur_cmd;
