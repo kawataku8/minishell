@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:50:54 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/19 21:50:56 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/10/17 16:54:48 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_ch_exit(char **argv, int argc)
 	if (argc >= 3)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", STD_ERR);
-		exit (ERROR);
+		exit (GENERAL_ERRORS);
 	}
 	if (!argv[1])
 		exit(SUCCEEDED);
@@ -68,7 +68,7 @@ int	ft_pa_exit(char **argv, int argc)
 	if (argc >= 3)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", STD_ERR);
-		return (ERROR);
+		return (GENERAL_ERRORS);
 	}
 	if (!argv[1])
 		exit(SUCCEEDED);
