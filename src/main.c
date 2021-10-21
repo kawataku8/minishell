@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:02:04 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/21 09:43:50 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/21 19:46:15 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,5 @@ int	main(int argc, char *argv[], char **envp)
 		usr_input = NULL;
 		free_cmdlist(&cmd_list);
 	}
-	// TODO: not good
-	exit(0);
 	return (0);
 }
