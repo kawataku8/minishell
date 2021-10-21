@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 20:36:01 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/16 22:13:46 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/21 13:11:30 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	setup_argv_argc(t_cmd_node *cmd_node)
 	while (cur_token != NULL)
 	{
 		if (((t_token *)cur_token->content)->type == STR)
-			new_argv[i++] = ((t_token *)cur_token->content)->word;
+			new_argv[i++] = ft_strdup(((t_token *)cur_token->content)->word);
 		cur_token = cur_token->next;
 	}
 	new_argv[i] = NULL;

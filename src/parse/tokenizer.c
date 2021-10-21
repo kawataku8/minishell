@@ -6,12 +6,13 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:08:34 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/16 22:14:53 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/21 13:05:42 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/validator.h"
+#include "../../include/main.h"
 
 //return: next dquote or EOF index
 int	idx_next_dquote(char *usr_input, int start)
@@ -92,6 +93,8 @@ t_token	*make_token(char *usr_input, int *i, int in_squote, int in_dquote)
 		new_token->type = RRDIR;
 	else if (type == LDIR && ft_strlen(new_token->word) == 2)
 		new_token->type = LLDIR;
+	else if (type == 6 && (in_squote || in_dquote))
+		new_token->type = 0;
 	else
 		new_token->type = type;
 	*i = end;
@@ -124,14 +127,14 @@ t_list	*make_tokenlist(char *usr_input)
 	return (token_list);
 }
 
-// void print_tokenlist(t_list *token_list)
-// {
-// 	t_list *cur_node = token_list;
-// 	while(cur_node != NULL)
-// 	{
-// 		printf("type:[%d]\n",((t_token*)cur_node->content)->type);
-// 		printf("word:[%s]\n",((t_token*)cur_node->content)->word);
-// 		printf("---------------------------\n");
-// 		cur_node = cur_node->next;
-// 	}
-// }
+void print_tokenlist(t_list *token_list)
+{
+	t_list *cur_node = token_list;
+	while(cur_node != NULL)
+	{
+		printf("type:[%d]\n",((t_token*)cur_node->content)->type);
+		printf("word:[%s]\n",((t_token*)cur_node->content)->word);
+		printf("---------------------------\n");
+		cur_node = cur_node->next;
+	}
+}
