@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 15:52:37 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/02 15:56:30 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/21 14:50:34 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*make_cmd_path(char *target_dir, char *cmd_name)
 }
 
 // find an absolute path of command
+// ascii 47 == '/'
 void	find_abscmd_path(char **cmd_argv)
 {
 	char	*abs_cmd_path;
