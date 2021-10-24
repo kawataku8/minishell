@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:52:18 by stakabay          #+#    #+#             */
-/*   Updated: 2021/10/13 23:51:09 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/24 20:08:08 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ char	*set_path(char **argv, int argc, t_env_list *list)
 		path = ft_strdup(node->value);
 	}
 	else if (!ft_strncmp(argv[1], "-", 1))
+	{
 		path = set_oldpwd_path(list);
+		if (!path)
+			return (NULL);
+	}
 	else if (argv[1][0] == '~')
 	{
 		node = serch_nodes(list, "HOME");
@@ -81,8 +85,10 @@ int	ft_cd(int argc, char **argv, t_env_list *list)
 	char		*path;
 
 	if (!is_valid_arg(argc, list))
-		return (ERROR);
+		return (GENERAL_ERRORS);
 	path = set_path(argv, argc, list);
+	if (!path)
+		return (GENERAL_ERRORS);
 	if (chdir(path) == -1)
 		return (chdir_error_message(path));
 	set_pwd_and_oldpwd(list);
