@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 01:00:44 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/12 21:45:13 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/23 14:48:39 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ void	process_cmdlist(t_list *cmd_list, t_env_list *env_list);
 int		make_exit_status(int status);
 
 char	*make_cmd_path(char *target_dir, char *cmd_name);
-void	find_abscmd_path(char **cmd_argv);
+void	find_abscmd_path(char **cmd_argv, t_env_list *env_list);
 
 #endif
