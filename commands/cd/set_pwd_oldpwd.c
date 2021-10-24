@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_pwd_oldpwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:52:16 by stakabay          #+#    #+#             */
-/*   Updated: 2021/10/13 23:46:25 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/24 20:16:54 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,8 @@ char	*set_oldpwd_path(t_env_list *list)
 	return (path);
 }
 
-void	set_pwd_and_oldpwd(t_env_list *list)
+void	set_oldpwd(t_env_list *list, t_env_node *node, t_env_node *ndptr)
 {
-	t_env_node	*node;
-	t_env_node	*ndptr;
-
-	node = serch_nodes(list, "PWD");
-	ndptr = serch_nodes(list, "OLDPWD");
 	if (!ndptr)
 	{
 		ndptr = make_env_node("OLDPWD", node->value);
@@ -46,8 +41,27 @@ void	set_pwd_and_oldpwd(t_env_list *list)
 		ndptr->value = ft_strdup(node->value);
 		if (!ndptr->value)
 			exit(malloc_error());
-		node->value = ft_strdup(getcwd(NULL, 0));
-		if (!node->value)
-			exit(malloc_error());
 	}
+}
+
+void	set_pwd_and_oldpwd(t_env_list *list)
+{
+	t_env_node	*node;
+	t_env_node	*ndptr;
+	char		*cwdpath;
+
+	node = serch_nodes(list, "PWD");
+	ndptr = serch_nodes(list, "OLDPWD");
+	set_oldpwd(list, node, ndptr);
+	cwdpath = getcwd(NULL, 0);
+	if (!cwdpath)
+	{
+		ft_putstr_fd("cd: error retrieving current directory: ", STD_ERR);
+		ft_putstr_fd("getcwd: cannot access parent directories: ", STD_ERR);
+		ft_putendl_fd("No such file or directory", STD_ERR);
+	}
+	else
+		node->value = ft_strdup(cwdpath);
+	if (!node->value)
+		exit(malloc_error());
 }

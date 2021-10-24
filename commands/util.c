@@ -6,7 +6,7 @@
 /*   By: stakabay <stakabay@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 21:50:25 by stakabay          #+#    #+#             */
-/*   Updated: 2021/09/19 21:50:37 by stakabay         ###   ########.fr       */
+/*   Updated: 2021/10/24 20:01:51 by stakabay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	put_endl(int fd)
 
 int	malloc_error(void)
 {
-	put_string_fd("minishell: malloc error", STD_ERR);
+	ft_putendl_fd("minishell: malloc error", STD_ERR);
 	return (GENERAL_ERRORS);
 }
 
