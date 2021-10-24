@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 21:35:45 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/13 23:41:20 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/24 21:09:07 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	connect_redirect(int red_type, int red_fd, char *red_filepath)
 
 int	set_red_fd(t_list *last_token, int red_type)
 {
-	if (((t_token *)last_token->content)->type == REDFD)
+	if (last_token != NULL && ((t_token *)last_token->content)->type == REDFD)
 		return (ft_atoi(((t_token *)last_token->content)->word));
 	else
 	{
@@ -89,8 +89,8 @@ void	parse_redirect(t_cmd_node *cmd_node)
 	int		red_type;
 	char	*red_filepath;
 
-	last_token = cmd_node->token_list;
-	cur_token = cmd_node->token_list->next;
+	last_token = NULL;
+	cur_token = cmd_node->token_list;
 	while (cur_token != NULL)
 	{
 		red_type = is_red_token(((t_token *)cur_token->content));
