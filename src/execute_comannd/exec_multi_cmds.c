@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/24 20:26:27 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/24 23:49:14 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int haspipe, int *lastpipe)
 		dup_lastpipe(haspipe, lastpipe);
 		dup_newpipe(cmd_node, newpipe);
 		parse_redirect(cmd_node);
+		setup_argv_argc(cmd_node);
 		if (get_ft_buildin_idx(cmd_node->argv) > -1)
 			do_single_cmd(cmd_node, env_list);
 		else
@@ -89,7 +90,6 @@ t_list	*exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 	{
 		cmd_node = ((t_cmd_node *)cur_cmd_list->content);
 		expand_env(cmd_node->token_list, env_list);
-		setup_argv_argc(cmd_node);
 		cmd_node->pid = start_command(cmd_node, env_list, haspipe, lastpipe);
 		haspipe = ispipe(cmd_node);
 		if (haspipe == 1)
