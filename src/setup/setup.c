@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 20:36:01 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/21 13:11:30 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 10:03:50 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,31 @@ int	count_strtoken(t_list *token)
 	return (counter);
 }
 
+char	*join_str_series(t_list **cur_token)
+{
+	t_list	*iter_token;
+	char	*joined_str;
+	char	*tmp;
+
+	iter_token = (*cur_token)->next;
+	joined_str = ft_strdup(((t_token *)(*cur_token)->content)->word);
+	while (iter_token != NULL && (((t_token *)iter_token->content)->type == STR
+			|| ((t_token *)iter_token->content)->type == DQUOTE
+			|| ((t_token *)iter_token->content)->type == SQUOTE))
+	{
+		if (((t_token *)iter_token->content)->type == STR)
+		{
+			tmp = joined_str;
+			joined_str = ft_strjoin(joined_str,
+					((t_token *)iter_token->content)->word);
+			free(tmp);
+		}
+		iter_token = iter_token->next;
+	}
+	*cur_token = iter_token;
+	return (joined_str);
+}
+
 void	setup_argv_argc(t_cmd_node *cmd_node)
 {
 	int		new_argc;
@@ -42,7 +67,9 @@ void	setup_argv_argc(t_cmd_node *cmd_node)
 	while (cur_token != NULL)
 	{
 		if (((t_token *)cur_token->content)->type == STR)
-			new_argv[i++] = ft_strdup(((t_token *)cur_token->content)->word);
+			new_argv[i++] = join_str_series(&cur_token);
+		if (cur_token == NULL)
+			break ;
 		cur_token = cur_token->next;
 	}
 	new_argv[i] = NULL;
