@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 17:17:29 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/16 22:15:11 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 16:06:35 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,31 @@ int	idx_next_squote(char *usr_input, int start)
 	}
 	end--;
 	return (end);
+}
+
+void	edit_tokenlist(t_list *token_list)
+{
+	t_list	*cur_token;
+	t_list	*new_list;
+	t_token	*new_token;
+	int		token_type;
+
+	cur_token = token_list;
+	while (cur_token != NULL)
+	{
+		new_list = NULL;
+		token_type = ((t_token *)cur_token->content)->type;
+		if (cur_token->next != NULL
+			&& (token_type == SQUOTE || token_type == DQUOTE)
+			&& (((t_token *)cur_token->next->content)->type == token_type))
+		{
+			new_token = (t_token *)malloc(sizeof(t_token));
+			new_token->word = ft_strdup("\0");
+			new_token->type = 0;
+			ft_lstadd_back(&new_list, ft_lstnew((void *)new_token));
+			new_list->next = cur_token->next;
+			cur_token->next = new_list;
+		}
+		cur_token = cur_token->next;
+	}
 }
