@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:02:04 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/25 16:07:02 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 23:02:45 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	free_cmdlist(t_list **cmd_list)
 		}
 		ft_lstclear(&((t_cmd_node *)cur_cmdlist->content)->token_list,
 			&del_token);
+		free_dchar(((t_cmd_node *)cur_cmdlist->content)->argv);
 		cur_cmdlist = next_cmdlist;
 	}
 }

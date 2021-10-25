@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 01:00:44 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/25 13:56:22 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 22:54:57 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	free_splitstr(char **str);
 t_list	*make_new_tokens(char *word, char *env_value);
 t_list	*expand_env_in_token(t_list *token, char *env_value, int flag_dquote);
 void	free_token(t_list *token);
-// void	expand_env(t_list *token_list, t_env_list *env_list);
 void	expand_env(t_cmd_node *cmd_node, t_env_list *env_list);
 void	edit_env(t_list *cmd_list, t_env_list *env_list);
 void	flag_init(int *flag_dquote, int *flag_squote);
