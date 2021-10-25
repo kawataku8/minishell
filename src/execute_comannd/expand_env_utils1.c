@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 17:20:53 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/16 22:16:43 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 09:21:48 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	envvar_exist(char *word, int *i, int *j)
 		{
 			*j = *i + 1;
 			while (word[*j] != '\0' && word[*j] != ' '
-				&& word[*j] != '$' && word[*j] != '\\')
+				&& word[*j] != '$' && word[*j] != '\\' && word[*j] != ',')
 				(*j)++;
 			if (*j > *i + 1)
 				return (1);
