@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:35:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/25 09:58:33 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 13:47:51 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	process_single_cmd(t_cmd_node *cmd_node, t_env_list *env_list)
 {
 	int	exit_status;
 
-	expand_env(cmd_node->token_list, env_list);
+	expand_env(cmd_node, env_list);
 	parse_redirect(cmd_node);
 	setup_argv_argc(cmd_node);
 	exit_status = exec_single_cmd(cmd_node, env_list);

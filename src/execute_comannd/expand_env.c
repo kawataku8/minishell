@@ -6,11 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 23:13:12 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/03 17:25:14 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 13:57:16 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cmd.h"
+#include "../../include/parse.h"
 
 void	free_token(t_list *token)
 {
@@ -36,16 +37,17 @@ char *env_value, int flag_dquote)
 	new_tokenlist = expand_env_in_token(cur_token, env_value, flag_dquote);
 	next_token = cur_token->next;
 	ft_lstadd_back(&new_tokenlist, next_token);
+	free(cur_token);
 	if (last_token != NULL)
 		last_token->next = new_tokenlist;
-	free_token(cur_token);
 	return (new_tokenlist);
 }
 
 // //input: "echo"->" "->"hello"->"$NAME"->";"
 // //output:"echo"->" "->"hello"->"takuya"->";"
 // //t_list->content == t_token
-void	expand_env(t_list *token_list, t_env_list *env_list)
+// void	expand_env(t_list *token_list, t_env_list *env_list)
+void	expand_env(t_cmd_node *cmd_node, t_env_list *env_list)
 {
 	int		flag_dquote;
 	int		flag_squote;
@@ -53,9 +55,7 @@ void	expand_env(t_list *token_list, t_env_list *env_list)
 	t_list	*cur_token;
 	t_list	*last_token;
 
-	flag_dquote = 0;
-	flag_squote = 0;
-	cur_token = token_list;
+	cur_token = cmd_node->token_list;
 	last_token = NULL;
 	while (cur_token != NULL)
 	{
@@ -66,6 +66,8 @@ void	expand_env(t_list *token_list, t_env_list *env_list)
 		{
 			cur_token = make_expanded_tokenlist(cur_token, last_token,
 					env_value, flag_dquote);
+			if (last_token == NULL)
+				cmd_node->token_list = cur_token;
 			continue ;
 		}
 		last_token = cur_token;
@@ -80,7 +82,7 @@ void	edit_env(t_list *cmd_list, t_env_list *env_list)
 	cur_cmd_list = cmd_list;
 	while (cur_cmd_list != NULL)
 	{
-		expand_env(((t_cmd_node *)cur_cmd_list->content)->token_list, env_list);
+		expand_env(((t_cmd_node *)cur_cmd_list->content), env_list);
 		cur_cmd_list = cur_cmd_list->next;
 	}
 }
