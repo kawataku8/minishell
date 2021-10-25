@@ -6,11 +6,12 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 22:10:44 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/01 22:11:46 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 20:53:02 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
+#include "../../include/main.h"
 
 int	*dup_original_fds(void)
 {
@@ -19,7 +20,7 @@ int	*dup_original_fds(void)
 	original_fds = (int *)malloc(sizeof(int) * 3);
 	if (original_fds == NULL)
 	{
-		printf("malloc error\n");
+		my_write_err_msg(2, "minishell: mallco error \n", 0);
 		exit(1);
 	}
 	original_fds[0] = dup(0);
