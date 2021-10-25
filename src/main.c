@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:02:04 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/25 10:38:20 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 16:07:02 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_list	*pre_process(char **usr_input, t_env_list *env_list, int *bc_flag)
 	if (res == 2)
 		return (NULL);
 	token_list = manage_tokenlist(*usr_input);
+	edit_tokenlist(token_list);
 	if (token_list == NULL)
 	{
 		mod_envlist_value("?", ft_itoa(258), env_list);

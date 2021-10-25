@@ -9,10 +9,7 @@ int main(int argc, char *argv[])
 
 	char *str;
 
-	str = strdup(NULL);
-	if(str == NULL)
-		return 1;
-	// printf("%s\n",str);
-	// free(str);
+	// printf("AAAAAAA\n");
+	printf("BBBBBBBBB\n");
 	return 0;
 }

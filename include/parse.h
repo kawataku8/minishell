@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 01:33:15 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/10 01:37:22 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 15:55:25 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ int			open_heredoc_tmp(char *file_path);
 int			write_heredoc_tmp(int heredoc_fd, char *heredoc_delim);
 int			make_heredoc(t_list *cur_cmd, int heredoc_tmp_num);
 int			process_heredoc(t_list *cmd_list);
+
+void		edit_tokenlist(t_list *token_list);
 
 #endif
