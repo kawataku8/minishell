@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:08:34 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/25 20:55:33 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 23:03:18 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_list	*make_tokenlist(char *usr_input)
 // 	while(cur_node != NULL)
 // 	{
 // 		printf("[%d]:[%s], ",((t_token*)cur_node->content)->type,
-//((t_token*)cur_node->content)->word);
+// ((t_token*)cur_node->content)->word);
 // 		cur_node = cur_node->next;
 // 	}
 // 	printf("\n");

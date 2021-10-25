@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 23:13:12 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/25 20:46:14 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 22:55:25 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ void	expand_env(t_cmd_node *cmd_node, t_env_list *env_list)
 	}
 }
 
-void	edit_env(t_list *cmd_list, t_env_list *env_list)
-{
-	t_list	*cur_cmd_list;
+// void	edit_env(t_list *cmd_list, t_env_list *env_list)
+// {
+// 	t_list	*cur_cmd_list;
 
-	cur_cmd_list = cmd_list;
-	while (cur_cmd_list != NULL)
-	{
-		expand_env(((t_cmd_node *)cur_cmd_list->content), env_list);
-		cur_cmd_list = cur_cmd_list->next;
-	}
-}
+// 	cur_cmd_list = cmd_list;
+// 	while (cur_cmd_list != NULL)
+// 	{
+// 		expand_env(((t_cmd_node *)cur_cmd_list->content), env_list);
+// 		cur_cmd_list = cur_cmd_list->next;
+// 	}
+// }

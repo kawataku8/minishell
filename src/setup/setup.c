@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 20:36:01 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/25 10:03:50 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 23:03:45 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,26 @@ int	count_strtoken(t_list *token)
 	return (counter);
 }
 
+int	is_next_delim_space(t_list *cur_token)
+{
+	t_list	*token;
+	int		flag;
+
+	flag = 1;
+	token = cur_token;
+	while (token != NULL && ((t_token *)token->content)->type != MYSPACE)
+	{
+		if (((t_token *)token->content)->type == DQUOTE
+			|| ((t_token *)token->content)->type == SQUOTE)
+		{
+			flag = 0;
+			break ;
+		}
+		token = token->next;
+	}
+	return (flag);
+}
+
 char	*join_str_series(t_list **cur_token)
 {
 	t_list	*iter_token;
@@ -36,6 +56,8 @@ char	*join_str_series(t_list **cur_token)
 
 	iter_token = (*cur_token)->next;
 	joined_str = ft_strdup(((t_token *)(*cur_token)->content)->word);
+	if (is_next_delim_space(*cur_token) == 1)
+		return (joined_str);
 	while (iter_token != NULL && (((t_token *)iter_token->content)->type == STR
 			|| ((t_token *)iter_token->content)->type == DQUOTE
 			|| ((t_token *)iter_token->content)->type == SQUOTE))
