@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:08:16 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/24 23:49:14 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 13:52:12 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_list	*exec_multi_cmds(t_list *cmd_list, t_env_list *env_list)
 	while (cur_cmd_list != NULL)
 	{
 		cmd_node = ((t_cmd_node *)cur_cmd_list->content);
-		expand_env(cmd_node->token_list, env_list);
+		expand_env(cmd_node, env_list);
 		cmd_node->pid = start_command(cmd_node, env_list, haspipe, lastpipe);
 		haspipe = ispipe(cmd_node);
 		if (haspipe == 1)

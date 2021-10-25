@@ -6,7 +6,7 @@
 /*   By: takuya <takuya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 17:24:15 by takuya            #+#    #+#             */
-/*   Updated: 2021/10/16 22:16:28 by takuya           ###   ########.fr       */
+/*   Updated: 2021/10/25 13:57:25 by takuya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,10 @@ t_list	*expand_env_in_token(t_list *token, char *env_value, int flag_dquote)
 		new_tokenlist = make_new_tokens(((t_token *)token->content)->word,
 				env_value);
 	return (new_tokenlist);
+}
+
+void	flag_init(int *flag_dquote, int *flag_squote)
+{
+	*flag_dquote = 0;
+	*flag_squote = 0;
 }
